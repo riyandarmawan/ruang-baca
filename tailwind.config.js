@@ -16,7 +16,18 @@ export default {
         '2xl': '6rem',
       },
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        lora: ["Lora", "serif"],
+        roboto: ["Roboto", "sans-serif"]
+      },
+      colors: {
+        primary: "#121212",
+        secondary: "#F5F5F5",
+        tersier: "#007BFF",
+        background: "#F5F5F5"
+      }
+    },
   },
   plugins: [],
 }
