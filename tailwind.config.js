@@ -1,3 +1,5 @@
+const { iconsPlugin, getIconCollections } = require("@egoist/tailwindcss-icons")
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -23,12 +25,16 @@ export default {
       },
       colors: {
         primary: "#121212",
-        secondary: "#F5F5F5",
+        secondary: "#E5E7EB",
         tersier: "#007BFF",
         background: "#F5F5F5"
       }
     },
   },
-  plugins: [],
+  plugins: [
+    iconsPlugin({
+      collections: getIconCollections(["mdi"]),
+    }),
+  ],
 }
 

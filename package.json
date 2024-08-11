@@ -7,6 +7,8 @@
         "start": "concurrently \"php artisan serve\" \"pnpm run dev\""
     },
     "devDependencies": {
+        "@egoist/tailwindcss-icons": "^1.8.1",
+        "@iconify-json/mdi": "^1.1.68",
         "autoprefixer": "^10.4.20",
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0",
