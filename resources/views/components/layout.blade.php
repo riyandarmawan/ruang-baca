@@ -15,30 +15,53 @@
         rel="stylesheet">
 </head>
 
-<body x-data="{ open: false }">
+<body>
     <header class="py-4 md:py-8">
         <div class="container mb-2 flex items-center justify-between">
             <a href="/">
-                <h1 class="font-lora text-2xl font-bold">Ruang Baca</h1>
+                <h1 class="font-lora text-2xl font-bold lg:text-3xl">Ruang Baca</h1>
             </a>
-            <div class="relative">
-                <span x-on:click="open = !open" class="i-mdi-search cursor-pointer text-2xl md:cursor-default md:absolute md:right-4 md:top-2 md:text-slate-400"></span>
-                <form action="" method="GET" class="hidden md:block">
-                    <input type="search" name="search" placeholder="Search any book here"
-                        class="w-full min-w-96 rounded-full bg-secondary px-4 py-2 text-slate-700 placeholder:text-slate-400 outline-none focus:ring focus:ring-primary">
-                </form>
-            </div>
-        </div>
-        <div class="container md:hidden">
-            <form action="" method="GET" x-bind:class="!open ? '' : '!block'"
-                class="float-end max-w-96 mb-4 hidden w-full">
-                <input type="search" name="search" placeholder="Search any book here"
-                    class="w-full rounded bg-secondary p-2 text-slate-700 placeholder:text-slate-400 outline-none focus:ring focus:ring-primary">
-            </form>
+            <a href=""
+                class="after:content-[' '] relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:hover:w-full font-medium sm:text-lg xl:text-xl">Login</a>
         </div>
     </header>
 
     @yield('content')
+
+    <section x-data="{ open: false }" class="text-background">
+        <div x-bind:class="!open ? '' : '!block'" class="fixed bottom-0 left-0 right-0 top-0 hidden bg-primary">
+            <div class="container py-8">
+                <h2 class="mb-8 text-center text-xl font-semibold">FILTER</h2>
+                <form action="" method="GET" class="flex flex-col items-center mx-auto sm:max-w-[30rem]">
+                    <div class="mb-4 w-full grid grid-cols-3 items-center">
+                        <label for="judul" class="font-medium">Judul</label>
+                        <input type="text" name="judul" id="judul" class="text-primary focus:ring focus:ring-tersier outline-none rounded p-2 col-span-2">
+                    </div>
+                    <div class="mb-4 w-full grid grid-cols-3 items-center">
+                        <label for="penulis" class="font-medium">Penulis</label>
+                        <input type="text" name="penulis" id="penulis" class="text-primary focus:ring focus:ring-tersier outline-none rounded p-2 col-span-2">
+                    </div>
+                    <div class="mb-4 w-full grid grid-cols-3 items-center">
+                        <label for="penerbit" class="font-medium">Penerbit</label>
+                        <input type="text" name="penerbit" id="penerbit" class="text-primary focus:ring focus:ring-tersier outline-none rounded p-2 col-span-2">
+                    </div>
+                    <div class="mb-4 w-full grid grid-cols-3 items-center">
+                        <label for="tahun" class="font-medium">Tahun</label>
+                        <input type="text" name="tahun" id="tahun" class="text-primary focus:ring focus:ring-tersier outline-none rounded p-2 col-span-2">
+                    </div>
+                    <div class="flex justify-center mt-4 w-full">
+                        <button class="bg-background text-primary px-8 py-1 rounded font-bold hover:opacity-80 active:opacity-70 focus:opacity-60">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <button type="button" x-on:click="open = !open" x-bind:class="!open ? 'bg-primary' : '!bg-background'"
+            class="fixed bottom-4 right-4 flex h-10 w-10 animate-bounce cursor-pointer items-center justify-center rounded-full bg-primary hover:opacity-90">
+            <span x-bind:class="!open ? 'bg-background' : '!bg-primary'"
+                class="i-mdi-filter bg-background text-3xl"></span>
+        </button>
+    </section>
 
     <footer class="py-4">
         <div class="container text-center">
