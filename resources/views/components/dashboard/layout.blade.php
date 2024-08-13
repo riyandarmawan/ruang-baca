@@ -21,49 +21,80 @@
             </div>
         </header>
 
-        <aside x-bind:class="open ? 'left-0 relative' : '-left-full absolute'"
-            class="max-w-96 flex flex-col justify-between bg-primary p-4 text-background duration-300"
-            style="height: calc(100vh - 5rem)">
-            <ul class="flex flex-col gap-4">
-                <li class="item-active cursor-pointer rounded px-4 py-2 hover:bg-tersier hover:opacity-80">
-                    <a href="" class="flex items-center gap-2 text-xl font-bold">
-                        <span class="i-mdi-chart-arc text-5xl"></span>
-                        Laporan
-                    </a>
-                </li>
-                <li class="cursor-pointer rounded px-4 py-2 hover:bg-tersier hover:opacity-80">
-                    <a href="" class="flex items-center gap-2 text-xl font-bold">
-                        <span class="i-mdi-user-outline text-5xl"></span>
-                        Data siswa</a>
-                </li>
-                <li class="cursor-pointer rounded px-4 py-2 hover:bg-tersier hover:opacity-80">
-                    <a href="" class="flex items-center gap-2 text-xl font-bold">
-                        <span class="i-mdi-bookshelf text-5xl"></span>
-                        Data buku</a>
-                </li>
-                <li class="cursor-pointer rounded px-4 py-2 hover:bg-tersier hover:opacity-80">
-                    <a href="" class="flex items-center gap-2 text-xl font-bold">
-                        <span class="i-mdi-clipboard-text-outline text-5xl"></span>
-                        Peminjaman
-                    </a>
-                </li>
-                <li class="cursor-pointer rounded px-4 py-2 hover:bg-tersier hover:opacity-80">
-                    <a href="" class="flex items-center gap-2 text-xl font-bold">
-                        <span class="i-mdi-inbox-arrow-down-outline text-5xl"></span>
-                        Pengembalian
-                    </a>
-                </li>
-            </ul>
+        <main class="flex w-full">
+            <aside x-bind:class="open ? 'left-0 relative' : '-left-full absolute'"
+                class="min-w-96 flex flex-col justify-between bg-primary p-4 text-background duration-300"
+                style="height: calc(100vh - 5rem)">
+                <ul class="flex flex-col gap-4">
+                    <li
+                        class="{{ Request::Is('dashboard') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+                        <a href="/dashboard" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
+                            <span class="i-mdi-chart-arc text-5xl"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li
+                        class="{{ Request::Is('dashboard/data-siswa') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+                        <a href="/dashboard/data-siswa" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
+                            <span class="i-mdi-user-outline text-5xl"></span>
+                            Data siswa</a>
+                    </li>
+                    <li
+                        class="{{ Request::Is('dashboard/data-buku') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+                        <a href="/dashboard/data-buku" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
+                            <span class="i-mdi-bookshelf text-5xl"></span>
+                            Data buku</a>
+                    </li>
+                    <li
+                        class="{{ Request::Is('dashboard/peminjaman') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+                        <a href="/dashboard/peminjaman" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
+                            <span class="i-mdi-clipboard-text-outline text-5xl"></span>
+                            Peminjaman
+                        </a>
+                    </li>
+                    <li
+                        class="{{ Request::Is('pengembalian') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+                        <a href="/dashboard/pengembalian" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
+                            <span class="i-mdi-inbox-arrow-down-outline text-5xl"></span>
+                            Pengembalian
+                        </a>
+                    </li>
+                </ul>
 
-            <hr>
+                <hr>
 
-            <div class="flex cursor-pointer items-center justify-between p-4">
-                <div class="flex items-center gap-4">
-                    <img src="" alt="user" class="h-12 w-12 rounded-full bg-white">
-                    <h4 class="text-xl font-semibold">Ujang Melayu</h4>
+                <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-between p-4">
+                    <div x-bind:class="open ? '!block' : ''"
+                        class="absolute bottom-full hidden w-80 overflow-hidden rounded bg-background text-primary">
+                        <a href="/dashbaord/user/profile"
+                            class="group flex items-center gap-2 p-4 text-lg font-bold hover:bg-tersier hover:text-background">
+                            <span class="i-mdi-user bg-primary text-2xl group-hover:bg-background"></span>
+                            Profile
+                        </a>
+                        <a href="/dashboard/user/settings"
+                            class="group flex items-center gap-2 p-4 text-lg font-bold hover:bg-tersier hover:text-background">
+                            <span class="i-mdi-gear bg-primary text-2xl group-hover:bg-background"></span>
+                            Settings
+                        </a>
+                        <a href=""
+                            class="group flex items-center gap-2 p-4 text-lg font-bold hover:bg-tersier hover:text-background">
+                            <span class="i-mdi-logout bg-primary text-2xl group-hover:bg-background"></span>
+                            Logout
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <img src="/images/user/jajang.jpg" alt="user"
+                            class="h-12 w-12 rounded-full border border-background">
+                        <h4 class="text-xl font-semibold">Jajang</h4>
+                    </div>
+                    <span x-on:click="open = !open" x-bind:class="open ? 'i-mdi-arrow-drop-down' : 'i-mdi-arrow-drop-up'"
+                        class="cursor-pointer bg-background text-4xl"></span>
                 </div>
-                <span class="i-mdi-arrow-drop-up cursor-pointer bg-background text-4xl"></span>
+            </aside>
+
+            <div class="w-full">
+                @yield('content')
             </div>
-        </aside>
+        </main>
     </div>
 @endsection

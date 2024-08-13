@@ -1,7 +1,5 @@
 @extends('components.layout')
 
-@section('title', 'Home')
-
 @section('content')
     @for ($i = 0; $i < 10; $i++)
         <section class="mb-4">
