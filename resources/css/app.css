@@ -5,3 +5,7 @@
 .item-active {
     @apply bg-tersier
 }
+
+table * {
+    @apply border border-primary
+}
