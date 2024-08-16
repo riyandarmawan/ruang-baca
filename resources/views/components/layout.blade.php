@@ -14,37 +14,13 @@
             <!-- Mobile menu toggle button -->
             <span x-on:click="open = !open" x-if="open ? '' : openFilter = false"
                 x-bind:class="open ? 'i-mdi-close' : 'i-mdi-hamburger-menu'"
-                class="cursor-pointer text-2xl lg:hidden"></span>
-
-            <!-- Navigation items (visible on larger screens) -->
-            <div class="hidden items-center gap-4 lg:flex">
-                <!-- Filter link -->
-                <span x-on:click="openFilter = !openFilter"
-                    class="i-mdi-filter cursor-pointer bg-primary text-2xl hover:opacity-80 focus:opacity-60 active:opacity-70"></span>
-
-                <!-- Login link (hidden when filter is open) -->
-                <a href="" class="group flex cursor-pointer items-center justify-between">
-
-                    <h3
-                        class="after:content-[' '] relative text-lg font-medium after:absolute after:left-0 after:top-full after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:group-hover:w-full">
-                        Masuk
-                    </h3>
-                </a>
-
-                <!-- Register link (hidden when filter is open) -->
-                <a href="" class="group flex cursor-pointer items-center justify-between">
-                    <h3
-                        class="after:content-[' '] relative text-lg font-medium after:absolute after:left-0 after:top-full after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:group-hover:w-full">
-                        Daftar
-                    </h3>
-                </a>
-            </div>
+                class="cursor-pointer text-2xl lg:text-3xl"></span>
 
             <!-- Mobile menu (visible when menu is open) -->
             <div x-bind:class="open ? '!left-0' : ''"
-                class="fixed bottom-0 left-full right-0 top-16 flex flex-col gap-4 bg-secondary py-4 duration-300"
+                class="fixed bottom-0 left-full right-0 top-16 bg-secondary py-4 duration-300"
                 style="height: calc(100vh - 4rem)">
-                <div class="container">
+                <div class="container flex flex-col gap-4">
                     <!-- Filter toggle button (inside mobile menu) -->
                     <div x-on:click="openFilter = !openFilter"
                         x-bind:class="openFilter ? 'justify-center' : 'justify-between'"
@@ -108,7 +84,7 @@
                     </div>
 
                     <!-- Login link (hidden when filter is open) -->
-                    <a x-bind:class="openFilter ? 'hidden' : ''" href=""
+                    <a x-bind:class="openFilter ? 'hidden' : ''" href="/auth/login"
                         class="group flex cursor-pointer items-center justify-between">
                         <h3
                             class="after:content-[' '] relative text-lg font-medium after:absolute after:left-0 after:top-full after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:group-hover:w-full">
@@ -117,7 +93,7 @@
                     </a>
 
                     <!-- Register link (hidden when filter is open) -->
-                    <a x-bind:class="openFilter ? 'hidden' : ''" href=""
+                    <a x-bind:class="openFilter ? 'hidden' : ''" href="/auth/register"
                         class="group flex cursor-pointer items-center justify-between">
                         <h3
                             class="after:content-[' '] relative text-lg font-medium after:absolute after:left-0 after:top-full after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:group-hover:w-full">

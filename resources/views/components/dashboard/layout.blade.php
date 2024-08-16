@@ -5,8 +5,8 @@
     <div x-data="{ open: true }">
         <header class="bg-primary">
             <div class="flex h-20 items-center justify-between px-6">
-                <div class="flex items-center gap-2">
-                    <span x-on:click="open = !open" class="i-mdi-hamburger-menu cursor-pointer bg-background text-3xl"></span>
+                <div class="flex items-center gap-2 px-2">
+                    <span x-on:click="open = !open" class="i-mdi-hamburger-menu cursor-pointer bg-background text-5xl"></span>
                     <a href="/">
                         <h1 class="font-lora text-3xl font-bold text-background">Ruang Baca</h1>
                     </a>
@@ -92,7 +92,7 @@
                 </div>
             </aside>
 
-            <div class="w-full">
+            <div class="w-full overflow-scroll" style="height: calc(100vh - 5rem)">
                 @yield('content')
             </div>
         </main>

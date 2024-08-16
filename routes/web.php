@@ -10,6 +10,23 @@ Route::get('/', function () {
     return view('pages.home', $data);
 });
 
+// Auth
+Route::get('/auth/login', function () {
+    $data = [
+        'title' => 'Masuk'
+    ];
+
+    return view('pages.auth.login', $data);
+});
+
+Route::get('/auth/register', function () {
+    $data = [
+        'title' => 'Daftar'
+    ];
+
+    return view('pages.auth.register', $data);
+});
+
 // dashboard
 Route::get('/dashboard', function () {
     $data = [
