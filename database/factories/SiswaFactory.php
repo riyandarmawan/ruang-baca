@@ -17,7 +17,11 @@ class SiswaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nisn' => fake()->numerify('##########'),
+            'nama' => fake()->name(),
+            'alamat' => fake()->address(),
+            'no_telp' => fake()->phoneNumber(),
+            'kode_kelas' => fake()->lexify('XII-???')
         ];
     }
 }

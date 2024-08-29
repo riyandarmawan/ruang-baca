@@ -21,10 +21,10 @@
             </div>
         </header>
 
-        <main class="flex h-fit w-full">
+        <main class="flex hfit w-full">
             <aside x-bind:class="open ? 'left-0 relative' : '-left-full absolute'"
                 class="min-w-96 flex flex-col gap-4 bg-primary p-4 text-background duration-300">
-                <ul class="flex flex-col gap-4">
+                <ul class="flex flex-col gap-4 h-[27rem] overflow-y-scroll scrollbar-none">
                     <li
                         class="{{ Request::Is('dashboard') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
                         <a href="/dashboard" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
@@ -37,6 +37,12 @@
                         <a href="/dashboard/data-siswa" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
                             <span class="i-mdi-user-outline text-5xl"></span>
                             Data siswa</a>
+                    </li>
+                    <li
+                        class="{{ Request::Is('dashboard/data-kelas') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+                        <a href="/dashboard/data-kelas" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
+                            <span class="i-mdi-dining-room text-5xl"></span>
+                            Data kelas</a>
                     </li>
                     <li
                         class="{{ Request::Is('dashboard/data-buku') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">

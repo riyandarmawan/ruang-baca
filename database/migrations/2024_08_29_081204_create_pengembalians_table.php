@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('pengembalians', function (Blueprint $table) {
             $table->id();
+            $table->string('nisn', 10);
+            $table->date('tanggal_kembali');
             $table->timestamps();
+
+            $table->foreign('nisn')->references('nisn')->on('siswas');
         });
     }
 

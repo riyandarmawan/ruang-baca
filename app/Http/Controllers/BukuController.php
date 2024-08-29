@@ -13,6 +13,14 @@ class BukuController extends Controller
     public function index()
     {
         //
+        $buku = new Buku();
+
+        $data = [
+            'title' => 'Data Buku',
+            'books' => $buku->all()
+        ];
+
+        return view('pages.dashboard.data-buku', $data);
     }
 
     /**

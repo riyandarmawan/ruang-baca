@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,21 +38,9 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard.index', $data);
 });
 
-Route::get('/dashboard/data-siswa', function () {
-    $data = [
-        'title' => 'Data Siswa'
-    ];
+Route::get('/dashboard/data-siswa', [SiswaController::class, 'index']);
 
-    return view('pages.dashboard.data-siswa', $data);
-});
-
-Route::get('/dashboard/data-buku', function () {
-    $data = [
-        'title' => 'Data Buku'
-    ];
-
-    return view('pages.dashboard.data-buku', $data);
-});
+Route::get('/dashboard/data-buku', [BukuController::class, 'index']);
 
 Route::get('/dashboard/peminjaman', function () {
     $data = [

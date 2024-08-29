@@ -16,16 +16,18 @@
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
+                @foreach ($books as $buku)
                 <tr>
-                    <td>123</td>
-                    <td>Bumi</td>
-                    <td>Gramedia</td>
-                    <td>2015</td>
+                    <td>{{ $buku->kode_buku }}</td>
+                    <td>{{ $buku->judul }}</td>
+                    <td>{{ $buku->penerbit }}</td>
+                    <td>{{ $buku->tahun_terbit }}</td>
                     <td>
                         <a href=""
                             class="my-2 inline-block rounded bg-primary px-4 py-1 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Detail</a>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

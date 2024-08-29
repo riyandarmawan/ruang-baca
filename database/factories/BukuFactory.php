@@ -17,7 +17,10 @@ class BukuFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'kode_buku' => fake()->numerify('###-###-##-####-#'),
+            'judul' => fake()->words(5, true),
+            'penerbit' => fake()->words(2, true),
+            'tahun_terbit' => fake()->year()
         ];
     }
 }

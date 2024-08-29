@@ -12,8 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('siswas', function (Blueprint $table) {
-            $table->id();
+            $table->string('nisn', 10);
+            $table->string('nama', 30);
+            $table->text('alamat');
+            $table->string('no_telp', 13);
+            $table->string('kode_kelas', 10);
             $table->timestamps();
+
+            $table->primary('nisn');
+            // $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
         });
     }
 

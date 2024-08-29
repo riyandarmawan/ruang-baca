@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('detail_peminjaman', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_peminjaman');
+            $table->string('kode_buku', 17);
+            $table->integer('jumlah');
             $table->timestamps();
+
+            $table->foreign('kode_buku')->references('kode_buku')->on('bukus');
         });
     }
 

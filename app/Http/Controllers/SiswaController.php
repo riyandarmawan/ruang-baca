@@ -12,7 +12,14 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+        $siswa = new Siswa();
+
+        $data = [
+            'title' => 'Data Siswa',
+            'students' => $siswa->all()
+        ];
+
+        return view('pages.dashboard.data-siswa', $data);
     }
 
     /**
