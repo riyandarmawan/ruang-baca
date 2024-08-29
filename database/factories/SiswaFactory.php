@@ -16,12 +16,14 @@ class SiswaFactory extends Factory
      */
     public function definition(): array
     {
+        $kodeKelas = fake()->randomElement(['X', 'XI', 'XII']) . '-' . fake()->randomElement(['PPLG', 'AK', 'TO', 'TM']);
+
         return [
             'nisn' => fake()->numerify('##########'),
             'nama' => fake()->name(),
             'alamat' => fake()->address(),
             'no_telp' => fake()->phoneNumber(),
-            'kode_kelas' => fake()->lexify('XII-???')
+            'kode_kelas' => $kodeKelas
         ];
     }
 }

@@ -16,8 +16,12 @@ class KelasFactory extends Factory
      */
     public function definition(): array
     {
+        $kodeKelas = fake()->randomElement(['X', 'XI', 'XII']) . '-' . fake()->randomElement(['PPLG', 'AK', 'TO', 'TM']);
+
         return [
-            //
+            'kode_kelas' => $kodeKelas,
+            'tingkat' => fake()->randomElement(['X', 'XI', 'XII']),
+            'jurusan' => fake()->randomElement(['Pengembangan Perangkat Lunak dan Gim', 'Akuntansi', 'Teknik Otomotif', 'Teknik Mesin'])
         ];
     }
 }

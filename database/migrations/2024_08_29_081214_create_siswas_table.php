@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->primary('nisn');
-            // $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
         });
     }
 

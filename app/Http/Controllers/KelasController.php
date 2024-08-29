@@ -12,7 +12,14 @@ class KelasController extends Controller
      */
     public function index()
     {
-        //
+        $kelas = new Kelas();
+
+        $data = [
+            'title' => 'Data Kelas',
+            'classes' => $kelas->all()
+        ];
+
+        return view('pages.dashboard.data-kelas', $data);
     }
 
     /**

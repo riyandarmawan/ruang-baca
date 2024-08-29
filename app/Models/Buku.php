@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Buku extends Model
 {
@@ -16,4 +17,8 @@ class Buku extends Model
     protected $keyType = 'string';
 
     protected $guarded = [];
+
+    public function roles(): BelongsToMany {
+        return $this->belongsToMany(Peminjaman::class);
+    }
 }

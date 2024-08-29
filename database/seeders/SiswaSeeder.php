@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,6 +14,6 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        Siswa::factory()->count(10)->create();
+        Siswa::factory()->count(10)->recycle(Kelas::factory()->count(4)->create())->create();
     }
 }

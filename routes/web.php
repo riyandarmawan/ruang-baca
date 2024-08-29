@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,8 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/dashboard/data-siswa', [SiswaController::class, 'index']);
+
+Route::get('/dashboard/data-kelas', [KelasController::class, 'index']);
 
 Route::get('/dashboard/data-buku', [BukuController::class, 'index']);
 
