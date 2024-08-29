@@ -24,7 +24,7 @@
         <main class="flex hfit w-full">
             <aside x-bind:class="open ? 'left-0 relative' : '-left-full absolute'"
                 class="min-w-96 flex flex-col gap-4 bg-primary p-4 text-background duration-300">
-                <ul class="flex flex-col gap-4 h-[27rem] overflow-y-scroll scrollbar-none">
+                <ul class="flex flex-col gap-4 h-[25rem] overflow-y-scroll scrollbar-none">
                     <li
                         class="{{ Request::Is('dashboard') ? 'item-active' : '' }} cursor-pointer rounded hover:bg-tersier hover:opacity-80">
                         <a href="/dashboard" class="flex items-center gap-2 px-4 py-2 text-xl font-bold">
