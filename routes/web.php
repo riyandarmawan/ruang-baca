@@ -1,62 +1,37 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $data = [
-        'title' => 'Ruang Baca'
-    ];
-
-    return view('pages.home', $data);
-});
+// home
+Route::get('/', [HomeController::class, 'index']);
 
 // Auth
-Route::get('/auth/login', function () {
-    $data = [
-        'title' => 'Masuk'
-    ];
+Route::get('/auth/login', [AuthController::class, 'login']);
 
-    return view('pages.auth.login', $data);
-});
-
-Route::get('/auth/register', function () {
-    $data = [
-        'title' => 'Daftar'
-    ];
-
-    return view('pages.auth.register', $data);
-});
+Route::get('/auth/register', [AuthController::class, 'register']);
 
 // dashboard
-Route::get('/dashboard', function () {
-    $data = [
-        'title' => 'Dashboard'
-    ];
+Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    return view('pages.dashboard.index', $data);
-});
+// siswa
+Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
 
-Route::get('/dashboard/data-siswa', [SiswaController::class, 'index']);
+// kelas
+Route::get('/dashboard/kelas', [KelasController::class, 'index']);
 
-Route::get('/dashboard/data-kelas', [KelasController::class, 'index']);
+// buku
+Route::get('/dashboard/buku', [BukuController::class, 'index']);
 
-Route::get('/dashboard/data-buku', [BukuController::class, 'index']);
+// peminjaman
+Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);
 
-Route::get('/dashboard/peminjaman', function () {
-    $data = [
-        'title' => 'Data Peminjaman'
-    ];
-
-    return view('pages.dashboard.peminjaman', $data);
-});
-
-Route::get('/dashboard/pengembalian', function () {
-    $data = [
-        'title' => 'Data Pengembalian'
-    ];
-
-    return view('pages.dashboard.pengembalian', $data);
-});
+// pengembalian
+Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);

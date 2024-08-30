@@ -20,7 +20,7 @@ class BukuController extends Controller
             'books' => $buku->all()
         ];
 
-        return view('pages.dashboard.data-buku', $data);
+        return view('pages.dashboard.buku', $data);
     }
 
     /**

@@ -12,7 +12,11 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => 'Data Peminjaman'
+        ];
+
+        return view('pages.dashboard.peminjaman', $data);
     }
 
     /**

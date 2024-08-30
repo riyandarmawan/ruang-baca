@@ -12,7 +12,11 @@ class PengembalianController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => 'Data Pengembalian'
+        ];
+
+        return view('pages.dashboard.pengembalian', $data);
     }
 
     /**
