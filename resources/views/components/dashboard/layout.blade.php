@@ -4,7 +4,7 @@
 @section('content-layout')
     <div x-data="{ detail: false }">
         <header class="bg-primary">
-            <div class="flex h-20 items-center justify-between px-2">
+            <div class="flex h-16 items-center justify-between px-2">
                 <div class="flex items-center gap-2 px-2">
                     <span x-on:click="detail = !detail"
                         class="i-mdi-hamburger-menu cursor-pointer bg-background text-2xl"></span>
@@ -22,7 +22,7 @@
             </div>
         </header>
 
-        <main class="hfit flex w-full">
+        <main class="h-fit flex w-full" style="height: calc(100vh - 4rem)">
             <aside x-bind:class="detail ? 'w-52 px-2' : 'w-14'"
                 class="flex flex-col gap-4 bg-primary py-2 ps-2 text-background duration-300">
                 <ul class="scrollbar-none flex h-[27rem] flex-col gap-4 overflow-y-scroll">
@@ -67,7 +67,7 @@
                     </li>
                 </ul>
 
-                <hr>
+                <hr x-bind:class="detail ? '' : 'w-10'">
 
                 <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-evenly py-4">
                     <div x-bind:class="{ 'left-8': !detail, '!block': open }"
