@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Buku extends Model
@@ -18,7 +19,13 @@ class Buku extends Model
 
     protected $guarded = [];
 
-    public function peminjamans(): BelongsToMany {
+    public function kategori(): BelongsTo 
+    {
+        return $this->belongsTo(Kategori::class);
+    }
+
+    public function peminjamans(): BelongsToMany 
+    {
         return $this->belongsToMany(Peminjaman::class, 'detail_peminjaman', 'kode_buku', 'id_peminjaman');
     }
 

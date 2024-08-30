@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Kategori;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,9 +20,13 @@ class BukuFactory extends Factory
     {
         return [
             'kode_buku' => fake()->numerify('###-###-##-####-#'),
+            'slug' => Str::slug(fake()->unique(true)->words(5, true)),
             'judul' => fake()->words(5, true),
             'penerbit' => fake()->words(2, true),
-            'tahun_terbit' => fake()->year()
+            'tahun_terbit' => fake()->year(),
+            'jumlah_halaman' => fake()->numberBetween(100, 1000),
+            'kategori_id' => Kategori::factory(),
+            'deskripsi' => fake()->text(),
         ];
     }
 }
