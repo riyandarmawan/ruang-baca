@@ -16,7 +16,7 @@ class PengembalianController extends Controller
             'title' => 'Data Pengembalian'
         ];
 
-        return view('pages.dashboard.pengembalian', $data);
+        return view('pages.dashboard.pengembalian.index', $data);
     }
 
     /**

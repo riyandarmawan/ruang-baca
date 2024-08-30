@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 // home
 Route::get('/', [HomeController::class, 'index']);
 
+// detail book
+Route::get('/buku/detail/{slug}', [HomeController::class, 'detail']);
+
 // Auth
 Route::get('/auth/login', [AuthController::class, 'login']);
 

@@ -12,6 +12,14 @@ class HomeController extends Controller
             'title' => 'Ruang Baca'
         ];
 
-        return view('pages.home', $data);
+        return view('pages.home.index', $data);
+    }
+
+    public function detail($slug) {
+        $data = [
+            'title' => 'Detail buku'
+        ];
+
+        return view('pages.home.detail', $data);
     }
 }

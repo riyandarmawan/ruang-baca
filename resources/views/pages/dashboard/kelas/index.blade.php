@@ -15,7 +15,7 @@
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
-                @foreach ($classes as $clss)
+                @foreach ($classes as $class)
                 <tr>
                     <td>{{ $class->kode_kelas }}</td>
                     <td>{{ $class->tingkat }}</td>

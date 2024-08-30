@@ -19,7 +19,7 @@ class SiswaController extends Controller
             'students' => $siswa->all()
         ];
 
-        return view('pages.dashboard.siswa', $data);
+        return view('pages.dashboard.siswa.index', $data);
     }
 
     /**

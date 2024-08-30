@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Kelas;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,14 +17,14 @@ class SiswaFactory extends Factory
      */
     public function definition(): array
     {
-        $kodeKelas = fake()->randomElement(['X', 'XI', 'XII']) . '-' . fake()->randomElement(['PPLG', 'AK', 'TO', 'TM']);
+        $kelas = new Kelas();
 
         return [
             'nisn' => fake()->numerify('##########'),
             'nama' => fake()->name(),
             'alamat' => fake()->address(),
             'no_telp' => fake()->phoneNumber(),
-            'kode_kelas' => $kodeKelas
+            'kode_kelas' => Kelas::factory()
         ];
     }
 }

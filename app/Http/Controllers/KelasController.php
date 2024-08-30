@@ -19,7 +19,7 @@ class KelasController extends Controller
             'classes' => $kelas->all()
         ];
 
-        return view('pages.dashboard.kelas', $data);
+        return view('pages.dashboard.kelas.index', $data);
     }
 
     /**

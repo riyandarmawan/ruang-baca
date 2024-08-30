@@ -16,7 +16,7 @@ class PeminjamanController extends Controller
             'title' => 'Data Peminjaman'
         ];
 
-        return view('pages.dashboard.peminjaman', $data);
+        return view('pages.dashboard.peminjaman.index', $data);
     }
 
     /**
