@@ -16,7 +16,7 @@ class KelasFactory extends Factory
      */
     public function definition(): array
     {
-        $kodeKelas = fake()->randomElement(['X', 'XI', 'XII']) . '-' . fake()->randomElement(['PPLG', 'AK', 'TO', 'TM']);
+        $kodeKelas = fake()->unique()->randomElement(['X-PPLG', 'X-AK', 'X-TO', 'X-TM', 'XI-PPLG', 'XI-AK', 'XI-TO', 'XI-TM', 'XII-PPLG', 'XII-AK', 'XII-TO', 'XII-TM']);
 
         return [
             'kode_kelas' => $kodeKelas,

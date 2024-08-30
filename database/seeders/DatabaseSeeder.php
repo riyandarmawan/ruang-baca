@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             BukuSeeder::class,
-            SiswaSeeder::class,
-            KelasSeeder::class
+            KelasSeeder::class,
+            DetailPeminjamanSeeder::class,
+            DetailPengembalianSeeder::class
         ]);
     }
 }

@@ -15,7 +15,6 @@ class HomeController extends Controller
 
         $data = [
             'title' => 'Ruang Baca',
-            'bukus' => $buku->all(),
             'kategoris' => $kategori->all()
         ];
 

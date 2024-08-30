@@ -12,8 +12,11 @@ class PengembalianController extends Controller
      */
     public function index()
     {
+        $pengembalian = new Pengembalian();
+
         $data = [
-            'title' => 'Data Pengembalian'
+            'title' => 'Data Pengembalian',
+            'pengembalians' => $pengembalian->all()
         ];
 
         return view('pages.dashboard.pengembalian.index', $data);

@@ -16,7 +16,7 @@ class KelasController extends Controller
 
         $data = [
             'title' => 'Data Kelas',
-            'classes' => $kelas->all()
+            'kelases' => $kelas->all()
         ];
 
         return view('pages.dashboard.kelas.index', $data);

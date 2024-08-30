@@ -19,19 +19,21 @@
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
-                <tr>
-                    <td>123</td>
-                    <td>Jajang</td>
-                    <td>123</td>
-                    <td>Bumi</td>
-                    <td>5 Agustus 2024</td>
-                    <td>15 Agustus 2024</td>
-                    <td>1</td>
-                    <td>
-                        <a href=""
-                            class="my-2 inline-block rounded bg-primary px-4 py-1 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Detail</a>
-                    </td>
-                </tr>
+                @foreach ($peminjamans->siswa as $peminjam)
+                    <tr>
+                        <td>{{ $peminjaman }}</td>
+                        <td>Jajang</td>
+                        <td>123</td>
+                        <td>Bumi</td>
+                        <td>5 Agustus 2024</td>
+                        <td>15 Agustus 2024</td>
+                        <td>1</td>
+                        <td>
+                            <a href=""
+                                class="my-2 inline-block rounded bg-primary px-4 py-1 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Detail</a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

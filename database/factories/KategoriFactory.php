@@ -18,8 +18,8 @@ class KategoriFactory extends Factory
     public function definition(): array
     {
         return [
-            'slug' => Str::slug(fake()->unique(true)->words(1, true)),
-            'nama' => fake()->words(1, true)
+            'slug' => Str::slug(fake()->unique(true)->words(2, true)),
+            'nama' => fake()->words(2, true)
         ];
     }
 }

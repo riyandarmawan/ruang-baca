@@ -15,7 +15,7 @@
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
-                @foreach ($students as $siswa)
+                @foreach ($siswas as $siswa)
                 <tr>
                     <td>{{ $siswa->nisn }}</td>
                     <td>{{ $siswa->nama }}</td>

@@ -16,7 +16,7 @@
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
-                @foreach ($books as $buku)
+                @foreach ($bukus as $buku)
                 <tr>
                     <td>{{ $buku->kode_buku }}</td>
                     <td>{{ $buku->judul }}</td>

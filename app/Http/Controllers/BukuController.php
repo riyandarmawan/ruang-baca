@@ -17,7 +17,7 @@ class BukuController extends Controller
 
         $data = [
             'title' => 'Data Buku',
-            'books' => $buku->all()
+            'bukus' => $buku->all()
         ];
 
         return view('pages.dashboard.buku.index', $data);

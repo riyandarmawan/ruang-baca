@@ -16,7 +16,7 @@ class SiswaController extends Controller
 
         $data = [
             'title' => 'Data Siswa',
-            'students' => $siswa->all()
+            'siswas' => $siswa->all()
         ];
 
         return view('pages.dashboard.siswa.index', $data);

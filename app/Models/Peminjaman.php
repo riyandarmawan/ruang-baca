@@ -11,6 +11,8 @@ class Peminjaman extends Model
 {
     use HasFactory;
 
+    protected $table = 'peminjamans';
+
     protected $guarded = [];
 
     public function bukus(): BelongsToMany

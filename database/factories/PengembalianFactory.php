@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class PengembalianFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nisn' => Siswa::factory(),
+            'tanggal_kembali' => fake()->dateTimeBetween(now(), '+1 week')
         ];
     }
 }

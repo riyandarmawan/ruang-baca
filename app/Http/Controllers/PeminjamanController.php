@@ -12,9 +12,14 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
+        $peminjaman = new Peminjaman();
+
         $data = [
-            'title' => 'Data Peminjaman'
+            'title' => 'Data Peminjaman',
+            'peminjamans' => $peminjaman->all()
         ];
+
+        dd($peminjaman->all()->siswas());
 
         return view('pages.dashboard.peminjaman.index', $data);
     }
