@@ -18,7 +18,12 @@ class Buku extends Model
 
     protected $guarded = [];
 
-    public function roles(): BelongsToMany {
-        return $this->belongsToMany(Peminjaman::class);
+    public function peminjamans(): BelongsToMany {
+        return $this->belongsToMany(Peminjaman::class, 'detail_peminjaman', 'kode_buku', 'id_peminjaman');
+    }
+
+    public function pengembalians(): BelongsToMany
+    {
+        return $this->belongsToMany(Pengembalian::class, 'detail_pengembalian', 'kode_buku', 'id_pengembalian');
     }
 }
