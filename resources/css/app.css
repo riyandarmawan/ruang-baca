@@ -6,8 +6,8 @@
     @apply bg-tersier
 }
 
-table * {
-    @apply border border-primary
+th, td {
+    @apply border border-primary text-center
 }
 
 .scrollbar-none {

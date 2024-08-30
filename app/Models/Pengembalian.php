@@ -15,10 +15,10 @@ class Pengembalian extends Model
 
     public function bukus(): BelongsToMany
     {
-        return $this->belongsToMany(Buku::class, 'detail_peminjaman', 'id_pengembalian', 'kode_buku');
+        return $this->belongsToMany(Buku::class, 'detail_pengembalian', 'id_pengembalian', 'kode_buku')->withPivot('jumlah');
     }
 
-    public function siswas(): BelongsTo
+    public function siswa(): BelongsTo
     {
         return $this->belongsTo(Siswa::class, 'nisn', 'nisn');
     }

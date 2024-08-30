@@ -21,7 +21,7 @@ class DetailPengembalianFactory extends Factory
         return [
             'id_pengembalian' => Pengembalian::factory(),
             'kode_buku' => Buku::factory(),
-            'jumlah' => fake()->numberBetween()
+            'jumlah' => fake()->numberBetween(0, 10)
         ];
     }
 }

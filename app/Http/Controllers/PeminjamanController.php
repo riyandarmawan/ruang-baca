@@ -19,8 +19,6 @@ class PeminjamanController extends Controller
             'peminjamans' => $peminjaman->all()
         ];
 
-        dd($peminjaman->all()->siswas());
-
         return view('pages.dashboard.peminjaman.index', $data);
     }
 

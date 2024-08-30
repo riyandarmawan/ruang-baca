@@ -19,7 +19,7 @@ class PengembalianFactory extends Factory
     {
         return [
             'nisn' => Siswa::factory(),
-            'tanggal_kembali' => fake()->dateTimeBetween(now(), '+1 week')
+            'tanggal_kembali' => fake()->dateTimeBetween(now(), '+1 week')->format('Y-m-d')
         ];
     }
 }
