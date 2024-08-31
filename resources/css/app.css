@@ -7,7 +7,19 @@
 }
 
 th, td {
-    @apply border border-primary text-center
+    @apply text-center border px-4 py-2
+}
+
+thead {
+  @apply bg-primary text-background
+}
+
+th {
+@apply border-background
+}
+
+td {
+  @apply border-primary
 }
 
 .scrollbar-none {

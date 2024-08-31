@@ -32,7 +32,7 @@
         </a>
     </li>
     <li
-        class="{{ Request::Is('/dashboard/pengembalian') ? 'item-active' : '' }} min-w-52 cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+        class="{{ Request::Is('dashboard/pengembalian') ? 'item-active' : '' }} min-w-52 cursor-pointer rounded hover:bg-tersier hover:opacity-80">
         <a href="/dashboard/pengembalian" class="flex items-center gap-4 px-2 py-2 text-lg font-bold">
             <span class="i-mdi-inbox-arrow-down-outline text-2xl"></span>
             Pengembalian
