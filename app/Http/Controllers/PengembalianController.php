@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
+use App\Models\Siswa;
 use App\Models\Pengembalian;
 use Illuminate\Http\Request;
 
@@ -27,8 +29,13 @@ class PengembalianController extends Controller
      */
     public function create()
     {
+        $siswa = new Siswa();
+        $buku = new Buku();
+
         $data = [
-            'title' => "Tambah Data Pengembalian"
+            'title' => "Tambah Data Pengembalian",
+            'siswas' => $siswa->all(),
+            'bukus' => $buku->all()
         ];
 
         return view('pages.dashboard.pengembalian.tambah', $data);

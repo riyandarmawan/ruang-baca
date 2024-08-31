@@ -1,33 +1,82 @@
 <x-dashboard.layout title="{{ $title }}">
-    <div class="p-6 flex items-center justify-center">
-        <div class="border border-primary h-fit p-4 rounded shadow shadow-slate-500 min-w-[40rem]">
-            <h1 class="text-center font-bold text-xl mb-6">Tambah Data Siswa</h1>
+    <div class="flex items-center justify-center p-6">
+        <div class="h-fit min-w-[40rem] rounded border border-primary p-4 shadow shadow-slate-500">
+            <h1 class="mb-6 text-center text-xl font-bold">Tambah Data Pengembalian</h1>
             <form action="" method="POST">
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="nisn">NISN</label>
-                    <input type="number" name="nisn" id="nisn" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                </div>
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="nama">Nama</label>
-                    <input type="text" name="nama" id="nama" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                </div>
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="alamat">Alamat</label>
-                    <textarea name="alamat" id="alamat" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2"></textarea>
-                </div>
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="no_telp">No Telp</label>
-                    <input type="number" name="no_telp" id="no_telp" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                </div>
-                <div class="grid grid-cols-3 items-center mb-6">
-                    <label for="kode_kelas">Kelas</label>
-                    <select name="kode_kelas" id="kode_kelas" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                        <option value="12">1</option>
+                <!-- Siswa Selection -->
+                <div class="mb-4 grid grid-cols-3 items-center">
+                    <label for="nisn">Siswa</label>
+                    <select name="nisn" id="nisn"
+                        class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                        @foreach ($siswas as $siswa)
+                            <option value="{{ $siswa->nisn }}">{{ $siswa->nama }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="flex justify-center">
-                <button class="py-2 px-6 bg-primary text-background rounded shadow shadow-slate-500 font-medium hover:opacity-80 active:opacity-70 focus:ring focus:ring-slate-500">Tambah</button></div>
+
+                <!-- Books Section -->
+                <div x-data="bookComponent()" class="mb-4 grid grid-cols-3">
+                    <label for="kode_buku">Buku</label>
+                    <div id="book-container" class="col-span-2 grid gap-4" x-ref="bookContainer">
+                        <div class="flex">
+                            <select name="kode_buku"
+                                class="w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                                @foreach ($bukus as $buku)
+                                    <option value="{{ $buku->kode_buku }}">{{ $buku->judul }}</option>
+                                @endforeach
+                            </select>
+                            <input type="number" name="jumlah" value="1"
+                                class="w-14 rounded border border-primary p-2 shadow shadow-slate-500">
+                        </div>
+                    </div>
+                    <div class="col-span-3 flex justify-end">
+                        <button type="button" class="mt-4 w-fit cursor-pointer" @click="addBook()">+ Tambah buku</button>
+                    </div>
+                </div>
+
+                <!-- Return Date Input -->
+                <div x-data="{ currentDate: (() => {
+                        const today = new Date();
+                        today.setDate(today.getDate() + 7);
+                        return today.toISOString().split('T')[0];
+                    })() }" class="mb-4 grid grid-cols-3 items-center">
+                    <label for="tanggal_kembali">Tanggal Kembali</label>
+                    <input type="date" name="tanggal_kembali" id="tanggal_kembali" x-bind:value="currentDate"
+                        class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-6 flex justify-center">
+                    <button
+                        class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">
+                        Tambah
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+
+    <!-- Template for Adding Books -->
+    <template x-data="bookComponent()" id="book-template">
+        <div class="flex">
+            <select name="kode_buku" class="w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                @foreach ($bukus as $buku)
+                    <option value="{{ $buku->kode_buku }}">{{ $buku->judul }}</option>
+                @endforeach
+            </select>
+            <input type="number" name="jumlah" value="1"
+                class="w-14 rounded border border-primary p-2 shadow shadow-slate-500">
+        </div>
+    </template>
+
+    <script>
+        function bookComponent() {
+            return {
+                addBook() {
+                    const template = document.getElementById('book-template').content.cloneNode(true);
+                    this.$refs.bookContainer.appendChild(template);
+                }
+            };
+        }
+    </script>
 </x-dashboard.layout>
