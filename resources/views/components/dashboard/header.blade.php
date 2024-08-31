@@ -1,6 +1,6 @@
 <header class="bg-primary">
             <div class="flex h-16 items-center justify-between px-2">
-                <div class="flex items-center gap-2 px-2">
+                <div class="flex items-center gap-4 px-2">
                     <span x-on:click="detail = !detail"
                         class="i-mdi-hamburger-menu cursor-pointer bg-background text-2xl"></span>
                     <a href="/">

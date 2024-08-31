@@ -9,7 +9,7 @@
             
             <x-dashboard.sidebar/>
 
-            <div class="w-full overflow-y-scroll" style="height: calc(100vh - 5rem)">
+            <div class="w-full overflow-auto" style="height: calc(100vh - 5rem)">
                 @yield('content')
             </div>
         </main>
