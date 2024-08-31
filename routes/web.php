@@ -27,14 +27,24 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 // siswa
 Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
 
+Route::get('/dashboard/siswa/tambah', [SiswaController::class, 'create']);
+
 // kelas
 Route::get('/dashboard/kelas', [KelasController::class, 'index']);
+
+Route::get('/dashboard/kelas/tambah', [KelasController::class, 'create']);
 
 // buku
 Route::get('/dashboard/buku', [BukuController::class, 'index']);
 
+Route::get('/dashboard/buku/tambah', [BukuController::class, 'create']);
+
 // peminjaman
 Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);
 
+Route::get('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'create']);
+
 // pengembalian
 Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
+
+Route::get('/dashboard/pengembalian/tambah', [PengembalianController::class, 'create']);

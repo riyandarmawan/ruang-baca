@@ -27,7 +27,11 @@ class PengembalianController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => "Tambah Data Pengembalian"
+        ];
+
+        return view('pages.dashboard.pengembalian.tambah', $data);
     }
 
     /**

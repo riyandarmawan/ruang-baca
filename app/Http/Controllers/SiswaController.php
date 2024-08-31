@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,14 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
+        $kelas = new Kelas();
+
+        $data = [
+            'title' => "Tambah Data Siswa",
+            'kelases' => $kelas->all()
+        ];
+
+        return view('pages.dashboard.siswa.tambah', $data);
     }
 
     /**

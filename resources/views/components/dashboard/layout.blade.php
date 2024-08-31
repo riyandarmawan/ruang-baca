@@ -7,7 +7,7 @@
             <x-dashboard.sidebar/>
 
             <div class="w-full overflow-auto" style="height: calc(100vh - 5rem)">
-                @yield('content')
+                {{ $slot }}
             </div>
         </main>
     </div>

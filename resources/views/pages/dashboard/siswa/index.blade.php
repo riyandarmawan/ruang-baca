@@ -1,9 +1,7 @@
-@extends('components.dashboard.layout')
-
-@section('content')
+<x-dashboard.layout title="{{ $title }}">
     <div class="p-6">
         <h1 class="mb-8 text-3xl font-bold">Data Siswa</h1>
-        <a href=""
+        <a href="/dashboard/siswa/tambah"
             class="rounded bg-primary px-4 py-2 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Tambah
             Data Siswa</a>
 
@@ -29,4 +27,4 @@
             </tbody>
         </table>
     </div>
-@endsection
+</x-dashboard.layout>

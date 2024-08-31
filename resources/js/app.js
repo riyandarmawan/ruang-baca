@@ -165,4 +165,3 @@ Chart.register(
     // Create the chart
     new Chart(document.getElementById("favorite-books"), config);
 })();
-

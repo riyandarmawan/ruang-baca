@@ -27,7 +27,11 @@ class KelasController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => "Tambah Data Kelas"
+        ];
+
+        return view('pages.dashboard.kelas.tambah', $data);
     }
 
     /**
