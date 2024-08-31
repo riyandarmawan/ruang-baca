@@ -18,8 +18,7 @@
 </head>
 
 <body>
-
-    @yield('content-layout')
+    {{ $slot }}
 </body>
 
 </html>

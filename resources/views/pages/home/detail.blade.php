@@ -1,9 +1,7 @@
-@extends('components.layout');
-
-@section('content')
-    <div class="container">
+<x-home.layout title="{{ $title }}">
+    <div class="container pt-8">
         <nav class="mb-8">
-            <ul class="flex gap-4">
+            <ul class="flex gap-4 flex-wrap">
                 <li>
                     <a href="/">Home</a>
                 </li>
@@ -40,4 +38,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-home.layout>

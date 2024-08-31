@@ -1,10 +1,8 @@
-@extends('components.base-layout')
-
-@section('content-layout')
-    <x-header/>
+<x-base-layout title="{{ $title }}">
+    <x-home.header />
 
     <div class="mt-14">
-        @yield('content')
+        {{ $slot }}
     </div>
 
     <footer class="py-4">
@@ -12,4 +10,4 @@
             <small class="lg:text-sm">&copy; 2024 Ruang Baca. All rights reserved.</small>
         </div>
     </footer>
-@endsection
+</x-base-layout>

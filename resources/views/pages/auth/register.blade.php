@@ -1,6 +1,4 @@
-@extends('components.base-layout')
-
-@section('content-layout')
+<x-base-layout title="{{ $title }}">
     <div class="h-dvh container flex items-center justify-center">
         <div class="w-[30rem] rounded-xl bg-primary px-4 py-6 text-background md:px-6">
             <h1 class="mb-8 text-center text-xl font-bold">Mulai daftarkan akun Anda sekarang!</h1>
@@ -32,4 +30,4 @@
             <a href="" class="mt-6 block text-center text-xs">kebijakan privasi</a>
         </div>
     </div>
-@endsection
+<x-base-layout title="{{ $title }}">

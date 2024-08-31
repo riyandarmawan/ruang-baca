@@ -1,7 +1,4 @@
-@extends('components.base-layout')
-
-
-@section('content-layout')
+<x-base-layout title="{{ $title }}">
     <div x-data="{ detail: false }">
         <x-dashboard.header/>
 
@@ -14,4 +11,4 @@
             </div>
         </main>
     </div>
-@endsection
+</x-base-layout>
