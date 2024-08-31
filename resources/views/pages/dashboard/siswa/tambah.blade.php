@@ -17,7 +17,7 @@
                 </div>
                 <div class="grid grid-cols-3 items-center mb-4">
                     <label for="no_telp">No Telp</label>
-                    <input type="number" name="no_telp" id="no_telp" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <input type="text" name="no_telp" id="no_telp" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
                 </div>
                 <div class="grid grid-cols-3 items-center mb-4">
                     <label for="kode_kelas">Kelas</label>

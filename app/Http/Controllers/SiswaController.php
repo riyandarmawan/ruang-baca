@@ -49,9 +49,18 @@ class SiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Siswa $siswa)
+    public function detail($nisn)
     {
-        //
+        $siswa = new Siswa();
+        $kelas = new Kelas();
+
+        $data = [
+            'title' => 'Detail siswa',
+            'siswa' => $siswa->find($nisn),
+            'kelases' => $kelas->all()
+        ];
+
+        return view('pages.dashboard.siswa.detail', $data);
     }
 
     /**

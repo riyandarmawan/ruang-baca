@@ -23,7 +23,7 @@
                         <td>{{ $peminjaman->tanggal_pinjam }}</td>
                         <td>{{ $peminjaman->tanggal_kembali }}</td>
                         <td>
-                            <a href="#"
+                            <a href="/dashboard/peminjaman/detail/{{ $peminjaman->id }}"
                                 class="my-2 inline-block rounded bg-primary px-4 py-1 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">
                                 Detail
                             </a>

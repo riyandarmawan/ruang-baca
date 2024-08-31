@@ -29,22 +29,32 @@ Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
 
 Route::get('/dashboard/siswa/tambah', [SiswaController::class, 'create']);
 
+Route::get('/dashboard/siswa/detail/{nisn}', [SiswaController::class, 'detail']);
+
 // kelas
 Route::get('/dashboard/kelas', [KelasController::class, 'index']);
 
 Route::get('/dashboard/kelas/tambah', [KelasController::class, 'create']);
+
+Route::get('/dashboard/kelas/detail/{kode_kelas}', [KelasController::class, 'detail']);
 
 // buku
 Route::get('/dashboard/buku', [BukuController::class, 'index']);
 
 Route::get('/dashboard/buku/tambah', [BukuController::class, 'create']);
 
+Route::get('/dashboard/buku/detail/{kode_buku}', [BukuController::class, 'detail']);
+
 // peminjaman
 Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);
 
 Route::get('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'create']);
 
+Route::get('/dashboard/peminjaman/detail/{id}', [PeminjamanController::class, 'detail']);
+
 // pengembalian
 Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
 
 Route::get('/dashboard/pengembalian/tambah', [PengembalianController::class, 'create']);
+
+Route::get('/dashboard/pengembalian/detail/{id}', [PengembalianController::class, 'detail']);
