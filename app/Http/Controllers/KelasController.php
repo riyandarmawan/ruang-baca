@@ -45,9 +45,16 @@ class KelasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kelas $kelas)
+    public function detail($kode_kelas)
     {
-        //
+        $kelas = new Kelas();
+
+        $data = [
+            'title' => "Detail Kelas",
+            'kelas' => $kelas->find($kode_kelas)->first()
+        ];
+
+        return view('pages.dashboard.kelas.detail', $data);
     }
 
     /**

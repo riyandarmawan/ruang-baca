@@ -52,9 +52,20 @@ class PeminjamanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Peminjaman $peminjaman)
+    public function detail($id)
     {
-        //
+        $peminjaman = new Peminjaman();
+        $siswa = new Siswa();
+        $buku = new Buku();
+
+        $data = [
+            'title' => "Tambah Data Peminjaman",
+            'peminjaman' => $peminjaman->where('id', $id)->first(),
+            'siswas' => $siswa->all(),
+            'bukus' => $buku->all()
+        ];
+
+        return view('pages.dashboard.peminjaman.detail', $data);
     }
 
     /**

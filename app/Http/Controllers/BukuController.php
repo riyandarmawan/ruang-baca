@@ -50,9 +50,18 @@ class BukuController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Buku $buku)
+    public function detail($slug)
     {
-        //
+        $buku = new Buku();
+        $kategori = new Kategori();
+
+        $data = [
+            'title' => "Tambah Data Buku",
+            'buku' => $buku->where('slug', $slug)->first(),
+            'kategoris' => $kategori->all()
+        ];
+
+        return view('pages.dashboard.buku.detail', $data);
     }
 
     /**

@@ -52,9 +52,20 @@ class PengembalianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pengembalian $pengembalian)
+    public function detail($id)
     {
-        //
+        $pengembalian = new Pengembalian();
+        $siswa = new Siswa();
+        $buku = new Buku();
+
+        $data = [
+            'title' => "Tambah Data Pengembalian",
+            'pengembalian' => $pengembalian->where('id', $id)->first(),
+            'siswas' => $siswa->all(),
+            'bukus' => $buku->all()
+        ];
+
+        return view('pages.dashboard.pengembalian.detail', $data);
     }
 
     /**
