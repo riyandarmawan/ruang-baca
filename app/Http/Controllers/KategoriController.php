@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 
-class BukuController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +13,14 @@ class BukuController extends Controller
     public function index()
     {
         //
-        $buku = new Buku();
+        $kategori = new Kategori();
 
         $data = [
-            'title' => 'Data Buku',
-            'bukus' => $buku->all()
+            'title' => 'Data Kategori',
+            'kategoris' => $kategori->all()
         ];
 
-        return view('pages.dashboard.buku.index', $data);
+        return view('pages.dashboard.kategori.index', $data);
     }
 
     /**
@@ -29,14 +28,11 @@ class BukuController extends Controller
      */
     public function create()
     {
-        $kategori = new Kategori();
-
         $data = [
-            'title' => "Tambah Data Buku",
-            'kategoris' => $kategori->all()
+            'title' => "Tambah Data Kategori"
         ];
 
-        return view('pages.dashboard.buku.tambah', $data);
+        return view('pages.dashboard.kategori.tambah', $data);
     }
 
     /**
@@ -52,22 +48,20 @@ class BukuController extends Controller
      */
     public function detail($slug)
     {
-        $buku = new Buku();
         $kategori = new Kategori();
 
         $data = [
-            'title' => "Detail Buku",
-            'buku' => $buku->where('slug', $slug)->first(),
-            'kategoris' => $kategori->all()
+            'title' => "Detail Kategori",
+            'kategori' => $kategori->where('slug', $slug)->first()
         ];
 
-        return view('pages.dashboard.buku.detail', $data);
+        return view('pages.dashboard.kategori.detail', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Buku $buku)
+    public function edit(Kategori $kategori)
     {
         //
     }
@@ -75,7 +69,7 @@ class BukuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Buku $buku)
+    public function update(Request $request, Kategori $kategori)
     {
         //
     }
@@ -83,7 +77,7 @@ class BukuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Buku $buku)
+    public function destroy(Kategori $kategori)
     {
         //
     }

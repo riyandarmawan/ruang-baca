@@ -59,7 +59,7 @@ class PeminjamanController extends Controller
         $buku = new Buku();
 
         $data = [
-            'title' => "Tambah Data Peminjaman",
+            'title' => "Detail Peminjaman",
             'peminjaman' => $peminjaman->where('id', $id)->first(),
             'siswas' => $siswa->all(),
             'bukus' => $buku->all()

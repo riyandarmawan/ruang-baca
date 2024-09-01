@@ -26,6 +26,12 @@
             Buku</a>
     </li>
     <li
+        class="{{ Request::Is('dashboard/kategori*') ? 'item-active' : '' }} min-w-52 cursor-pointer rounded hover:bg-tersier hover:opacity-80">
+        <a href="/dashboard/kategori" class="flex items-center gap-4 px-2 py-2 text-lg font-bold">
+            <span class="i-mdi-category text-2xl"></span>
+            Kategori</a>
+    </li>
+    <li
         class="{{ Request::Is('dashboard/peminjaman*') ? 'item-active' : '' }} min-w-52 cursor-pointer rounded hover:bg-tersier hover:opacity-80">
         <a href="/dashboard/peminjaman" class="flex items-center gap-4 px-2 py-2 text-lg font-bold">
             <span class="i-mdi-clipboard-text-outline text-2xl"></span>

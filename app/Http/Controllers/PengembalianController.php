@@ -59,7 +59,7 @@ class PengembalianController extends Controller
         $buku = new Buku();
 
         $data = [
-            'title' => "Tambah Data Pengembalian",
+            'title' => "Detail Pengembalian",
             'pengembalian' => $pengembalian->where('id', $id)->first(),
             'siswas' => $siswa->all(),
             'bukus' => $buku->all()

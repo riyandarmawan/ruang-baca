@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
@@ -44,6 +45,13 @@ Route::get('/dashboard/buku', [BukuController::class, 'index']);
 Route::get('/dashboard/buku/tambah', [BukuController::class, 'create']);
 
 Route::get('/dashboard/buku/detail/{kode_buku}', [BukuController::class, 'detail']);
+
+// buku
+Route::get('/dashboard/kategori', [KategoriController::class, 'index']);
+
+Route::get('/dashboard/kategori/tambah', [KategoriController::class, 'create']);
+
+Route::get('/dashboard/kategori/detail/{slug}', [KategoriController::class, 'detail']);
 
 // peminjaman
 Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);
