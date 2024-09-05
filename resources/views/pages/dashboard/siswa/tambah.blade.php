@@ -1,34 +1,54 @@
 <x-dashboard.layout title="{{ $title }}">
-    <div class="p-6 flex items-center justify-center">
-        <div class="border border-primary h-fit p-4 rounded shadow shadow-slate-500 min-w-[40rem]">
-            <h1 class="text-center font-bold text-xl mb-6">Tambah Data Siswa</h1>
+    <div class="flex items-center justify-center p-6">
+        <div class="h-fit min-w-[40rem] rounded border border-primary p-4 shadow shadow-slate-500">
+            <h1 class="mb-6 text-center text-xl font-bold">Tambah Data Siswa</h1>
             <form action="" method="POST">
-                <div class="grid grid-cols-3 items-center mb-4">
+                @csrf
+                <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="nisn">NISN</label>
-                    <input type="number" name="nisn" id="nisn" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <input type="text" inputmode="numeric" name="nisn" id="nisn" value="{{ $errors->has('nisn') ? '' : old('nisn') }}" required
+                        class="{{ $errors->has('nisn') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
+                    @error('nisn')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
-                <div class="grid grid-cols-3 items-center mb-4">
+                <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="nama">Nama</label>
-                    <input type="text" name="nama" id="nama" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <input type="text" name="nama" id="nama" value="{{ $errors->has('nama') ? '' : old('nama') }}" required
+                        class="{{ $errors->has('nama') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500">
+                    @error('nama')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
-                <div class="grid grid-cols-3 items-center mb-4">
+                <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="alamat">Alamat</label>
-                    <textarea name="alamat" id="alamat" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2"></textarea>
+                    <textarea name="alamat" id="alamat" required
+                        class="{{ $errors->has('alamat') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500">{{ $errors->has('alamat') ? '' : old('alamat') }}</textarea>
+                    @error('alamat')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
-                <div class="grid grid-cols-3 items-center mb-4">
+                <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="no_telp">No Telp</label>
-                    <input type="text" name="no_telp" id="no_telp" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <input type="text" inputmode="numeric" name="no_telp" id="no_telp" value="{{ $errors->has('no_telp') ? '' : old('alamat') }}" required
+                        class="{{ $errors->has('no_telp') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500">
+                    @error('no_telp')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
-                <div class="grid grid-cols-3 items-center mb-4">
+                <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="kode_kelas">Kelas</label>
-                    <select name="kode_kelas" id="kode_kelas" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <select name="kode_kelas" id="kode_kelas" required
+                        class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
                         @foreach ($kelases as $kelas)
-                        <option value="{{ $kelas->kode_kelas }}">{{ $kelas->kode_kelas }}</option>
+                        <option {{ $kelas->kode_kelas === old('kode_kelas') ? 'selected' : '' }} value="{{ $kelas->kode_kelas }}">{{ $kelas->kode_kelas }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="flex justify-center mt-6">
-                <button class="py-2 px-6 bg-primary text-background rounded shadow shadow-slate-500 font-medium hover:opacity-80 active:opacity-70 focus:ring focus:ring-slate-500">Tambah</button></div>
+                <div class="mt-6 flex justify-center">
+                    <button
+                        class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">Tambah</button>
+                </div>
             </form>
         </div>
     </div>

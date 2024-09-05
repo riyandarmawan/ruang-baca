@@ -30,6 +30,8 @@ Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
 
 Route::get('/dashboard/siswa/tambah', [SiswaController::class, 'create']);
 
+Route::post('/dashboard/siswa/tambah', [SiswaController::class, 'store']);
+
 Route::get('/dashboard/siswa/detail/{nisn}', [SiswaController::class, 'detail']);
 
 // kelas

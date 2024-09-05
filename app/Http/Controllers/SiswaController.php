@@ -43,7 +43,18 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $siswa = new Siswa();
+
+        $request->validate([
+            'nisn' => 'required|unique:App\Models\Siswa,nisn|digits:10|numeric',
+            'nama' => 'required|max:30',
+            'alamat' => 'required',
+            'no_telp' => 'required|max_digits:13|numeric'
+        ]);
+
+        $siswa->create($request->all());
+
+        return redirect('/dashboard/siswa')->with('success', 'Data siswa berhasil ditambah!');
     }
 
     /**

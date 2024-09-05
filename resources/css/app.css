@@ -22,8 +22,12 @@ td {
   @apply border-primary
 }
 
-.scrollbar-none {
+.input-error {
+  @apply border-red-500 ring-red-500
+}
 
+.input-unerror {
+  @apply border-primary ring-primary
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
