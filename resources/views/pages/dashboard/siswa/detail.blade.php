@@ -40,6 +40,7 @@
 
                 <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
                     <form action="/dashboard/siswa/ubah/{{ $siswa->nisn }}" method="POST">
+                        @csrf
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="nisn">NISN</label>
                             <input type="number" name="nisn" id="nisn" required
@@ -68,8 +69,8 @@
                             <select name="kode_kelas" id="kode_kelas" required
                                 class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
                                 @foreach ($kelases as $kelas)
-                                    <option {{ $kelas->kode_kelas === $siswa->kode_kelas ? 'selected' : '' }}
-                                        value="{{ $kelas->kode_kelas }}">{{ $kelas->kode_kelas }}</option>
+                                <option {{ $kelas->kode_kelas === $siswa->kode_kelas ? 'selected' : '' }}
+                                    value="{{ $kelas->kode_kelas }}">{{ $kelas->kode_kelas }}</option>
                                 @endforeach
                             </select>
                         </div>
