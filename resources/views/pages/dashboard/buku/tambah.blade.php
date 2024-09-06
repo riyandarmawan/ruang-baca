@@ -3,6 +3,7 @@
         <div class="border border-primary h-fit p-4 rounded shadow shadow-slate-500 min-w-[40rem]">
             <h1 class="text-center font-bold text-xl mb-6">Tambah Data Siswa</h1>
             <form action="" method="POST">
+                @csrf
                 <div class="grid grid-cols-3 items-center mb-4">
                     <label for="kode_buku">Kode Buku</label>
                     <input type="text" name="kode_buku" id="kode_buku" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
