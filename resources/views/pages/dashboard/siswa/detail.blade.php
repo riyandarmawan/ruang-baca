@@ -44,7 +44,7 @@
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="nisn">NISN</label>
                             <input type="text" inputmode="numeric" name="nisn" id="nisn"
-                                value="{{ $errors->has('nisn') ? $siswa->nisn : (old('nisn') ? old('nisn') : $siswa->nisn) }}"
+                                value="{{ $errors->has('nisn') ? $siswa->nisn : old('nisn', $siswa->nisn) }}"
                                 required
                                 class="{{ $errors->has('nisn') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
                             @error('nisn')
@@ -55,7 +55,7 @@
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="nama">Nama</label>
                             <input type="text" name="nama" id="nama"
-                                value="{{ $errors->has('nama') ? $siswa->nama : (old('nama') ? old('nama') : $siswa->nama) }}"
+                                value="{{ $errors->has('nama') ? $siswa->nama : old('nama', $siswa->nama) }}"
                                 required
                                 class="{{ $errors->has('nama') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
                             @error('nama')
@@ -66,7 +66,7 @@
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="alamat">Alamat</label>
                             <textarea name="alamat" id="alamat" required
-                                class="{{ $errors->has('alamat') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">{{ $errors->has('alamat') ? $siswa->alamat : (old('alamat') ? old('alamat') : $siswa->alamat) }}</textarea>
+                                class="{{ $errors->has('alamat') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">{{ $errors->has('alamat') ? $siswa->alamat : old('alamat', $siswa->alamat) }}</textarea>
                             @error('alamat')
                                 <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}
                                 </p>
@@ -75,7 +75,7 @@
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="no_telp">No Telp</label>
                             <input type="text" inputmode="numeric" name="no_telp" id="no_telp"
-                                value="{{ $errors->has('no_telp') ? $siswa->no_telp : (old('no_telp') ? old('no_telp') : $siswa->no_telp) }}"
+                                value="{{ $errors->has('no_telp') ? $siswa->no_telp : old('no_telp', $siswa->no_telp) }}"
                                 required
                                 class="{{ $errors->has('no_telp') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
                             @error('no_telp')
@@ -89,7 +89,7 @@
                                 class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none">
                                 @foreach ($kelases as $kelas)
                                     <option
-                                        {{ (old('kode_kelas') ?? $siswa->kode_kelas) == $kelas->kode_kelas ? 'selected' : '' }}
+                                        {{ old('kode_kelas', $siswa->kode_kelas) == $kelas->kode_kelas ? 'selected' : '' }}
                                         value="{{ $kelas->kode_kelas }}">{{ $kelas->kode_kelas }}</option>
                                 @endforeach
                             </select>

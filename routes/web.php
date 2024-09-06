@@ -43,7 +43,13 @@ Route::get('/dashboard/kelas', [KelasController::class, 'index']);
 
 Route::get('/dashboard/kelas/tambah', [KelasController::class, 'create']);
 
+Route::post('/dashboard/kelas/tambah', [KelasController::class, 'store']);
+
 Route::get('/dashboard/kelas/detail/{kode_kelas}', [KelasController::class, 'detail']);
+
+Route::post('/dashboard/kelas/ubah/{kode_kelas}', [KelasController::class, 'update']);
+
+Route::post('/dashboard/kelas/hapus/{kode_kelas}', [KelasController::class, 'destroy']);
 
 // buku
 Route::get('/dashboard/buku', [BukuController::class, 'index']);

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->primary('nisn');
-            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelases');
         });
     }
 

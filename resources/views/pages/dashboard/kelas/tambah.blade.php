@@ -6,15 +6,25 @@
                 @csrf
                 <div class="grid grid-cols-3 items-center mb-4">
                     <label for="kode_kelas">Kode Kelas</label>
-                    <input type="text" name="kode_kelas" id="kode_kelas" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2">
+                    <input type="text" name="kode_kelas" id="kode_kelas" value="{{ $errors->has('kode_kelas') ? '' : old('kode_kelas') }}" required class="{{ $errors->has('kode_kelas') ? 'input-error' : 'input-unerror' }} border outline-none col-span-2 w-full focus:ring shadow shadow-slate-500 rounded p-2">
+                    @error('kode_kelas')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="grid grid-cols-3 items-center mb-4">
                     <label for="tingkat">Tingkat</label>
-                    <input type="text" name="tingkat" id="tingkat" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <select type="text" name="tingkat" id="tingkat" required class="input-unerror border outline-none col-span-2 w-full focus:ring shadow shadow-slate-500 rounded p-2">
+                        <option value="X">X</option>
+                        <option value="XI">XI</option>
+                        <option value="XII">XII</option>
+                    </select>
                 </div>
                 <div class="grid grid-cols-3 items-center mb-4">
                     <label for="jurusan">Jurusan</label>
-                    <input type="text" name="jurusan" id="jurusan" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2">
+                    <input type="text" name="jurusan" id="jurusan" value="{{ $errors->has('jurusan') ? '' : old('jurusan') }}" required class="{{ $errors->has('jurusan') ? 'input-error' : 'input-unerror' }} border outline-none col-span-2 w-full focus:ring shadow shadow-slate-500 rounded p-2">
+                    @error('jurusan')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="flex justify-center mt-6">
                 <button class="py-2 px-6 bg-primary text-background rounded shadow shadow-slate-500 font-medium hover:opacity-80 active:opacity-70 focus:ring focus:ring-slate-500">Tambah</button></div>
