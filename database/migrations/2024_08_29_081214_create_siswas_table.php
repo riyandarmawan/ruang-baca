@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_telp', 13);
             $table->string('kode_kelas', 10);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->primary('nisn');
             $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');

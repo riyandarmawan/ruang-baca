@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SiswaController extends Controller
 {
@@ -46,10 +47,29 @@ class SiswaController extends Controller
         $siswa = new Siswa();
 
         $request->validate([
-            'nisn' => 'required|unique:App\Models\Siswa,nisn|digits:10|numeric',
+            'nisn' => 'required|unique:App\Models\Siswa,nisn|numeric|digits:10',
             'nama' => 'required|max:30',
             'alamat' => 'required',
-            'no_telp' => 'required|max_digits:13|numeric'
+            'no_telp' => 'required|numeric|min_digits:8|max_digits:13'
+        ], [
+            // NISN 
+            'nisn.required' => 'NISN wajib diisi!',
+            'nisn.unique' => 'NISN tersebut sudah ada yang menggunakan, gunakan NISN lain',
+            'nisn.numeric' => 'NISN harus berupa angka!',
+            'nisn.digits' => 'NISN harus memiliki 10 digit angka',
+
+            // Nama
+            'nama.require' => 'Nama wajib diisi!',
+            'nama.max' => 'Nama tidak boleh lebih dari 30 karakter!',
+
+            // Alamat
+            'alamat.required' => 'Alamat wajib diisi!',
+
+            // No Telepon
+            'no_telp.required' => 'No Telepon wajib diisi!',
+            'no_telp.numeric' => 'NO Telepon harus berupa angka!',
+            'no_telp.min_digits' => 'No Telepon harus lebih dari 8 digit angka',
+            'no_telp.max_digits' => 'No Telepon tidak boleh lebih dari 13 digit angka'
         ]);
 
         $siswa->create($request->all());
@@ -85,16 +105,55 @@ class SiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, $nisn)
     {
-        //
+        $siswa = new Siswa();
+
+        $request->validate([
+            'nisn' => [
+                'required',
+                Rule::unique('siswas', 'nisn')->ignore($nisn ,'nisn'),
+                'numeric',
+                'digits:10'
+            ],
+            'nama' => 'required|max:30',
+            'alamat' => 'required',
+            'no_telp' => 'required|numeric|min_digits:8|max_digits:13'
+        ], [
+            // NISN 
+            'nisn.required' => 'NISN wajib diisi!',
+            'nisn.unique' => 'NISN tersebut sudah ada yang menggunakan, gunakan NISN lain',
+            'nisn.numeric' => 'NISN harus berupa angka!',
+            'nisn.digits' => 'NISN harus memiliki 10 digit angka',
+
+            // Nama
+            'nama.require' => 'Nama wajib diisi!',
+            'nama.max' => 'Nama tidak boleh lebih dari 30 karakter!',
+
+            // Alamat
+            'alamat.required' => 'Alamat wajib diisi!',
+
+            // No Telepon
+            'no_telp.required' => 'No Telepon wajib diisi!',
+            'no_telp.numeric' => 'NO Telepon harus berupa angka!',
+            'no_telp.min_digits' => 'No Telepon harus lebih dari 8 digit angka',
+            'no_telp.max_digits' => 'No Telepon tidak boleh lebih dari 13 digit angka'
+        ]);
+
+        $siswa->find($nisn)->update($request->all());
+
+        return redirect('/dashboard/siswa')->with('success', 'Data siswa berhasil diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($nisn)
     {
-        //
+        $siswa = new Siswa();
+
+        $siswa->find($nisn)->delete();
+
+        return redirect('/dashboard/siswa')->with('success', 'Data siswa berhasil dihapus!');
     }
 }

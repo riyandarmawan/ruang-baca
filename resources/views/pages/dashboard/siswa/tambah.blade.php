@@ -9,31 +9,31 @@
                     <input type="text" inputmode="numeric" name="nisn" id="nisn" value="{{ $errors->has('nisn') ? '' : old('nisn') }}" required
                         class="{{ $errors->has('nisn') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
                     @error('nisn')
-                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="nama">Nama</label>
                     <input type="text" name="nama" id="nama" value="{{ $errors->has('nama') ? '' : old('nama') }}" required
-                        class="{{ $errors->has('nama') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500">
+                        class="{{ $errors->has('nama') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 focus:ring outline-none">
                     @error('nama')
-                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="alamat">Alamat</label>
                     <textarea name="alamat" id="alamat" required
-                        class="{{ $errors->has('alamat') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500">{{ $errors->has('alamat') ? '' : old('alamat') }}</textarea>
+                        class="{{ $errors->has('alamat') ? 'input-error' : 'input-unerror' }} outline-none col-span-2 w-full rounded border p-2 shadow shadow-slate-500 focus:ring">{{ $errors->has('alamat') ? '' : old('alamat') }}</textarea>
                     @error('alamat')
-                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4 grid grid-cols-3 items-center">
                     <label for="no_telp">No Telp</label>
-                    <input type="text" inputmode="numeric" name="no_telp" id="no_telp" value="{{ $errors->has('no_telp') ? '' : old('alamat') }}" required
-                        class="{{ $errors->has('no_telp') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500">
+                    <input type="text" inputmode="numeric" name="no_telp" id="no_telp" value="{{ $errors->has('no_telp') ? '' : old('no_telp') }}" required
+                        class="{{ $errors->has('no_telp') ? 'input-error' : 'input-unerror' }} outline-none col-span-2 w-full rounded border p-2 shadow shadow-slate-500 focus:ring">
                     @error('no_telp')
-                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium">{{ $message }}</p>
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4 grid grid-cols-3 items-center">

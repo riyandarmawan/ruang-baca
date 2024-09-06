@@ -34,6 +34,10 @@ Route::post('/dashboard/siswa/tambah', [SiswaController::class, 'store']);
 
 Route::get('/dashboard/siswa/detail/{nisn}', [SiswaController::class, 'detail']);
 
+Route::post('/dashboard/siswa/ubah/{nisn}', [SiswaController::class, 'update']);
+
+Route::get('/dashboard/siswa/hapus/{nisn}', [SiswaController::class, 'destroy']);
+
 // kelas
 Route::get('/dashboard/kelas', [KelasController::class, 'index']);
 

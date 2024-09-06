@@ -20,7 +20,7 @@ class SiswaFactory extends Factory
         $kelas = new Kelas();
 
         return [
-            'nisn' => fake()->numerify('##########'),
+            'nisn' => fake()->unique()->numerify('##########'),
             'nama' => fake()->name(),
             'alamat' => fake()->address(),
             'no_telp' => fake()->phoneNumber(),
