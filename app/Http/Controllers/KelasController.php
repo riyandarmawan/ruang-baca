@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class KelasController extends Controller
 {
@@ -91,22 +92,27 @@ class KelasController extends Controller
      */
     public function update(Request $request, $kode_kelas)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'kode_kelas' => [
                 'required',
                 Rule::unique('kelases', 'kode_kelas')->ignore($kode_kelas, 'kode_kelas'),
-                'regex:/^(X|XI|XII)-[A-Z]+$/'
             ],
             'jurusan' => 'required'
         ], [
             // Kode Kelas
             'kode_kelas.required' => 'Kode Kelas harus diisi!',
             'kode_kelas.unique' => 'Kode Kelas sudah digunakan sebelumnya! Cari alternatif lain!',
-            'kode_kelas.regex' => 'Kode Kelas harus mengikuti format TINGKAT-JURUSAN (Contoh: X-AK)',
 
             // Jurusan
             'jurusan.required' => 'Jurusan harus diisi!'
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->withFragment('ubah');
+        }
 
         $kelas = new Kelas();
 

@@ -36,7 +36,7 @@
                     </li>
                 </ul>
 
-                <div x-bind:class="active !== 'detail' ? '' : '!grid'" id="detail" class="hidden gap-4 p-4">
+                <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Kode Buku</strong>
                         <span>:</span>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <div x-bind:class="active !== 'ubah' ? '' : '!block'" id="ubah" class="hidden p-4">
+                <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
                     <form action="/dashboard/buku/ubah/{{ $buku->slug }}" method="POST">
                         @csrf
                         <div class="mb-4 grid grid-cols-3 items-center">

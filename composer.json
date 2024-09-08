@@ -24,7 +24,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/formatKodeBuku.php"
+            "app/Helpers/formatKodeBuku.php",
+            "app/Helpers/formatNoTelp.php"
         ]
     },
     "autoload-dev": {

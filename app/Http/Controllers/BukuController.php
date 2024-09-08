@@ -100,12 +100,12 @@ class BukuController extends Controller
      */
     public function detail($slug)
     {
-        $buku = Buku::where('slug', $slug)->firstOrFail();
+        $buku = new Buku();
         $kategori = new Kategori();
 
         $data = [
             'title' => "Detail Buku",
-            'buku' => $buku,
+            'buku' => $buku->where('slug', $slug)->firstOrFail(),
             'kategoris' => $kategori->all()
         ];
 
@@ -164,7 +164,7 @@ class BukuController extends Controller
                 ->withFragment('ubah');
         }
 
-        $buku = Buku::where('slug', $slug)->firstOrFail();
+        $buku = new Buku();
 
         $buku->kode_buku = $request->kode_buku;
         $buku->judul = $request->judul;
@@ -176,7 +176,7 @@ class BukuController extends Controller
 
         $buku->slug = Str::slug($request->judul);
 
-        $buku->save();
+        $buku->where('slug', $slug)->firstOrFail()->save();
 
         return redirect('/dashboard/buku')->with('success', 'Data buku berhasil diubah!');
     }
@@ -186,9 +186,9 @@ class BukuController extends Controller
      */
     public function destroy($slug)
     {
-        $buku = Buku::where('slug', $slug)->firstOrFail();
+        $buku = new Buku();
 
-        $buku->delete();
+        $buku->where('slug', $slug)->firstOrFail()->delete();
 
         return redirect('/dashboard/buku')->with('success', 'Data buku berhasil dihapus!');
     }

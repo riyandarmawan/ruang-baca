@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class SiswaController extends Controller
@@ -107,10 +108,10 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $nisn)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nisn' => [
                 'required',
-                Rule::unique('siswas', 'nisn')->ignore($nisn ,'nisn'),
+                Rule::unique('siswas', 'nisn')->ignore($nisn, 'nisn'),
                 'numeric',
                 'digits:10'
             ],
@@ -137,6 +138,13 @@ class SiswaController extends Controller
             'no_telp.min_digits' => 'No Telepon harus lebih dari 8 digit angka',
             'no_telp.max_digits' => 'No Telepon tidak boleh lebih dari 13 digit angka'
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->withFragment('ubah');
+        }
 
         $siswa = new Siswa();
 

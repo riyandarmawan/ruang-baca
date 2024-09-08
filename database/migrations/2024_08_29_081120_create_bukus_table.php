@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('kategori_id');
             $table->text('deskripsi');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->primary('kode_buku');
             $table->foreign('kategori_id')->references('id')->on('kategoris');
