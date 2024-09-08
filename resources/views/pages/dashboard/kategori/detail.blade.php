@@ -16,29 +16,30 @@
                 </ul>
 
                 <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
-                    <div class="grid grid-cols-4">
-                        <p>Slug</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $kategori->slug }}</p>
-                    </div>
-                    <div class="grid grid-cols-4">
-                        <p>Nama Kategori</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $kategori->nama }}</p>
+                    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+                        <strong>Nama Kategori</strong>
+                        <span>:</span>
+                        <div>{{ $kategori->nama }}</div>
                     </div>
                 </div>
 
                 <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
                     <form action="/dashboard/kategori/ubah/{{ $kategori->slug }}" method="POST">
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="slug">Slug</label>
-                    <input type="text" name="slug" id="slug" required value="{{ $kategori->slug }}" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                </div>
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="Nama">Nama Kategori</label>
-                    <input type="text" name="Nama" id="Nama" required value="{{ $kategori->slug }}" class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                </div>
-                <div class="flex justify-center mt-6">
-                <button class="py-2 px-6 bg-primary text-background rounded shadow shadow-slate-500 font-medium hover:opacity-80 active:opacity-70 focus:ring focus:ring-slate-500">Ubah</button></div>
-            </form>
+                        <div class="mb-4 grid grid-cols-3 items-center">
+                            <label for="slug">Slug</label>
+                            <input type="text" name="slug" id="slug" required value="{{ $kategori->slug }}"
+                                class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                        </div>
+                        <div class="mb-4 grid grid-cols-3 items-center">
+                            <label for="Nama">Nama Kategori</label>
+                            <input type="text" name="Nama" id="Nama" required value="{{ $kategori->slug }}"
+                                class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                        </div>
+                        <div class="mt-6 flex justify-center">
+                            <button
+                                class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">Ubah</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">

@@ -5,6 +5,10 @@
             class="rounded bg-primary px-4 py-2 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Tambah
             Data Buku</a>
 
+        @if (session('success'))
+            <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
+        @endif
+
         <table class="mt-8 w-full min-w-[50rem] table-auto">
             <thead>
                 <th>Kode Buku</th>
@@ -16,7 +20,7 @@
             <tbody class="text-center">
                 @foreach ($bukus as $buku)
                     <tr>
-                        <td>{{ $buku->kode_buku }}</td>
+                        <td>{{ formatKodeBuku($buku->kode_buku) }}</td>
                         <td>{{ $buku->judul }}</td>
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>

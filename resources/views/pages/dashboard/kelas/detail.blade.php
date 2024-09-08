@@ -16,17 +16,20 @@
                 </ul>
 
                 <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
-                    <div class="grid grid-cols-4">
-                        <p>Kode Kelas</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $kelas->kode_kelas }}</p>
+                    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+                        <strong>Kode Kelas</strong>
+                        <span>:</span>
+                        <div>{{ formatKodeBuku($kelas->kode_kelas) }}</div>
                     </div>
-                    <div class="grid grid-cols-4">
-                        <p>Nama</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $kelas->tingkat }}</p>
+                    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+                        <strong>Nama</strong>
+                        <span>:</span>
+                        <div>{{ $kelas->tingkat }}</div>
                     </div>
-                    <div class="grid grid-cols-4">
-                        <p>Alamat</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $kelas->jurusan }}</p>
+                    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+                        <strong>Alamat</strong>
+                        <span>:</span>
+                        <div>{{ $kelas->jurusan }}</div>
                     </div>
                 </div>
 
@@ -36,7 +39,8 @@
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="kode_kelas">Kode Kelas</label>
                             <input type="text" name="kode_kelas" id="kode_kelas"
-                                value="{{ $errors->has('kode_kelas') ? $kelas->kode_kelas : old('kode_kelas',$kelas->kode_kelas) }}" required
+                                value="{{ $errors->has('kode_kelas') ? $kelas->kode_kelas : old('kode_kelas', $kelas->kode_kelas) }}"
+                                required
                                 class="{{ $errors->has('kode_kelas') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
                             @error('kode_kelas')
                                 <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}
@@ -47,15 +51,19 @@
                             <label for="tingkat">Tingkat</label>
                             <select type="text" name="tingkat" id="tingkat" required
                                 class="input-unerror col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
-                                <option {{ old('tingkat', $kelas->tingkat) == 'X' ? 'selected'  : '' }} value="X">X</option>
-                                <option {{ old('tingkat', $kelas->tingkat) == 'XI' ? 'selected'  : '' }} value="XI">XI</option>
-                                <option {{ old('tingkat', $kelas->tingkat) == 'XII' ? 'selected'  : '' }} value="XII">XII</option>
+                                <option {{ old('tingkat', $kelas->tingkat) == 'X' ? 'selected' : '' }} value="X">X
+                                </option>
+                                <option {{ old('tingkat', $kelas->tingkat) == 'XI' ? 'selected' : '' }} value="XI">
+                                    XI</option>
+                                <option {{ old('tingkat', $kelas->tingkat) == 'XII' ? 'selected' : '' }}
+                                    value="XII">XII</option>
                             </select>
                         </div>
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="jurusan">Jurusan</label>
                             <input type="text" name="jurusan" id="jurusan"
-                                value="{{ $errors->has('jurusan') ? $kelas->jurusan : old('jurusan', $kelas->jurusan) }}" required
+                                value="{{ $errors->has('jurusan') ? $kelas->jurusan : old('jurusan', $kelas->jurusan) }}"
+                                required
                                 class="{{ $errors->has('jurusan') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border p-2 shadow shadow-slate-500 outline-none focus:ring">
                             @error('jurusan')
                                 <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}

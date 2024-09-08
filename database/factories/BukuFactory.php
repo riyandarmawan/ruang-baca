@@ -19,7 +19,7 @@ class BukuFactory extends Factory
     public function definition(): array
     {
         return [
-            'kode_buku' => fake()->numerify('###-###-##-####-#'),
+            'kode_buku' => fake()->numerify('#############'),
             'slug' => Str::slug(fake()->unique(true)->words(5, true)),
             'judul' => fake()->words(5, true),
             'penerbit' => fake()->words(2, true),

@@ -16,27 +16,32 @@
                 </ul>
 
                 <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
-                    <div class="grid grid-cols-4">
-                        <p>NISN</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $siswa->nisn }}</p>
-                    </div>
-                    <div class="grid grid-cols-4">
-                        <p>Nama</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $siswa->nama }}</p>
-                    </div>
-                    <div class="grid grid-cols-4">
-                        <p>Alamat</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $siswa->alamat }}</p>
-                    </div>
-                    <div class="grid grid-cols-4">
-                        <p>No Telepon</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $siswa->no_telp }}</p>
-                    </div>
-                    <div class="grid grid-cols-4">
-                        <p>Kelas</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $siswa->kode_kelas }}</p>
-                    </div>
-                </div>
+    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+        <strong>NISN</strong>
+        <span>:</span>
+        <div>{{ $siswa->nisn }}</div>
+    </div>
+    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+        <strong>Nama</strong>
+        <span>:</span>
+        <div>{{ $siswa->nama }}</div>
+    </div>
+    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+        <strong>Alamat</strong>
+        <span>:</span>
+        <div>{{ $siswa->alamat }}</div>
+    </div>
+    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+        <strong>No Telepon</strong>
+        <span>:</span>
+        <div>{{ rtrim(chunk_split($siswa->no_telp, 4, '-'), '-') }}</div>
+    </div>
+    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+        <strong>Kelas</strong>
+        <span>:</span>
+        <div>{{ $siswa->kode_kelas }}</div>
+    </div>
+</div>
 
                 <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
                     <form action="/dashboard/siswa/ubah/{{ $siswa->nisn }}" method="POST">

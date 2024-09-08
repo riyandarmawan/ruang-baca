@@ -40,8 +40,6 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        $kelas = new Kelas();
-
         $request->validate([
             'kode_kelas' => [
                 'required',
@@ -58,6 +56,8 @@ class KelasController extends Controller
             'jurusan.required' => 'Jurusan harus diisi!'
         ]);
 
+        $kelas = new Kelas();
+        
         $kelas->create($request->all());
 
         return redirect('/dashboard/kelas')->with('success', 'Data kelas berhasil ditambah!');
@@ -91,8 +91,6 @@ class KelasController extends Controller
      */
     public function update(Request $request, $kode_kelas)
     {
-        $kelas = new Kelas();
-
         $request->validate([
             'kode_kelas' => [
                 'required',
@@ -109,6 +107,8 @@ class KelasController extends Controller
             // Jurusan
             'jurusan.required' => 'Jurusan harus diisi!'
         ]);
+
+        $kelas = new Kelas();
 
         $kelas->find($kode_kelas)->update($request->all());
 

@@ -56,7 +56,13 @@ Route::get('/dashboard/buku', [BukuController::class, 'index']);
 
 Route::get('/dashboard/buku/tambah', [BukuController::class, 'create']);
 
-Route::get('/dashboard/buku/detail/{kode_buku}', [BukuController::class, 'detail']);
+Route::post('/dashboard/buku/tambah', [BukuController::class, 'store']);
+
+Route::get('/dashboard/buku/detail/{slug}', [BukuController::class, 'detail']);
+
+Route::post('/dashboard/buku/ubah/{slug}', [BukuController::class, 'update']);
+
+Route::post('/dashboard/buku/hapus/{slug}', [BukuController::class, 'destroy']);
 
 // buku
 Route::get('/dashboard/kategori', [KategoriController::class, 'index']);

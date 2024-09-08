@@ -44,8 +44,6 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $siswa = new Siswa();
-
         $request->validate([
             'nisn' => 'required|unique:App\Models\Siswa,nisn|numeric|digits:10',
             'nama' => 'required|max:30',
@@ -71,6 +69,8 @@ class SiswaController extends Controller
             'no_telp.min_digits' => 'No Telepon harus lebih dari 8 digit angka',
             'no_telp.max_digits' => 'No Telepon tidak boleh lebih dari 13 digit angka'
         ]);
+
+        $siswa = new Siswa();
 
         $siswa->create($request->all());
 
@@ -107,8 +107,6 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $nisn)
     {
-        $siswa = new Siswa();
-
         $request->validate([
             'nisn' => [
                 'required',
@@ -139,6 +137,8 @@ class SiswaController extends Controller
             'no_telp.min_digits' => 'No Telepon harus lebih dari 8 digit angka',
             'no_telp.max_digits' => 'No Telepon tidak boleh lebih dari 13 digit angka'
         ]);
+
+        $siswa = new Siswa();
 
         $siswa->find($nisn)->update($request->all());
 
