@@ -42,6 +42,11 @@
 
                 <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+                        <strong>Sampul</strong>
+                        <span>:</span>
+                        <img src="{{ asset("storage/images/bukus/$buku->sampul") }}" alt="{{ $buku->judul }}" class="aspect-[2/3] object-cover w-36 rounded-xl">
+                    </div>
+                    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Kode Buku</strong>
                         <span>:</span>
                         <div>{{ formatKodeBuku($buku->kode_buku) }}</div>

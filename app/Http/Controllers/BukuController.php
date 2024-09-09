@@ -47,6 +47,8 @@ class BukuController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->file('sampul'));
+
         $request->validate([
             'kode_buku' => 'required|unique:App\Models\Buku,kode_buku|digits:13',
             'sampul' => 'required|image|mimes:jpeg,jpg,png|max:2048',
@@ -97,6 +99,14 @@ class BukuController extends Controller
         $buku->deskripsi = $request->deskripsi;
 
         $buku->slug = Str::slug($request->judul);
+
+        if($request->file('sampul')) {
+            $sampul = $request->file('sampul');
+            $sampulName = time() . '.' . $sampul->getClientOriginalExtension();
+            $sampul->storeAs('public/images/bukus', $sampulName);
+
+            $buku->sampul = $sampulName;
+        }
 
         $buku->save();
 

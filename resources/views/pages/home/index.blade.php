@@ -10,7 +10,7 @@
                                 <a href="/buku/detail/{{ $buku->slug }}" class="block w-24 md:w-28 lg:w-32 xl:w-36">
                                     <div class="relative aspect-[2/3] w-full">
                                         <img loading="lazy"
-                                            src="/images/bukus/{{ $buku->sampul }}"
+                                            src="{{ asset("storage/images/bukus/$buku->sampul") }}"
                                             alt="{{ $buku->judul }}" class="h-full w-full rounded-xl object-cover">
                                     </div>
                                     <h4 class="mb-1 mt-2 line-clamp-2 text-sm font-medium md:text-base xl:text-lg">
