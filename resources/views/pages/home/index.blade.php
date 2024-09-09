@@ -9,7 +9,7 @@
                             @foreach ($kategori->bukus as $buku)
                                 <a href="/buku/detail/{{ $buku->slug }}"
                                     class="aspect-[9/16] w-24 md:w-28 lg:w-32 xl:w-36">
-                                    <img src="https://upload.wikimedia.org/wikipedia/id/thumb/b/bf/Harry_Potter_and_the_Sorcerer%27s_Stone.jpg/220px-Harry_Potter_and_the_Sorcerer%27s_Stone.jpg"
+                                    <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/id/thumb/b/bf/Harry_Potter_and_the_Sorcerer%27s_Stone.jpg/220px-Harry_Potter_and_the_Sorcerer%27s_Stone.jpg"
                                         alt="Harry Potter and the Philosopher's Stone" class="w-full rounded-xl">
                                     <h4 class="mb-1 mt-2 line-clamp-2 text-sm font-medium md:text-base xl:text-lg">
                                         {{ $buku->judul }}

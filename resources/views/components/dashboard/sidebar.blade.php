@@ -26,7 +26,7 @@
         </div>
         <div class="flex overflow-hidden">
             <div x-on:click="open = !open" class="me-14 ms-1 flex items-center gap-4">
-                <img src="/images/user/jajang.jpg" alt="user" class="h-8 w-8 rounded-full border border-background">
+                <img loading="lazy" src="/images/user/jajang.jpg" alt="user" class="h-8 w-8 rounded-full border border-background">
                 <h4 class="text-lg font-semibold">Jajang</h4>
             </div>
             <span x-on:click="open = !open" x-bind:class="open ? 'i-mdi-arrow-drop-down' : 'i-mdi-arrow-drop-up'"

@@ -21,7 +21,7 @@
         </nav>
 
         <div class="flex flex-col items-center gap-4 lg:flex-row lg:gap-6">
-            <img src="https://upload.wikimedia.org/wikipedia/id/thumb/b/bf/Harry_Potter_and_the_Sorcerer%27s_Stone.jpg/220px-Harry_Potter_and_the_Sorcerer%27s_Stone.jpg"
+            <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/id/thumb/b/bf/Harry_Potter_and_the_Sorcerer%27s_Stone.jpg/220px-Harry_Potter_and_the_Sorcerer%27s_Stone.jpg"
                 alt="Harry Potter and the Philosopher's Stone" class="w-56 rounded-xl">
             <div class="lg:p-4">
                 <h1 class="mb-6 text-center text-2xl font-bold">{{ $buku->judul }}</h1>
