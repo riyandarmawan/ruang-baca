@@ -49,6 +49,7 @@ class BukuController extends Controller
     {
         $request->validate([
             'kode_buku' => 'required|unique:App\Models\Buku,kode_buku|digits:13',
+            'sampul' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required|numeric|digits:4',
@@ -59,6 +60,12 @@ class BukuController extends Controller
             'kode_buku.required' => 'Kode buku harus diisi!',
             'kode_buku.unique' => 'Kode buku ini sudah digunakan!',
             'kode_buku.digits' => 'Kode buku harus terdiri dari 13 digit angka!',
+
+            // Sampul
+            'sampul.required' => 'Sampul harus diisi!',
+            'sampul.image' => 'Sampul harus berupa gambar!',
+            'sampul.mimes' => 'Sampul harus berupa jpeg, jpg, atau png!',
+            'sampul.max' => 'Sampul harus berukuranw kurang dari 2mb!',
 
             // Judul
             'judul.required' => 'Judul buku harus diisi!',
