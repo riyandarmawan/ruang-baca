@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
-            $table->string('slug', 30)->unique();
+            $table->string('slug', 35)->unique();
             $table->string('nama', 30);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

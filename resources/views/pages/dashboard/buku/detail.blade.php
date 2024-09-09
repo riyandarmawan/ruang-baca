@@ -11,7 +11,11 @@
             const currentHash = window.location.hash;
             event.target.action += currentHash;
         }
-    }" x-init="window.addEventListener('hashchange', () => active = window.location.hash.substring(1))">
+    }" x-init="if (!window.location.hash) {
+        window.location.hash = 'detail';
+    }
+    active = window.location.hash.substring(1);
+    window.addEventListener('hashchange', () => active = window.location.hash.substring(1));">
         <div class="flex items-center justify-center p-6">
             <div
                 class="h-[32rem] min-w-[40rem] max-w-[60rem] overflow-auto rounded border border-primary shadow shadow-slate-500">
@@ -134,7 +138,8 @@
                             <select name="kategori_id" id="kategori_id" required
                                 class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring focus:ring-primary">
                                 @foreach ($kategoris as $kategori)
-                                    <option {{ old('kategori_id', $buku->kategori_id) ? 'selected' : '' }}
+                                    <option
+                                        {{ old('kategori_id', $buku->kategori_id) == $kategori->id ? 'selected' : '' }}
                                         value="{{ $kategori->id }}">
                                         {{ $kategori->nama }}</option>
                                 @endforeach
@@ -155,8 +160,8 @@
                                 class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">Ubah</button>
                         </div>
                     </form>
-                </div> 
-                
+                </div>
+
                 <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
                     <!-- Button to trigger the modal -->
                     <button x-on:click="modal = !modal" type="button"

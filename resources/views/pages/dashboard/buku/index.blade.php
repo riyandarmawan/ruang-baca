@@ -11,19 +11,23 @@
 
         <table class="mt-8 w-full min-w-[50rem] table-auto">
             <thead>
+                <th>No</th>
                 <th>Kode Buku</th>
                 <th>Judul</th>
                 <th>Penerbit</th>
                 <th>Tahun</th>
+                <th>Kategori</th>
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
                 @foreach ($bukus as $buku)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ formatKodeBuku($buku->kode_buku) }}</td>
                         <td>{{ $buku->judul }}</td>
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>
+                        <td>{{ $buku->kategori->nama }}</td>
                         <td>
                             <a href="/dashboard/buku/detail/{{ $buku->slug }}"
                                 class="my-2 inline-block rounded bg-primary px-4 py-1 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Detail</a>

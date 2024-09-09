@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class BukuController extends Controller
 {
@@ -20,7 +21,7 @@ class BukuController extends Controller
 
         $data = [
             'title' => 'Data Buku',
-            'bukus' => $buku->all()
+            'bukus' => $buku->with(['kategori'])->get()
         ];
 
         return view('pages.dashboard.buku.index', $data);
@@ -125,8 +126,14 @@ class BukuController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        $buku =  Buku::where('slug', $slug)->firstOrFail();
+
         $validator = Validator::make($request->all(), [
-            'kode_buku' => 'required|unique:App\Models\Buku,kode_buku|digits:13',
+            'kode_buku' => [
+                'required',
+                Rule::unique('bukus', 'kode_buku')->ignore($buku->kode_buku, 'kode_buku'),
+                'digits:13'
+            ],
             'judul' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required|numeric|digits:4',
@@ -164,8 +171,6 @@ class BukuController extends Controller
                 ->withFragment('ubah');
         }
 
-        $buku = new Buku();
-
         $buku->kode_buku = $request->kode_buku;
         $buku->judul = $request->judul;
         $buku->penerbit = $request->penerbit;
@@ -176,7 +181,7 @@ class BukuController extends Controller
 
         $buku->slug = Str::slug($request->judul);
 
-        $buku->where('slug', $slug)->firstOrFail()->save();
+        $buku->save();
 
         return redirect('/dashboard/buku')->with('success', 'Data buku berhasil diubah!');
     }

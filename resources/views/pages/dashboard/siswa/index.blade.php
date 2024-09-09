@@ -11,6 +11,7 @@
 
         <table class="mt-4 w-full min-w-[50rem] table-auto">
             <thead>
+                <th>No</th>
                 <th>NISN</th>
                 <th>Nama</th>
                 <th>Kelas</th>
@@ -19,9 +20,10 @@
             <tbody class="text-center">
                 @foreach ($siswas as $siswa)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $siswa->nisn }}</td>
                         <td>{{ $siswa->nama }}</td>
-                        <td>{{ $siswa->kode_kelas }}</td>
+                        <td>{{ $siswa->kelas->kode_kelas }}</td>
                         <td>
                             <a href="/dashboard/siswa/detail/{{ $siswa->nisn }}"
                                 class="my-2 inline-block rounded bg-primary px-4 py-1 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Detail</a>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kode_buku', 17);
             $table->integer('jumlah');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('kode_buku')->references('kode_buku')->on('bukus');
         });

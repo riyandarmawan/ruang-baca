@@ -11,6 +11,7 @@
 
         <table class="mt-8 w-full min-w-[50rem] table-auto">
             <thead>
+                <th>No</th>
                 <th>Kode Kelas</th>
                 <th>Tingkat</th>
                 <th>Jurusan</th>
@@ -19,6 +20,7 @@
             <tbody class="text-center">
                 @foreach ($kelases as $kelas)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $kelas->kode_kelas }}</td>
                         <td>{{ $kelas->tingkat }}</td>
                         <td>{{ $kelas->jurusan }}</td>

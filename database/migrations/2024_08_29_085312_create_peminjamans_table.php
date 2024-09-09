@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('nisn')->references('nisn')->on('siswas');
         });

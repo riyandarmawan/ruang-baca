@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class KategoriController extends Controller
 {
@@ -40,7 +42,21 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required'
+        ], [
+            'nama.required' => 'Nama wajib diisi!'
+        ]);
+
+        $kategori = new Kategori();
+
+        $kategori->nama = $request->nama;
+
+        $kategori->slug = Str::slug($request->nama);
+
+        $kategori->save();
+
+        return redirect('/dashboard/kategori')->with('success', 'Data kategori berhasil ditambahkan!');
     }
 
     /**
@@ -69,16 +85,38 @@ class KategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(Request $request, $slug)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required'
+        ], [
+            'nama.required' => 'Nama wajib diisi!'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->withFragment('ubah');
+        }
+
+        $kategori = Kategori::where('slug', $slug)->firstOrFail();
+
+        $kategori->nama = $request->nama;
+
+        $kategori->slug = Str::slug($request->nama);
+
+        $kategori->save();
+
+        return redirect('/dashboard/kategori')->with('success', 'Data kategori berhasil diubah!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kategori $kategori)
+    public function destroy($slug)
     {
-        //
+        $kategori = new Kategori();
+
+        $kategori->where('slug', $slug)->firstOrFail()->delete();
+
+        return redirect('/dashboard/kategori')->with('success', 'Data kategroi berhasil dihapus!');
     }
 }

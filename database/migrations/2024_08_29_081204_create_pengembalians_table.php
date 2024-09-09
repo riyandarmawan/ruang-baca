@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nisn', 10);
             $table->date('tanggal_kembali');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('nisn')->references('nisn')->on('siswas');
         });

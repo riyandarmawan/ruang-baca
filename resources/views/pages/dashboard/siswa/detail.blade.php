@@ -11,29 +11,36 @@
             const currentHash = window.location.hash;
             event.target.action += currentHash;
         }
-    }" x-init="window.addEventListener('hashchange', () => active = window.location.hash.substring(1))">
-        <div class="flex items-center justify-center p-6">
-            <div
-                class="h-[32rem] min-w-[40rem] max-w-[60rem] overflow-auto rounded border border-primary shadow shadow-slate-500">
-                <ul class="flex justify-around border-b border-primary p-4">
-                    <li>
-                        <a href="#detail" x-bind:class="active === 'detail' ? 'after:w-full' : ''"
-                            class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
-                            Detail
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#ubah" x-bind:class="active === 'ubah' ? 'after:w-full' : ''"
-                            class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
-                            Ubah
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#hapus" x-bind:class="active === 'hapus' ? 'after:w-full' : ''"
-                            class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
-                            Hapus
-                        </a>
-                </ul>
+    }" 
+    x-init="
+        if (!window.location.hash) { 
+            window.location.hash = 'detail'; 
+        }
+        active = window.location.hash.substring(1);
+        window.addEventListener('hashchange', () => active = window.location.hash.substring(1));
+    ">
+    <div class="flex items-center justify-center p-6">
+        <div class="h-[32rem] min-w-[40rem] max-w-[60rem] overflow-auto rounded border border-primary shadow shadow-slate-500">
+            <ul class="flex justify-around border-b border-primary p-4">
+                <li>
+                    <a href="#detail" x-bind:class="active === 'detail' ? 'after:w-full' : ''"
+                        class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
+                        Detail
+                    </a>
+                </li>
+                <li>
+                    <a href="#ubah" x-bind:class="active === 'ubah' ? 'after:w-full' : ''"
+                        class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
+                        Ubah
+                    </a>
+                </li>
+                <li>
+                    <a href="#hapus" x-bind:class="active === 'hapus' ? 'after:w-full' : ''"
+                        class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
+                        Hapus
+                    </a>
+                </li>
+            </ul>
 
                 <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">

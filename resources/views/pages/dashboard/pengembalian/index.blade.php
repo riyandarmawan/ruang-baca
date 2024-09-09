@@ -8,6 +8,7 @@
         <table class="mt-8 w-full min-w-[50rem] table-auto border-collapse">
             <thead>
                 <tr>
+                    <th>No</th>
                     <th>NISN</th>
                     <th>Peminjam</th>
                     <th>Tanggal Kembali</th>
@@ -17,6 +18,7 @@
             <tbody>
                 @foreach ($pengembalians as $pengembalian)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $pengembalian->siswa->nisn }}</td>
                         <td>{{ $pengembalian->siswa->nama }}</td>
                         <td>{{ $pengembalian->tanggal_kembali }}</td>

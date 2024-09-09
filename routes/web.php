@@ -64,12 +64,18 @@ Route::post('/dashboard/buku/ubah/{slug}', [BukuController::class, 'update']);
 
 Route::post('/dashboard/buku/hapus/{slug}', [BukuController::class, 'destroy']);
 
-// buku
+// Kategori
 Route::get('/dashboard/kategori', [KategoriController::class, 'index']);
 
 Route::get('/dashboard/kategori/tambah', [KategoriController::class, 'create']);
 
+Route::post('/dashboard/kategori/tambah', [KategoriController::class, 'store']);
+
 Route::get('/dashboard/kategori/detail/{slug}', [KategoriController::class, 'detail']);
+
+Route::post('/dashboard/kategori/ubah/{slug}', [KategoriController::class, 'update']);
+
+Route::post('/dashboard/kategori/hapus/{slug}', [KategoriController::class, 'destroy']);
 
 // peminjaman
 Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);

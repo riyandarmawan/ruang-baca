@@ -5,16 +5,20 @@
             class="rounded bg-primary px-4 py-2 text-lg font-semibold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Tambah
             Data Kategori</a>
 
+        @if (session('success'))
+            <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
+        @endif
+
         <table class="mt-8 w-full min-w-[50rem] table-auto">
             <thead>
-                <th>Slug</th>
+                <th>No</th>
                 <th>Nama Kategori</th>
                 <th>Aksi</th>
             </thead>
             <tbody class="text-center">
                 @foreach ($kategoris as $kategori)
                     <tr>
-                        <td>{{ $kategori->slug }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $kategori->nama }}</td>
                         <td>
                             <a href="/dashboard/kategori/detail/{{ $kategori->slug }}"

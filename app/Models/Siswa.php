@@ -21,6 +21,8 @@ class Siswa extends Model
 
     protected $guarded = [];
 
+    protected $with = ['kelas'];
+
     public function peminjaman(): HasMany
     {
         return $this->hasMany(Peminjaman::class, 'nisn', 'nisn');
@@ -33,6 +35,6 @@ class Siswa extends Model
 
     public function kelas(): BelongsTo
     {
-        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
+        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas')->withTrashed();
     }
 }

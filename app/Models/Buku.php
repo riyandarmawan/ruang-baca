@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\GenerateUniqueSlugTrait;
 
 class Buku extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use GenerateUniqueSlugTrait;
 
     protected $primaryKey = 'kode_buku';
 
@@ -23,7 +25,7 @@ class Buku extends Model
 
     public function kategori(): BelongsTo 
     {
-        return $this->belongsTo(Kategori::class);
+        return $this->belongsTo(Kategori::class)->withTrashed();
     }
 
     public function peminjamans(): BelongsToMany 

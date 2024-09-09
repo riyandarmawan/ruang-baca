@@ -5,12 +5,11 @@
             <form action="" method="POST">
                 @csrf
                 <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="slug">Slug</label>
-                    <input type="text" name="slug" id="slug" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
-                </div>
-                <div class="grid grid-cols-3 items-center mb-4">
-                    <label for="Nama">Nama Kategori</label>
-                    <input type="text" name="Nama" id="Nama" required class="border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    <label for="nama">Nama Kategori</label>
+                    <input type="text" name="nama" id="nama" value="{{ $errors->has('nama') ? '' : old('nama') }}" required class="{{ $errors->has('nama') ? 'input-error' : 'input-unerror' }} border col-span-2 w-full border-primary shadow shadow-slate-500 rounded p-2 ">
+                    @error('nama')
+                    <p class="col-span-2 col-start-2 mt-2 text-red-500 font-medium text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="flex justify-center mt-6">
                 <button class="py-2 px-6 bg-primary text-background rounded shadow shadow-slate-500 font-medium hover:opacity-80 active:opacity-70 focus:ring focus:ring-slate-500">Tambah</button></div>

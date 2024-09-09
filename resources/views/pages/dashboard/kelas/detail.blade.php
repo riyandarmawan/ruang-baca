@@ -11,7 +11,11 @@
             const currentHash = window.location.hash;
             event.target.action += currentHash;
         }
-    }" x-init="window.addEventListener('hashchange', () => active = window.location.hash.substring(1))">
+    }" x-init="if (!window.location.hash) {
+        window.location.hash = 'detail';
+    }
+    active = window.location.hash.substring(1);
+    window.addEventListener('hashchange', () => active = window.location.hash.substring(1));">
         <div class="flex items-center justify-center p-6">
             <div
                 class="h-[32rem] min-w-[40rem] max-w-[60rem] overflow-auto rounded border border-primary shadow shadow-slate-500">
@@ -36,7 +40,7 @@
                     </li>
                 </ul>
 
-                 <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
+                <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Kode Kelas</strong>
                         <span>:</span>
