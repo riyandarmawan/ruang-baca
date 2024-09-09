@@ -20,6 +20,7 @@ class BukuFactory extends Factory
     {
         return [
             'kode_buku' => fake()->numerify('#############'),
+            'sampul' => 'no-cover.png',
             'slug' => Str::slug(fake()->unique(true)->words(5, true)),
             'judul' => fake()->words(5, true),
             'penerbit' => fake()->words(2, true),

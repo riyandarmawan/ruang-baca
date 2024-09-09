@@ -1,5 +1,5 @@
 <!-- Header Component -->
-    <header x-data="{ open: false, openFilter: false, currentYear: new Date().getFullYear() }" class="fixed left-0 right-0 top-0 bg-background shadow-md">
+    <header x-data="{ open: false, openFilter: false, currentYear: new Date().getFullYear() }" class="fixed left-0 right-0 top-0 bg-background shadow-md z-[9999]">
         <!-- Container for header content -->
         <div class="container flex h-16 items-center justify-between">
 
