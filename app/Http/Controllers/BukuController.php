@@ -6,6 +6,7 @@ use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -100,7 +101,7 @@ class BukuController extends Controller
 
         $buku->slug = Str::slug($request->judul);
 
-        if($request->file('sampul')) {
+        if ($request->file('sampul')) {
             $sampul = $request->file('sampul');
             $sampulName = time() . '.' . $sampul->getClientOriginalExtension();
             $sampul->storeAs('public/images/bukus', $sampulName);
@@ -151,6 +152,7 @@ class BukuController extends Controller
                 Rule::unique('bukus', 'kode_buku')->ignore($buku->kode_buku, 'kode_buku'),
                 'digits:13'
             ],
+            'sampul' => 'image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required|numeric|digits:4',
@@ -161,6 +163,11 @@ class BukuController extends Controller
             'kode_buku.required' => 'Kode buku harus diisi!',
             'kode_buku.unique' => 'Kode buku ini sudah digunakan!',
             'kode_buku.digits' => 'Kode buku harus terdiri dari 13 digit angka!',
+
+            // Sampul
+            'sampul.image' => 'Sampul harus berupa gambar!',
+            'sampul.mimes' => 'Sampul harus berupa jpeg, jpg, atau png!',
+            'sampul.max' => 'Sampul harus berukuranw kurang dari 2mb!',
 
             // Judul
             'judul.required' => 'Judul buku harus diisi!',
@@ -198,6 +205,20 @@ class BukuController extends Controller
 
         $buku->slug = Str::slug($request->judul);
 
+        $buku->sampul = $buku->sampul;
+
+        if ($request->file('sampul')) {
+            if ($buku->sampul && $buku->sampul !== 'no-cover.jpg' && Storage::exists("public/images/bukus/$buku->sampul")) {
+                Storage::delete("public/images/bukus/$buku->sampul");
+            }
+
+            $sampul = $request->file('sampul');
+            $sampulName = time() . '.' . $sampul->getClientOriginalExtension();
+            $sampul->storeAs('public/images/bukus', $sampulName);
+
+            $buku->sampul = $sampulName;
+        }
+
         $buku->save();
 
         return redirect('/dashboard/buku')->with('success', 'Data buku berhasil diubah!');
@@ -208,9 +229,13 @@ class BukuController extends Controller
      */
     public function destroy($slug)
     {
-        $buku = new Buku();
+        $buku = Buku::where('slug', $slug)->firstOrFail();
 
-        $buku->where('slug', $slug)->firstOrFail()->delete();
+        if ($buku->sampul && $buku->sampul !== 'no-cover.jpg' && Storage::exists("public/images/bukus/$buku->sampul")) {
+            Storage::delete("public/images/bukus/$buku->sampul");
+        }
+
+        $buku->delete();
 
         return redirect('/dashboard/buku')->with('success', 'Data buku berhasil dihapus!');
     }

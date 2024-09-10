@@ -44,7 +44,8 @@
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Sampul</strong>
                         <span>:</span>
-                        <img src="{{ asset("storage/images/bukus/$buku->sampul") }}" alt="{{ $buku->judul }}" class="aspect-[2/3] object-cover w-36 rounded-xl">
+                        <img src="{{ asset("storage/images/bukus/$buku->sampul") }}" alt="{{ $buku->judul }}"
+                            class="aspect-[2/3] w-36 rounded-xl object-cover">
                     </div>
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Kode Buku</strong>
@@ -69,7 +70,7 @@
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Jumlah Halaman</strong>
                         <span>:</span>
-                        <div>{{ $buku->jumlah_halaman }}</div>
+                        <div>{{ $buku->jumlah_halaman }} Halaman</div>
                     </div>
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Kategori</strong>
@@ -84,8 +85,27 @@
                 </div>
 
                 <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
-                    <form action="/dashboard/buku/ubah/{{ $buku->slug }}" method="POST">
+                    <form action="/dashboard/buku/ubah/{{ $buku->slug }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
+                        <div x-data="{ imagePreview: '{{ asset("storage/images/bukus/$buku->sampul") }}' }" class="mb-4 grid grid-cols-3 items-center">
+                            <label for="sampul">Sampul</label>
+                            <div class="col-span-2 flex flex-col gap-4">
+                                <label for="sampul"
+                                    class="focus focus-ring {{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} aspect-[2/3] w-36 cursor-pointer overflow-hidden rounded-xl border border-primary shadow shadow-slate-50 outline-none focus:ring">
+                                    <img src="{{ asset("storage/images/bukus/$buku->sampul") }}" :src="imagePreview"
+                                        alt="Sampul" class="aspect-[2/3] w-full object-cover">
+                                </label>
+                                <input type="file" name="sampul" id="sampul"
+                                    value="{{ $errors->has('sampul') ? '' : old('sampul') }}"
+                                    @change="fileChosen"
+                                    class="{{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring hidden">
+                            </div>
+                            @error('sampul')
+                                <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
                         <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="kode_buku">Kode Buku</label>
                             <input type="number" name="kode_buku" id="kode_buku"
@@ -195,4 +215,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function fileChosen(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imagePreview = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </x-dashboard.layout>

@@ -4,17 +4,17 @@
             <h1 class="mb-6 text-center text-xl font-bold">Tambah Data Buku</h1>
             <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div x-data="{ imagePreview: '/images/bukus/no-cover.png' }" class="mb-4 grid grid-cols-3 items-center">
+                <div x-data="{ imagePreview: '{{ asset('storage/images/bukus/no-cover.png') }}' }" class="mb-4 grid grid-cols-3 items-center">
                     <label for="sampul">Sampul</label>
                     <div class="col-span-2 flex flex-col gap-4">
                         <label for="sampul"
                             class="focus focus-ring {{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} aspect-[2/3] w-36 cursor-pointer overflow-hidden rounded-xl border border-primary focus:ring shadow shadow-slate-50 outline-none">
-                            <img src="/images/bukus/no-cover.png" :src="imagePreview" alt="Sampul"
+                            <img src="{{ asset('storage/images/bukus/no-cover.png') }}" :src="imagePreview" alt="Sampul"
                                 class="aspect-[2/3] w-full object-cover">
                         </label>
                         <input type="file" name="sampul" id="sampul"
                             value="{{ $errors->has('sampul') ? '' : old('sampul') }}" required @change="fileChosen"
-                            class="{{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
+                            class="{{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring hidden">
                     </div>
                     @error('sampul')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>

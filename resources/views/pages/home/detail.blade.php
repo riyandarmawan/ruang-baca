@@ -30,10 +30,10 @@
                     <h3 class="mb-2 text-lg font-bold">Detail:</h3>
                     <ul class="grid sm:grid-cols-2 lg:grid-cols-5 gap-x-8">
                         <li class="mb-2"><span class="block font-medium">Jumlah Halaman</span>
-                            {{ $buku->jumlah_halaman }}</li>
+                            {{ $buku->jumlah_halaman }} Halaman</li>
                         <li class="mb-2"><span class="block font-medium">Tahun Terbit</span> {{ $buku->tahun_terbit }}</li>
                         <li class="mb-2"><span class="block font-medium">Penerbit</span> {{ $buku->penerbit }}</li>
-                        <li class="mb-2"><span class="block font-medium">Kode Buku</span> {{ $buku->kode_buku }}</li>
+                        <li class="mb-2"><span class="block font-medium">Kode Buku</span> {{ formatKodeBuku($buku->kode_buku) }}</li>
                         <li class="mb-2"><span class="block font-medium">Kategori</span> {{ $buku->kategori->nama }}</li>
                     </ul>
                 </div>
