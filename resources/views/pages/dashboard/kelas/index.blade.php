@@ -9,7 +9,7 @@
             <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
         @endif
 
-        <table class="mt-8 w-full min-w-[50rem] table-auto">
+        <table class="mt-8 w-full min-w-[50rem] table-auto mb-8">
             <thead>
                 <th>No</th>
                 <th>Kode Kelas</th>
@@ -20,7 +20,7 @@
             <tbody class="text-center">
                 @foreach ($kelases as $kelas)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($kelases->currentPage() - 1) * $kelases->perPage() + $loop->iteration }}</td>
                         <td>{{ $kelas->kode_kelas }}</td>
                         <td>{{ $kelas->tingkat }}</td>
                         <td>{{ $kelas->jurusan }}</td>
@@ -32,5 +32,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $kelases->links() }}
     </div>
 </x-dashboard.layout>

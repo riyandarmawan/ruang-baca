@@ -18,7 +18,7 @@ class KelasController extends Controller
 
         $data = [
             'title' => 'Data Kelas',
-            'kelases' => $kelas->all()
+            'kelases' => $kelas->paginate(10)
         ];
 
         return view('pages.dashboard.kelas.index', $data);

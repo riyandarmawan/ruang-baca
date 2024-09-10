@@ -22,7 +22,7 @@ class BukuController extends Controller
 
         $data = [
             'title' => 'Data Buku',
-            'bukus' => $buku->with(['kategori'])->get()
+            'bukus' => $buku->with(['kategori'])->paginate(10)
         ];
 
         return view('pages.dashboard.buku.index', $data);

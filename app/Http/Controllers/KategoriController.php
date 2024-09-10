@@ -19,7 +19,7 @@ class KategoriController extends Controller
 
         $data = [
             'title' => 'Data Kategori',
-            'kategoris' => $kategori->all()
+            'kategoris' => $kategori->paginate(10)
         ];
 
         return view('pages.dashboard.kategori.index', $data);

@@ -9,7 +9,7 @@
             <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
         @endif
 
-        <table class="mt-8 w-full min-w-[50rem] table-auto">
+        <table class="mt-8 w-full min-w-[50rem] table-auto mb-8">
             <thead>
                 <th>No</th>
                 <th>Kode Buku</th>
@@ -22,7 +22,7 @@
             <tbody class="text-center">
                 @foreach ($bukus as $buku)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($bukus->currentPage() - 1) * $bukus->perPage() + $loop->iteration }}</td>
                         <td>{{ formatKodeBuku($buku->kode_buku) }}</td>
                         <td>{{ $buku->judul }}</td>
                         <td>{{ $buku->penerbit }}</td>
@@ -36,5 +36,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $bukus->links() }}
     </div>
 </x-dashboard.layout>

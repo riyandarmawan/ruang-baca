@@ -9,7 +9,7 @@
             <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
         @endif
 
-        <table class="mt-8 w-full min-w-[50rem] table-auto">
+        <table class="mt-8 w-full min-w-[50rem] table-auto mb-8">
             <thead>
                 <th>No</th>
                 <th>Nama Kategori</th>
@@ -18,7 +18,7 @@
             <tbody class="text-center">
                 @foreach ($kategoris as $kategori)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($kategoris->currentPage() - 1) * $kategoris->perPage() + $loop->iteration }}</td>
                         <td>{{ $kategori->nama }}</td>
                         <td>
                             <a href="/dashboard/kategori/detail/{{ $kategori->slug }}"
@@ -28,5 +28,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $kategoris->links() }}
     </div>
 </x-dashboard.layout>

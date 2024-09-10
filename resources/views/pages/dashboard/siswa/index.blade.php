@@ -9,7 +9,7 @@
             <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
         @endif
 
-        <table class="mt-4 w-full min-w-[50rem] table-auto">
+        <table class="mt-4 w-full min-w-[50rem] table-auto mb-8">
             <thead>
                 <th>No</th>
                 <th>NISN</th>
@@ -20,7 +20,7 @@
             <tbody class="text-center">
                 @foreach ($siswas as $siswa)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($siswas->currentPage() - 1) * $siswas->perPage() + $loop->iteration }}</td>
                         <td>{{ $siswa->nisn }}</td>
                         <td>{{ $siswa->nama }}</td>
                         <td>{{ $siswa->kelas->kode_kelas }}</td>
@@ -32,5 +32,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $siswas->links() }}
     </div>
 </x-dashboard.layout>
