@@ -12,13 +12,26 @@ class KelasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $kelas = new Kelas();
+
+        if ($search) {
+            $kelases = $kelas->where('kode_kelas', 'like', "%$search%")
+                ->orWhere('tingkat', 'like', "%$search%")
+                ->orWhere('jurusan', 'like', "%$search%")
+                ->paginate(10)
+                ->appends(['search' => $search]);
+        } else {
+            $kelases = $kelas->paginate(10);
+        }
 
         $data = [
             'title' => 'Data Kelas',
-            'kelases' => $kelas->paginate(10)
+            'kelases' => $kelases,
+            'search' => $search
         ];
 
         return view('pages.dashboard.kelas.index', $data);
@@ -58,7 +71,7 @@ class KelasController extends Controller
         ]);
 
         $kelas = new Kelas();
-        
+
         $kelas->create($request->all());
 
         return redirect('/dashboard/kelas')->with('success', 'Data kelas berhasil ditambah!');
@@ -92,7 +105,7 @@ class KelasController extends Controller
      */
     public function update(Request $request, $kode_kelas)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'kode_kelas' => [
                 'required',
                 Rule::unique('kelases', 'kode_kelas')->ignore($kode_kelas, 'kode_kelas'),
@@ -130,6 +143,6 @@ class KelasController extends Controller
 
         $kelas->find($kode_kelas)->delete();
 
-        return redirect('/dashboard/kelas')->with('success', 'Data kelas berhasil dihapus!');//
+        return redirect('/dashboard/kelas')->with('success', 'Data kelas berhasil dihapus!'); //
     }
 }

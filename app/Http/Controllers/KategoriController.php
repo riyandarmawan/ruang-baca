@@ -12,14 +12,24 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
         $kategori = new Kategori();
+
+        if ($search) {
+            $kategoris = $kategori->where('nama', 'like', "%$search%")
+                ->paginate(10)
+                ->appends(['search' => $search]);
+        } else {
+            $kategoris = $kategori->paginate(10);
+        }
 
         $data = [
             'title' => 'Data Kategori',
-            'kategoris' => $kategori->paginate(10)
+            'kategoris' => $kategoris,
+            'search' => $search
         ];
 
         return view('pages.dashboard.kategori.index', $data);

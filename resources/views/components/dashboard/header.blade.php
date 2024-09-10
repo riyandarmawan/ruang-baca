@@ -8,9 +8,8 @@
         </div>
         <form action="" method="GET">
             <div class="relative w-fit">
-                <input type="search" id="search" name="search" placeholder="Cari data disini"
+                <input type="search" id="search" name="search" value="{{ $search }}" placeholder="Cari data disini"
                     class="rounded px-4 py-2 text-base text-slate-600 outline-none" autofocus>
-                <span class="i-mdi-search absolute right-2 top-2 bg-slate-400 text-2xl"></span>
             </div>
         </form>
     </div>

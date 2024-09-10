@@ -13,13 +13,26 @@ class SiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $siswa = new Siswa();
+
+        if ($search) {
+            $siswas = $siswa->where('nisn', 'like', "%$search%")
+                ->orWhere('nama', 'like', "%$search%")
+                ->orWhere('kode_kelas', 'like', "%$search%")
+                ->paginate(10)
+                ->appends(['search' => $search]);
+        } else {
+            $siswas = $siswa->paginate(10);
+        }
 
         $data = [
             'title' => 'Data Siswa',
-            'siswas' => $siswa->paginate(10)
+            'siswas' => $siswas,
+            'search' => $search
         ];
 
         return view('pages.dashboard.siswa.index', $data);

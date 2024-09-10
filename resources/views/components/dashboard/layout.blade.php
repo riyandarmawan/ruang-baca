@@ -1,6 +1,6 @@
 <x-base-layout title="{{ $title }}">
     <div x-data="{ detail: false }">
-        <x-dashboard.header/>
+        <x-dashboard.header search="{{ $search }}"/>
 
         <main class="h-fit flex w-full" style="height: calc(100vh - 4rem)">
             

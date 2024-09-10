@@ -15,14 +15,31 @@ class BukuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
         $buku = new Buku();
+
+        if ($search) {
+            $bukus = $buku->with(['kategori'])
+                ->where('kode_buku', 'like', "%$search%")
+                ->orWhere('judul', 'like', "%$search%")
+                ->orWhere('penerbit', 'like', "%$search%")
+                ->orWhere('tahun_terbit', 'like', "%$search%")
+                ->orWhereHas('kategori', function ($query) use ($search) {
+                    $query->where('nama', 'like', "%$search%");
+                })
+                ->paginate(10)
+                ->appends(['search' => $search]);
+        } else {
+            $bukus = $buku->with(['kategori'])->paginate(10);
+        }
 
         $data = [
             'title' => 'Data Buku',
-            'bukus' => $buku->with(['kategori'])->paginate(10)
+            'bukus' => $bukus,
+            'search' => $search
         ];
 
         return view('pages.dashboard.buku.index', $data);
