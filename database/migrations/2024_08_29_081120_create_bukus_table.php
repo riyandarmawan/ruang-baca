@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sampul', 100);
             $table->string('slug', 55)->unique();
             $table->string('judul', 50);
+            $table->string('penulis', 30);
             $table->string('penerbit', 30);
             $table->year('tahun_terbit');
             $table->integer('jumlah_halaman');
