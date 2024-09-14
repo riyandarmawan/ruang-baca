@@ -14,6 +14,7 @@
                 <th>No</th>
                 <th>Kode Buku</th>
                 <th>Judul</th>
+                <th>Penulis</th>
                 <th>Penerbit</th>
                 <th>Tahun</th>
                 <th>Kategori</th>
@@ -25,6 +26,7 @@
                         <td>{{ ($bukus->currentPage() - 1) * $bukus->perPage() + $loop->iteration }}</td>
                         <td>{{ formatKodeBuku($buku->kode_buku) }}</td>
                         <td>{{ $buku->judul }}</td>
+                        <td>{{ $buku->penulis }}</td>
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>
                         <td>{{ $buku->kategori->nama }}</td>

@@ -25,6 +25,7 @@ class BukuController extends Controller
             $bukus = $buku->with(['kategori'])
                 ->where('kode_buku', 'like', "%$search%")
                 ->orWhere('judul', 'like', "%$search%")
+                ->orWhere('penulis', 'like', "%$search%")
                 ->orWhere('penerbit', 'like', "%$search%")
                 ->orWhere('tahun_terbit', 'like', "%$search%")
                 ->orWhereHas('kategori', function ($query) use ($search) {
@@ -71,6 +72,7 @@ class BukuController extends Controller
             'kode_buku' => 'required|unique:App\Models\Buku,kode_buku|digits:13',
             'sampul' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required',
+            'penulis' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required|numeric|digits:4',
             'jumlah_halaman' => 'required|numeric',
@@ -89,6 +91,9 @@ class BukuController extends Controller
 
             // Judul
             'judul.required' => 'Judul buku harus diisi!',
+
+            // Penulis
+            'penulis.required' => 'Penulis buku harus diisi!',
 
             // Penerbit
             'penerbit.required' => 'Penerbit buku harus diisi!',
@@ -110,6 +115,7 @@ class BukuController extends Controller
 
         $buku->kode_buku = $request->kode_buku;
         $buku->judul = $request->judul;
+        $buku->penulis = $request->penulis;
         $buku->penerbit = $request->penerbit;
         $buku->tahun_terbit = $request->tahun_terbit;
         $buku->jumlah_halaman = $request->jumlah_halaman;
@@ -171,6 +177,7 @@ class BukuController extends Controller
             ],
             'sampul' => 'image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required',
+            'penulis' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required|numeric|digits:4',
             'jumlah_halaman' => 'required|numeric',
@@ -188,6 +195,9 @@ class BukuController extends Controller
 
             // Judul
             'judul.required' => 'Judul buku harus diisi!',
+
+            // Penulis
+            'penulis.required' => 'Penulis buku harus diisi!',
 
             // Penerbit
             'penerbit.required' => 'Penerbit buku harus diisi!',
@@ -214,6 +224,7 @@ class BukuController extends Controller
 
         $buku->kode_buku = $request->kode_buku;
         $buku->judul = $request->judul;
+        $buku->penulis = $request->penulis;
         $buku->penerbit = $request->penerbit;
         $buku->tahun_terbit = $request->tahun_terbit;
         $buku->jumlah_halaman = $request->jumlah_halaman;

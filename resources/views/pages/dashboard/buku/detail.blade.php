@@ -58,6 +58,11 @@
                         <div>{{ $buku->judul }}</div>
                     </div>
                     <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
+                        <strong>Penulis</strong>
+                        <span>:</span>
+                        <div>{{ $buku->penulis }}</div>
+                    </div>
+                    <div class="grid grid-cols-[13rem_auto_1fr] gap-4">
                         <strong>Penerbit</strong>
                         <span>:</span>
                         <div>{{ $buku->penerbit }}</div>
@@ -128,6 +133,16 @@
                             @enderror
                         </div>
                         <div class="mb-4 grid grid-cols-3 items-center">
+                            <label for="penulis">Penulis</label>
+                            <input type="text" name="penulis" id="penulis" required
+                                value="{{ $errors->has('penulis') ? $buku->penulis : old('penulis', $buku->penulis) }}"
+                                class="{{ $errors->has('penulis') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
+                            @error('penulis')
+                                <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                        <div class="mb-4 grid grid-cols-3 items-center">
                             <label for="penerbit">Penerbit</label>
                             <input type="text" name="penerbit" id="penerbit" required
                                 value="{{ $errors->has('penerbit') ? $buku->penerbit : old('penerbit', $buku->penerbit) }}"
@@ -149,7 +164,7 @@
                             @enderror
                         </div>
                         <div class="mb-4 grid grid-cols-3 items-center">
-                            <label for="jumlah_halaman">Jumlah Halaman</label>
+                            <label for="umlah_halaman">Jumlah Halaman</label>
                             <input type="number" name="jumlah_halaman" id="jumlah_halaman" required
                                 value="{{ $errors->has('jumlah_halaman') ? $buku->jumlah_halaman : old('jumlah_halaman', $buku->jumlah_halaman) }}"
                                 class="{{ $errors->has('jumlah_halaman') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">

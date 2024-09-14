@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}" search="">
+<x-dashboard.layout title="{{ $title }}">
     <div class="grid grid-cols-3 gap-8 p-4">
         <div class="rounded-md border-2 border-primary bg-primary p-4 text-background">
             <h4 class="text-center text-xl font-medium">Buku yang dipinjam minggu ini</h4>

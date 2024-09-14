@@ -23,6 +23,7 @@ class BukuFactory extends Factory
             'sampul' => 'no-cover.jpg',
             'slug' => Str::slug(fake()->unique(true)->words(5, true)),
             'judul' => fake()->words(5, true),
+            'penulis' => fake()->words(2, true),
             'penerbit' => fake()->words(2, true),
             'tahun_terbit' => fake()->year(),
             'jumlah_halaman' => fake()->numberBetween(100, 1000),

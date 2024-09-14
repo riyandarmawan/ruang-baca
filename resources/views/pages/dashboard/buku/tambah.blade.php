@@ -4,12 +4,12 @@
             <h1 class="mb-6 text-center text-xl font-bold">Tambah Data Buku</h1>
             <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div x-data="{ imagePreview: '{{ asset('storage/images/bukus/no-cover.png') }}' }" class="mb-4 grid grid-cols-3 items-center">
+                <div x-data="{ imagePreview: '{{ asset('storage/images/bukus/no-cover.jpg') }}' }" class="mb-4 grid grid-cols-3 items-center">
                     <label for="sampul">Sampul</label>
                     <div class="col-span-2 flex flex-col gap-4">
                         <label for="sampul"
                             class="focus focus-ring {{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} aspect-[2/3] w-36 cursor-pointer overflow-hidden rounded-xl border border-primary focus:ring shadow shadow-slate-50 outline-none">
-                            <img src="{{ asset('storage/images/bukus/no-cover.png') }}" :src="imagePreview" alt="Sampul"
+                            <img src="{{ asset('storage/images/bukus/no-cover.jpg') }}" :src="imagePreview" alt="Sampul"
                                 class="aspect-[2/3] w-full object-cover">
                         </label>
                         <input type="file" name="sampul" id="sampul"
@@ -35,6 +35,15 @@
                         value="{{ $errors->has('judul') ? '' : old('judul') }}"
                         class="{{ $errors->has('judul') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
                     @error('judul')
+                        <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4 grid grid-cols-3 items-center">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" name="penulis" id="penulis" required
+                        value="{{ $errors->has('penulis') ? '' : old('penulis') }}"
+                        class="{{ $errors->has('penulis') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
+                    @error('penulis')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
@@ -85,7 +94,7 @@
                     @enderror
                 </div>
                 <div class="mt-6 flex justify-center">
-                    <button
+                    <button type="submit"
                         class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">Tambah</button>
                 </div>
             </form>

@@ -6,11 +6,13 @@
                 <h1 class="font-lora text-2xl font-bold text-background">Ruang Baca</h1>
             </a>
         </div>
-        <form action="" method="GET">
-            <div class="relative w-fit">
-                <input type="search" id="search" name="search" value="{{ $search }}" placeholder="Cari data disini"
-                    class="rounded px-4 py-2 text-base text-slate-600 outline-none" autofocus>
-            </div>
-        </form>
+        
+            <form action="" method="GET">
+                <div class="relative w-fit">
+                    <input type="search" id="search" name="search" value="{{ $search }}"
+                        placeholder="Cari data disini" class="rounded px-4 py-2 text-base text-slate-600 outline-none"
+                        autofocus>
+                </div>
+            </form>
     </div>
 </header>
