@@ -16,10 +16,10 @@ class KelasFactory extends Factory
      */
     public function definition(): array
     {
-        $kodeKelas = fake()->unique()->randomElement(['X-PPLG', 'X-AK', 'X-TO', 'X-TM', 'XI-PPLG', 'XI-AK', 'XI-TO', 'XI-TM', 'XII-PPLG', 'XII-AK', 'XII-TO', 'XII-TM']);
+        // $kodeKelas = fake()->unique()->randomElement(['X-PPLG', 'X-AK', 'X-TO', 'X-TM', 'XI-PPLG', 'XI-AK', 'XI-TO', 'XI-TM', 'XII-PPLG', 'XII-AK', 'XII-TO', 'XII-TM']);
 
         return [
-            'kode_kelas' => $kodeKelas,
+            'kode_kelas' => fake()->unique()->bothify('??-???'),
             'tingkat' => fake()->randomElement(['X', 'XI', 'XII']),
             'jurusan' => fake()->randomElement(['Pengembangan Perangkat Lunak dan Gim', 'Akuntansi', 'Teknik Otomotif', 'Teknik Mesin'])
         ];

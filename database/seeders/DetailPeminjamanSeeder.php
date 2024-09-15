@@ -17,12 +17,6 @@ class DetailPeminjamanSeeder extends Seeder
      */
     public function run(): void
     {
-        $kelas = new Kelas();
-
-        $buku = Buku::factory(10)->create();
-        $siswa = Siswa::factory(10)->recycle($kelas->all())->create();
-        $peminjaman = Peminjaman::factory(10)->recycle($siswa)->create();
-
-        DetailPeminjaman::factory(10)->recycle($buku)->recycle($peminjaman)->create();
+        DetailPeminjaman::factory(10)->recycle(Buku::all())->recycle(Peminjaman::all())->create();
     }
 }

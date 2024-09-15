@@ -11,24 +11,24 @@
         </div>
 
         <div class="col-span-2 row-span-2 rounded-md border-2 border-primary bg-primary p-4 text-background">
-            <div class="m-auto w-11/12">
+            <div class="m-auto w-10/12">
                 <canvas id="buku-chart"></canvas>
             </div>
         </div>
 
         <div class="order-4 rounded-md border-2 border-primary bg-primary p-4 text-background">
             <h4 class="text-center text-xl font-medium">Buku terfavorit</h4>
-            <h2 id="data-buku-terfavorit" class="mt-4 text-center text-lg font-bold">Harry Poter dan Batu Bertuah</h2>
+            <h2 id="data-buku-terfavorit" class="mt-4 text-center text-lg font-bold">{{ $bukuTerfavorit }}</h2>
         </div>
 
         <div class="order-5 rounded-md border-2 border-primary bg-primary p-4 text-background">
             <h4 class="text-center text-xl font-medium">Penulis terfavorit</h4>
-            <h2 id="data-buku-terfavorit" class="mt-4 text-center text-lg font-bold">J.K Rowling</h2>
+            <h2 id="data-buku-terfavorit" class="mt-4 text-center text-lg font-bold">{{ $penulisTerfavorit }}</h2>
         </div>
 
         <div class="order-5 rounded-md border-2 border-primary bg-primary p-4 text-background">
             <h4 class="text-center text-xl font-medium">Penerbit terfavorit</h4>
-            <h2 id="data-buku-terfavorit" class="mt-4 text-center text-lg font-bold">Gramedia</h2>
+            <h2 id="data-buku-terfavorit" class="mt-4 text-center text-lg font-bold">{{ $penerbitTerfavorit }}</h2>
         </div>
     </div>
 

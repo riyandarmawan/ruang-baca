@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use Carbon\Carbon;
@@ -11,50 +12,65 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $dataPinjam = Peminjaman::whereBetween('tanggal_pinjam', [
-            Carbon::now()->startOfWeek(),
-            Carbon::now()->endOfWeek()
-        ])
-            ->with('bukus')
-            ->get();
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
 
-        $dataKembali = Pengembalian::whereBetween('tanggal_kembali', [
-            Carbon::now()->startOfWeek(),
-            Carbon::now()->endOfWeek()
-        ])
-            ->with('bukus')
-            ->get();
-
-        $jumlahBukuDiPinjam = $dataPinjam->sum(function ($peminjaman) {
-            return $peminjaman->bukus->sum('pivot.jumlah');
-        });
-
-        $jumlahBukuDiKembalikan = $dataKembali->sum(function ($pengembalian) {
-            return $pengembalian->bukus->sum('pivot.jumlah');
-        });
-
+        // Initialize arrays with 7 days (Monday to Sunday)
         $pinjamPerHari = array_fill(0, 7, 0);
         $kembaliPerHari = array_fill(0, 7, 0);
-        
-        // Aggregate data for each day, ensuring Monday is index 0 and Sunday is index 6
+
+        // Aggregate data for books borrowed and returned
+        $dataPinjam = Peminjaman::whereBetween('tanggal_pinjam', [$startOfWeek, $endOfWeek])
+            ->with('bukus')
+            ->get();
+
+        $dataKembali = Pengembalian::whereBetween('tanggal_kembali', [$startOfWeek, $endOfWeek])
+            ->with('bukus')
+            ->get();
+
         foreach ($dataPinjam as $peminjaman) {
-            $dayIndex = (Carbon::parse($peminjaman->tanggal_pinjam)->dayOfWeekIso - 1 + 7) % 7;
+            $dayIndex = (Carbon::parse($peminjaman->tanggal_pinjam)->dayOfWeekIso - 1) % 7;
             $pinjamPerHari[$dayIndex] += $peminjaman->bukus->sum('pivot.jumlah');
         }
 
         foreach ($dataKembali as $pengembalian) {
-            $dayIndex = (Carbon::parse($pengembalian->tanggal_kembali)->dayOfWeekIso - 1 + 7) % 7;
+            $dayIndex = (Carbon::parse($pengembalian->tanggal_kembali)->dayOfWeekIso - 1) % 7;
             $kembaliPerHari[$dayIndex] += $pengembalian->bukus->sum('pivot.jumlah');
         }
 
-        $data = [
+        // Calculate total numbers
+        $jumlahBukuDiPinjam = array_sum($pinjamPerHari);
+        $jumlahBukuDiKembalikan = array_sum($kembaliPerHari);
+
+        // Get most favorite book, author, and publisher
+        $bukuTerfavorit = Buku::select('bukus.judul')
+            ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+            ->groupBy('bukus.judul')
+            ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
+            ->first();
+
+        $penulisTerfavorit = Buku::select('bukus.penulis')
+            ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+            ->groupBy('bukus.penulis')
+            ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
+            ->first();
+
+        $penerbitTerfavorit = Buku::select('bukus.penerbit')
+            ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+            ->groupBy('bukus.penerbit')
+            ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
+            ->first();
+
+        // Pass data to the view
+        return view('pages.dashboard.index', [
             'title' => 'Dashboard',
             'jumlahBukuDiPinjam' => $jumlahBukuDiPinjam,
             'pinjamPerHari' => $pinjamPerHari,
             'jumlahBukuDiKembalikan' => $jumlahBukuDiKembalikan,
             'kembaliPerHari' => $kembaliPerHari,
-        ];
-
-        return view('pages.dashboard.index', $data);
+            'bukuTerfavorit' => $bukuTerfavorit->judul ?? 'Tidak ada data',
+            'penulisTerfavorit' => $penulisTerfavorit->penulis ?? 'Tidak ada data',
+            'penerbitTerfavorit' => $penerbitTerfavorit->penerbit ?? 'Tidak ada data'
+        ]);
     }
 }

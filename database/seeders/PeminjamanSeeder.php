@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Siswa;
+use App\Models\Peminjaman;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PeminjamanSeeder extends Seeder
 {
@@ -12,6 +14,6 @@ class PeminjamanSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Peminjaman::factory(10)->recycle(Siswa::all())->create();
     }
 }

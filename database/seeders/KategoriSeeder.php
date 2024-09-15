@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Kategori;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class KategoriSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class KategoriSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Kategori::factory(10)->create();
     }
 }
