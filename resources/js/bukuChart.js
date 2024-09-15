@@ -2,15 +2,18 @@ import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
+const pinjamPerHari = window.dataChart?.pinjamPerHari || [];
+const kembaliPerHari = window.dataChart?.kembaliPerHari || [];
+
 const ctx = document.getElementById('buku-chart').getContext('2d');
 const bukuChart = new Chart(ctx, {
     type: 'line', // Specify chart type
     data: {
-        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'], // X-axis labels
+        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu', 'Minggu'], // X-axis labels
         datasets: [
             {
                 label: 'Buku yang dipinjam', // First line (books borrowed)
-                data: [10, 8, 12, 6, 5, 9], // Data points for books borrowed (Sum = 50)
+                data: pinjamPerHari, // Data points for books borrowed (Sum = 50)
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
@@ -18,7 +21,7 @@ const bukuChart = new Chart(ctx, {
             },
             {
                 label: 'Buku yang dikembalikan', // Second line (books returned)
-                data: [5, 7, 6, 4, 3, 5], // Data points for books returned (Sum = 30)
+                data: kembaliPerHari, // Data points for books returned (Sum = 30)
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,

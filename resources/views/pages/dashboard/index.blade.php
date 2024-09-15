@@ -2,16 +2,16 @@
     <div class="grid grid-cols-3 gap-8 p-4">
         <div class="rounded-md border-2 border-primary bg-primary p-4 text-background">
             <h4 class="text-center text-xl font-medium">Buku yang dipinjam minggu ini</h4>
-            <h2 id="data-pinjam" class="mt-4 text-center text-5xl font-bold">50</h2>
+            <h2 id="data-pinjam" class="mt-4 text-center text-5xl font-bold">{{ $jumlahBukuDiPinjam }}</h2>
         </div>
 
         <div class="order-3 rounded-md border-2 border-primary bg-primary p-4 text-background">
             <h4 class="text-center text-xl font-medium">Buku yang dikembalikan minggu ini</h4>
-            <h2 id="data-kembali" class="mt-4 text-center text-5xl font-bold">30</h2>
+            <h2 id="data-kembali" class="mt-4 text-center text-5xl font-bold">{{ $jumlahBukuDiKembalikan }}</h2>
         </div>
 
         <div class="col-span-2 row-span-2 rounded-md border-2 border-primary bg-primary p-4 text-background">
-            <div class="m-auto w-3/4">
+            <div class="m-auto w-11/12">
                 <canvas id="buku-chart"></canvas>
             </div>
         </div>
@@ -32,5 +32,12 @@
         </div>
     </div>
 
+    <script>
+        window.dataChart =  {
+            pinjamPerHari: @json($pinjamPerHari),
+            kembaliPerHari: @json($kembaliPerHari)
+        };
+    </script>
+    
     @vite('resources/js/bukuChart.js')
 </x-dashboard.layout>
