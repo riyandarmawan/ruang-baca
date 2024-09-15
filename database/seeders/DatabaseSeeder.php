@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            BukuSeeder::class,
-            DetailPeminjamanSeeder::class,
-            DetailPengembalianSeeder::class,
             KategoriSeeder::class,
+            BukuSeeder::class,
             KelasSeeder::class,
+            SiswaSeeder::class,
             PeminjamanSeeder::class,
+            DetailPeminjamanSeeder::class,
             PengembalianSeeder::class,
-            SiswaSeeder::class
+            DetailPengembalianSeeder::class
         ]);
     }
 }
