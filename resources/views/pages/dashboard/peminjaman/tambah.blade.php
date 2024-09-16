@@ -1,6 +1,16 @@
 <x-dashboard.layout title="{{ $title }}">
     <div class="p-4">
-        <form action="" method="POST" class="grid grid-cols-3 gap-8" x-data="bookFormHandler()">
+            @if ($errors->any())
+                <div class="text-white p-4 rounded col-span-3 bg-red-500 mb-8">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="font-medium">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        <form action="" method="POST" class="grid grid-cols-3 gap-8" x-data="bookFormHandler({{ json_encode(old('books', [])) }})">
+            @csrf
             <!-- Date Fields -->
             <div class="col-start-3 row-start-1 flex items-center gap-4">
                 <label for="tanggal_pinjam" class="w-48 whitespace-nowrap">Tanggal Pinjam</label>
@@ -17,9 +27,15 @@
             <!-- NISN Field -->
             <div class="col-start-1 row-start-1 flex items-center gap-4">
                 <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
-                <input type="text" inputmode="numeric" id="nisn" name="nisn" x-model="nisn" @keydown.tab="fetchStudent()" autofocus
-                    class="w-full rounded border px-4 py-2 outline-none focus:ring">
+                <div class="w-full">
+                    <input type="text" inputmode="numeric" id="nisn" name="nisn" x-model="nisn"
+                        x-init="nisn = '{{ old('nisn') }}'" @keydown.tab="nisn ? fetchStudent() : alert('NISN tidak boleh kosong!')"
+                        autofocus required
+                        class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring"
+                        x-ref="nisn">
+                </div>
             </div>
+
             <!-- Nama and Kode Kelas Fields -->
             <div class="col-start-1 row-start-2 flex items-center gap-4">
                 <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
@@ -48,24 +64,37 @@
                     <!-- Dynamic book rows -->
                     <template x-for="(book, index) in books" :key="index">
                         <tr>
+                            <!-- Kode Buku Field -->
                             <td class="p-0">
-                                <input type="text" x-model="book.kode_buku" @keydown.tab="fetchBookData(index)"
+                                <input type="text" x-model="book.kode_buku"
+                                    @keydown.tab="book.kode_buku ? fetchBookData(index) : alert('Kode buku tidak boleh kosong!')"
+                                    :x-ref="'kode_buku' + index" :name="'books[' + index + '][kode_buku]'" required
+                                    class="w-full rounded px-4 py-2 outline-none" :value="book.kode_buku">
+                            </td>
+
+                            <td class="p-0">
+                                <input type="text" x-model="book.judul" readonly :x-ref="'judul' + index"
                                     class="w-full rounded px-4 py-2 outline-none">
                             </td>
                             <td class="p-0">
-                                <input type="text" x-model="book.judul" readonly class="w-full rounded px-4 py-2 outline-none">
+                                <input type="text" x-model="book.penulis" readonly :x-ref="'penulis' + index"
+                                    class="w-full rounded px-4 py-2 outline-none">
                             </td>
                             <td class="p-0">
-                                <input type="text" x-model="book.penulis" readonly class="w-full rounded px-4 py-2 outline-none">
+                                <input type="text" x-model="book.penerbit" readonly :x-ref="'penerbit' + index"
+                                    class="w-full rounded px-4 py-2 outline-none">
                             </td>
                             <td class="p-0">
-                                <input type="text" x-model="book.penerbit" readonly class="w-full rounded px-4 py-2 outline-none">
+                                <input type="text" x-model="book.tahun_terbit" readonly
+                                    :x-ref="'tahun_terbit' + index" class="w-full rounded px-4 py-2 outline-none">
                             </td>
+
+                            <!-- Jumlah Buku Field -->
                             <td class="p-0">
-                                <input type="text" x-model="book.tahun_terbit" readonly class="w-full rounded px-4 py-2 outline-none">
-                            </td>
-                            <td class="p-0">
-                                <input type="number" x-model="book.jumlah" value="1" min="1" class="w-full rounded px-4 py-2 outline-none">
+                                <input type="number" x-model="book.jumlah" min="1" :x-ref="'jumlah' + index"
+                                    required :name="'books[' + index + '][jumlah]'"
+                                    class="w-full rounded px-4 py-2 outline-none"
+                                    :value="book.jumlah ? book.jumlah : 1">
                             </td>
                         </tr>
                     </template>
@@ -73,10 +102,11 @@
                     <!-- Add Row and Save Buttons -->
                     <tr>
                         <td colspan="3" class="p-0">
-                            <button type="button" @click="addBookRow()" class="bg-tersier w-full text-white py-2 font-bold">Tambah Buku</button>
+                            <button type="button" @click="addBookRow()"
+                                class="w-full bg-tersier py-2 font-bold text-white">Tambah Buku</button>
                         </td>
                         <td colspan="3" class="p-0">
-                            <button type="submit" class="bg-primary w-full text-white py-2 font-bold">Simpan</button>
+                            <button type="submit" class="w-full bg-primary py-2 font-bold text-white">Simpan</button>
                         </td>
                     </tr>
                 </tbody>

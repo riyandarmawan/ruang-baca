@@ -14,11 +14,11 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjaman = new Peminjaman();
+        $peminjaman = Peminjaman::all();
 
         $data = [
             'title' => 'Data Peminjaman',
-            'peminjamans' => $peminjaman->all()
+            'peminjamans' => $peminjaman
         ];
 
         return view('pages.dashboard.peminjaman.index', $data);
@@ -29,13 +29,13 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-        $siswa = new Siswa();
-        $buku = new Buku();
+        $siswa = Siswa::all();
+        $buku = Buku::all();
 
         $data = [
             'title' => "Tambah Data Peminjaman",
-            'siswas' => $siswa->all(),
-            'bukus' => $buku->all()
+            'siswas' => $siswa,
+            'bukus' => $buku
         ];
 
         return view('pages.dashboard.peminjaman.tambah', $data);
@@ -46,7 +46,35 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validation rules
+        $rules = [
+            'nisn' => 'required|exists:siswas,nisn|numeric|digits:10',
+            'books.*.kode_buku' => 'required|exists:bukus,kode_buku|numeric|digits:13',
+            'books.*.jumlah' => 'required|numeric|min:1',
+        ];
+
+        // Custom error messages
+        $messages = [
+            'nisn.required' => 'NISN wajib diisi!',
+            'nisn.exists' => 'Siswa dengan NISN tersebut tidak ditemukan.',
+            'nisn.numeric' => 'NISN harus berupa angka!',
+            'nisn.digits' => 'NISN harus 10 digit angka!',
+            'books.*.kode_buku.required' => 'Kode buku wajib diisi!',
+            'books.*.kode_buku.exists' => 'Buku dengan kode tersebut tidak ditemukan.',
+            'books.*.kode_buku.numeric' => 'Kode buku harus berupa angka!',
+            'books.*.kode_buku.digits' => 'Kode buku harus 10 digit angka.',
+            'books.*.jumlah.required' => 'Jumlah buku wajib diisi!',
+            'books.*.jumlah.numeric' => 'Jumlah buku harus berupa angka!',
+            'books.*.jumlah.min' => 'Jumlah buku minimal 1.'
+        ];
+
+        // Validate request
+        $validatedData = $request->validate($rules, $messages);
+
+        // If validation passes, handle the data
+        // ...
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     /**
@@ -54,15 +82,15 @@ class PeminjamanController extends Controller
      */
     public function detail($id)
     {
-        $peminjaman = new Peminjaman();
-        $siswa = new Siswa();
-        $buku = new Buku();
+        $peminjaman = Peminjaman::findOrFail($id);
+        $siswa = Siswa::all();
+        $buku = Buku::all();
 
         $data = [
             'title' => "Detail Peminjaman",
-            'peminjaman' => $peminjaman->where('id', $id)->first(),
-            'siswas' => $siswa->all(),
-            'bukus' => $buku->all()
+            'peminjaman' => $peminjaman,
+            'siswas' => $siswa,
+            'bukus' => $buku
         ];
 
         return view('pages.dashboard.peminjaman.detail', $data);
@@ -73,7 +101,7 @@ class PeminjamanController extends Controller
      */
     public function edit(Peminjaman $peminjaman)
     {
-        //
+        // Implement edit logic if needed
     }
 
     /**
@@ -81,7 +109,7 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, Peminjaman $peminjaman)
     {
-        //
+        // Implement update logic if needed
     }
 
     /**
@@ -89,6 +117,6 @@ class PeminjamanController extends Controller
      */
     public function destroy(Peminjaman $peminjaman)
     {
-        //
+        // Implement delete logic if needed
     }
 }
