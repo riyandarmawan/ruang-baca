@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiControler;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
@@ -90,3 +91,8 @@ Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
 Route::get('/dashboard/pengembalian/tambah', [PengembalianController::class, 'create']);
 
 Route::get('/dashboard/pengembalian/detail/{id}', [PengembalianController::class, 'detail']);
+
+// APIs
+Route::get('/api/siswa/{nisn}', [ApiControler::class, 'siswa']);
+
+Route::get('/api/buku/{kode_buku}', [ApiControler::class, 'buku']);

@@ -30,6 +30,11 @@ td {
   @apply border-primary ring-primary
 }
 
+/* readonly input */
+input:read-only, input:disabled {
+  @apply bg-gray-200 border-slate-400 ring-slate-400 text-slate-700
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-none::-webkit-scrollbar {
   display: none;
