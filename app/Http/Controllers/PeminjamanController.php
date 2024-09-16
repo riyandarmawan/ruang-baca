@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\DetailPeminjaman;
 use App\Models\Siswa;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
@@ -72,9 +73,25 @@ class PeminjamanController extends Controller
         $validatedData = $request->validate($rules, $messages);
 
         // If validation passes, handle the data
-        // ...
+        $peminjaman = new Peminjaman();
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        $peminjaman->nisn = $request->nisn;
+        $peminjaman->tanggal_pinjam = $request->tanggal_pinjam;
+        $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+
+        $peminjaman->save();
+
+        $peminjamanId = $peminjaman->id;
+
+        foreach ($request->books as $book) {
+            $detailPeminjaman = new DetailPeminjaman();
+            $detailPeminjaman->id_peminjaman = $peminjamanId;
+            $detailPeminjaman->kode_buku = $book['kode_buku'];
+            $detailPeminjaman->jumlah = $book['jumlah'];
+            $detailPeminjaman->save();
+        }
+
+        return redirect('/dashboard/peminjaman')->with('success', 'Data peminjaman berhasil disimpan!');
     }
 
     /**

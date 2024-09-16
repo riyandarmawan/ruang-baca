@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('detail_peminjaman', function (Blueprint $table) {
             $table->id();
             $table->integer('id_peminjaman');
-            $table->string('kode_buku', 17);
+            $table->string('kode_buku', 13);
             $table->integer('jumlah');
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('id_peminjaman')->references('id')->on('peminjamans');
             $table->foreign('kode_buku')->references('kode_buku')->on('bukus');
         });
     }

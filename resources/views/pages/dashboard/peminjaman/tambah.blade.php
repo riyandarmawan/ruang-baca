@@ -1,14 +1,15 @@
 <x-dashboard.layout title="{{ $title }}">
     <div class="p-4">
-            @if ($errors->any())
-                <div class="text-white p-4 rounded col-span-3 bg-red-500 mb-8">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li class="font-medium">{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+        @if ($errors->any())
+            <div class="col-span-3 mb-8 rounded bg-red-500 p-4 text-white">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="font-medium">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="" method="POST" class="grid grid-cols-3 gap-8" x-data="bookFormHandler({{ json_encode(old('books', [])) }})">
             @csrf
             <!-- Date Fields -->
@@ -30,8 +31,7 @@
                 <div class="w-full">
                     <input type="text" inputmode="numeric" id="nisn" name="nisn" x-model="nisn"
                         x-init="nisn = '{{ old('nisn') }}'" @keydown.tab="nisn ? fetchStudent() : alert('NISN tidak boleh kosong!')"
-                        autofocus required
-                        class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring"
+                        autofocus required class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring"
                         x-ref="nisn">
                 </div>
             </div>

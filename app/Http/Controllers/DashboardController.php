@@ -12,8 +12,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $startOfWeek = Carbon::now()->startOfWeek();
-        $endOfWeek = Carbon::now()->endOfWeek();
+        $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
+        $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
 
         // Initialize arrays with 7 days (Monday to Sunday)
         $pinjamPerHari = array_fill(0, 7, 0);
@@ -21,11 +21,11 @@ class DashboardController extends Controller
 
         // Aggregate data for books borrowed and returned
         $dataPinjam = Peminjaman::whereBetween('tanggal_pinjam', [$startOfWeek, $endOfWeek])
-            ->with('bukus')
+            ->with('bukus') // Eager load bukus
             ->get();
 
         $dataKembali = Pengembalian::whereBetween('tanggal_kembali', [$startOfWeek, $endOfWeek])
-            ->with('bukus')
+            ->with('bukus') // Eager load bukus
             ->get();
 
         foreach ($dataPinjam as $peminjaman) {
@@ -42,21 +42,27 @@ class DashboardController extends Controller
         $jumlahBukuDiPinjam = array_sum($pinjamPerHari);
         $jumlahBukuDiKembalikan = array_sum($kembaliPerHari);
 
-        // Get most favorite book, author, and publisher
+        // Get most favorite book, author, and publisher based on this week
         $bukuTerfavorit = Buku::select('bukus.judul')
             ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+            ->join('peminjamans', 'detail_peminjaman.id_peminjaman', '=', 'peminjamans.id')
+            ->whereBetween('peminjamans.tanggal_pinjam', [$startOfWeek, $endOfWeek])
             ->groupBy('bukus.judul')
             ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
             ->first();
 
         $penulisTerfavorit = Buku::select('bukus.penulis')
             ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+            ->join('peminjamans', 'detail_peminjaman.id_peminjaman', '=', 'peminjamans.id')
+            ->whereBetween('peminjamans.tanggal_pinjam', [$startOfWeek, $endOfWeek])
             ->groupBy('bukus.penulis')
             ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
             ->first();
 
         $penerbitTerfavorit = Buku::select('bukus.penerbit')
             ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+            ->join('peminjamans', 'detail_peminjaman.id_peminjaman', '=', 'peminjamans.id')
+            ->whereBetween('peminjamans.tanggal_pinjam', [$startOfWeek, $endOfWeek])
             ->groupBy('bukus.penerbit')
             ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
             ->first();
