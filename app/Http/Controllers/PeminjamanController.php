@@ -13,13 +13,30 @@ class PeminjamanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $peminjaman = Peminjaman::all();
+        $search = $request->input('search');
+
+        $peminjaman = new Peminjaman();
+
+        if($search) {
+            $peminjamans = $peminjaman
+                ->where('nisn', 'like', "%$search%")
+                ->orWhereHas('siswa', function ($query) use ($search) {
+                    $query->where('nama','like', "%$search%");
+                })
+                ->orWhere('tanggal_pinjam', 'like', "%$search%")
+                ->orWhere('tanggal_kembali', 'like', "%$search%")
+                ->paginate(10)
+                ->appends(['search' => $search]);
+        } else {
+           $peminjamans = $peminjaman->paginate(10);
+        }
 
         $data = [
             'title' => 'Data Peminjaman',
-            'peminjamans' => $peminjaman
+            'peminjamans' => $peminjamans,
+            'search' => $search
         ];
 
         return view('pages.dashboard.peminjaman.index', $data);

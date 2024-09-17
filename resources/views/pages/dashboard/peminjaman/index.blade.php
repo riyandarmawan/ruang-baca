@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}">
+<x-dashboard.layout title="{{ $title }}" search="{{ $search }}">
     <div class="p-6">
         <h1 class="mb-8 text-3xl font-bold">Data Peminjaman</h1>
         <a href="/dashboard/peminjaman/tambah"
@@ -39,5 +39,6 @@
             </tbody>
         </table>
 
+        {{ $peminjamans->links() }}
     </div>
 </x-dashboard.layout>
