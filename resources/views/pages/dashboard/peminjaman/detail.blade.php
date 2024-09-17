@@ -211,27 +211,31 @@
 
                 </div>
 
-                <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
-                    <a x-on:click="modal = !modal" x-ref="delete"
-                        href="/dashboard/siswa/hapus/{{ $peminjaman->id }}" @click.prevent=""
-                        class="font-medium text-red-500">Hapus data peminjaman ini</a>
+                      <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
+                    <!-- Button to trigger the modal -->
+                    <button x-on:click="modal = !modal" type="button"
+                        class="font-medium text-red-500 focus:outline-none">Hapus data peminjaman ini</button>
                 </div>
-            </div>
-        </div>
 
-        <div x-bind:class="modal ? '!block' : ''"
-            class="absolute bottom-1/3 left-1/3 hidden overflow-hidden rounded-xl border border-primary bg-background shadow-xl">
-            <div class="flex items-center border-b border-primary bg-gray-200 p-4 font-semibold text-red-500">
-                <span class="i-mdi-alert me-2 text-lg"></span>
-                Peringatan
-            </div>
-            <div class="p-4">Apakah anda yakin ingin menghapus data peminjaman ini?</div>
-            <div class="flex items-center justify-end bg-gray-200 p-4">
-                <a x-bind:href="$refs.delete.href"
-                    class="me-4 rounded bg-red-500 px-4 py-1 font-medium text-background shadow shadow-slate-500">Ya</a>
-                <p x-on:click="modal = !modal"
-                    class="cursor-pointer rounded bg-primary px-4 py-1 font-medium text-background shadow shadow-slate-500">
-                    Tidak</p>
+                <!-- Modal for confirmation -->
+                <div x-bind:class="modal ? '!block' : ''"
+                    class="absolute bottom-1/3 left-1/3 hidden overflow-hidden rounded-xl border border-primary bg-background shadow-xl">
+                    <div class="flex items-center border-b border-primary bg-gray-200 p-4 font-semibold text-red-500">
+                        <span class="i-mdi-alert me-2 text-lg"></span>
+                        Peringatan
+                    </div>
+                    <div class="p-4">Apakah anda yakin ingin menghapus data peminjaman ini?</div>
+                    <div class="flex items-center justify-end bg-gray-200 p-4">
+                        <form action="/dashboard/peminjaman/hapus/{{ $peminjaman->id }}" method="post">
+                            @csrf
+                            <button type="submit"
+                                class="me-4 rounded bg-red-500 px-4 py-1 font-medium text-background shadow shadow-slate-500">Ya</button>
+                        </form>
+                        <button x-on:click="modal = !modal" type="button"
+                            class="cursor-pointer rounded bg-primary px-4 py-1 font-medium text-background shadow shadow-slate-500">
+                            Tidak</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

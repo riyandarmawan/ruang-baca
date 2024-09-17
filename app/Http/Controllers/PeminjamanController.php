@@ -194,8 +194,17 @@ class PeminjamanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Peminjaman $peminjaman)
+    public function destroy($id)
     {
-        // Implement delete logic if needed
+        $peminjaman = Peminjaman::find($id);
+        $detailPeminjamans = DetailPeminjaman::where('id_peminjaman', $peminjaman->id)->get();
+
+        foreach($detailPeminjamans as $detailPeminjaman) {
+            $detailPeminjaman->delete();
+        }
+
+        $peminjaman->delete();
+
+        return redirect('/dashboard/peminjaman')->with('success', 'Data peminjaman berhasil dihapus!');
     }
 }

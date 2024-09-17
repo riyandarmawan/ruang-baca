@@ -89,6 +89,8 @@ Route::get('/dashboard/peminjaman/detail/{id}', [PeminjamanController::class, 'd
 
 Route::post('/dashboard/peminjaman/ubah/{id}', [PeminjamanController::class, 'update']);
 
+Route::post('/dashboard/peminjaman/hapus/{id}', [PeminjamanController::class, 'destroy']);
+
 // pengembalian
 Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
 
