@@ -1,8 +1,7 @@
 <x-dashboard.layout title="{{ $title }}">
     <div x-data="{ modal: false, active: 'detail' }" class="relative">
         <div class="flex items-center justify-center p-6">
-            <div
-                class="h-[32rem] min-w-[40rem] max-w-[60rem] overflow-auto rounded border border-primary shadow shadow-slate-500">
+            <div class="h-[32rem] min-w-[40rem] overflow-auto rounded border border-primary shadow shadow-slate-500">
                 <ul class="flex justify-around border-b border-primary p-4">
                     <li x-on:click="active = 'detail'" x-bind:class="active === 'detail' ? 'after:w-full' : ''"
                         class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:duration-300 after:content-[''] hover:after:w-full">
@@ -15,105 +14,223 @@
                         Hapus</li>
                 </ul>
 
-                <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden gap-4 p-4">
-                    <div class="grid grid-cols-4">
-                        <p>NISN</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $peminjaman->nisn }}</p>
+                <div x-bind:class="active !== 'detail' ? '' : '!grid'" class="hidden grid-cols-3 gap-8 p-4">
+                    <!-- Date Fields -->
+                    <div class="col-start-3 row-start-1 flex items-center gap-4">
+                        <label for="tanggal_pinjam" class="w-48 whitespace-nowrap">Tanggal Pinjam</label>
+                        <input type="date" id="tanggal_pinjam" name="tanggal_pinjam"
+                            value="{{ $peminjaman->tanggal_pinjam }}" disabled
+                            class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
-                    <div class="grid grid-cols-4">
-                        <p>Buku</p>
-                        <div class="col-span-3">
-                            <ul>
-                                @foreach ($peminjaman->bukus as $buku)
-                                    <li class="list-inside list-disc">
-                                        {{ $buku->judul . ' (' . $buku->pivot->jumlah . ')' }}</li>
-                                @endforeach
-                            </ul>
+                    <div class="col-start-3 row-start-2 flex items-center gap-4">
+                        <label for="tanggal_kembali" class="w-48 whitespace-nowrap">Tanggal Kembali</label>
+                        <input type="date" id="tanggal_kembali" name="tanggal_kembali"
+                            value="{{ $peminjaman->tanggal_kembali }}" disabled
+                            class="w-full rounded border px-4 py-2 outline-none focus:ring">
+                    </div>
+
+                    <!-- NISN Field -->
+                    <div class="col-start-1 row-start-1 flex items-center gap-4">
+                        <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
+                        <div class="w-full">
+                            <input type="text" inputmode="numeric" id="nisn" name="nisn"
+                                value="{{ $peminjaman->nisn }}" disabled
+                                class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
                     </div>
-                    <div class="grid grid-cols-4">
-                        <p>Tanggal Pinjam</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $peminjaman->tanggal_pinjam }}</p>
+
+                    <!-- Nama and Kode Kelas Fields -->
+                    <div class="col-start-1 row-start-2 flex items-center gap-4">
+                        <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
+                        <input type="text" id="nama" name="nama" value="{{ $peminjaman->siswa->nama }}"
+                            disabled class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
-                    <div class="grid grid-cols-4">
-                        <p>Tanggal Kembali</p>
-                        <p class="col-span-3"><span class="me-2">:</span> {{ $peminjaman->tanggal_kembali }}</p>
+                    <div class="col-start-1 row-start-3 flex items-center gap-4">
+                        <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
+                        <input type="text" id="kode_kelas" name="kode_kelas"
+                            value="{{ $peminjaman->siswa->kode_kelas }}" disabled
+                            class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
+
+                    <!-- Book Table -->
+                    <table class="col-span-3 col-start-1 row-start-4 table-auto">
+                        <thead>
+                            <tr>
+                                <th>Kode Buku</th>
+                                <th>Judul</th>
+                                <th>Penulis</th>
+                                <th>Penerbit</th>
+                                <th>Tahun Terbit</th>
+                                <th>Jumlah Buku</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($peminjaman->bukus as $buku)
+                                <tr>
+                                    <td class="p-0">
+                                        <input type="text" value="{{ $buku->kode_buku }}" disabled
+                                            class="w-full rounded px-4 py-2 outline-none">
+                                    </td>
+
+                                    <td class="p-0">
+                                        <input type="text" value="{{ $buku->judul }}" disabled
+                                            class="w-full rounded px-4 py-2 outline-none">
+                                    </td>
+                                    <td class="p-0">
+                                        <input type="text" value="{{ $buku->penulis }}" disabled
+                                            class="w-full rounded px-4 py-2 outline-none">
+                                    </td>
+                                    <td class="p-0">
+                                        <input type="text" value="{{ $buku->penerbit }}" disabled
+                                            class="w-full rounded px-4 py-2 outline-none">
+                                    </td>
+                                    <td class="p-0">
+                                        <input type="text" value="{{ $buku->tahun_terbit }}" disabled
+                                            class="w-full rounded px-4 py-2 outline-none">
+                                    </td>
+
+                                    <!-- Jumlah Buku Field -->
+                                    <td class="p-0">
+                                        <input type="number" value="{{ $buku->pivot->jumlah }}"
+                                            class="w-full rounded px-4 py-2 outline-none">
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
                 <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
-                    <form action="/dashboard/peminjaman/detail/{{ $peminjaman->id }}" method="POST">
-                        <!-- Siswa Selection -->
-                        <div class="mb-4 grid grid-cols-3 items-center">
-                            <label for="nisn">Siswa</label>
-                            <select name="nisn" id="nisn"
-                                class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                                @foreach ($siswas as $siswa)
-                                    <option {{ $peminjaman->nisn === $siswa->nisn ? 'selected' : '' }}
-                                        value="{{ $siswa->nisn }}">{{ $siswa->nama }}</option>
+                    @if ($errors->any())
+                        <div class="col-span-3 mb-8 rounded bg-red-500 p-4 text-white">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="font-medium">{{ $error }}</li>
                                 @endforeach
-                            </select>
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="" method="POST" class="grid grid-cols-3 gap-8" x-data="bookFormHandler(@json(old('books', $peminjaman->bukus)))">
+                        @csrf
+                        <!-- Date Fields -->
+                        <div class="col-start-3 row-start-1 flex items-center gap-4">
+                            <label for="tanggal_pinjam" class="w-48 whitespace-nowrap">Tanggal Pinjam</label>
+                            <input type="date" id="tanggal_pinjam" name="tanggal_pinjam"
+                                value="{{ $peminjaman->tanggal_pinjam }}" readonly
+                                class="w-full rounded border px-4 py-2 outline-none focus:ring">
+                        </div>
+                        <div class="col-start-3 row-start-2 flex items-center gap-4">
+                            <label for="tanggal_kembali" class="w-48 whitespace-nowrap">Tanggal Kembali</label>
+                            <input type="date" id="tanggal_kembali" name="tanggal_kembali"
+                                value="{{ $peminjaman->tanggal_kembali }}" readonly
+                                class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
 
-                        <!-- Books Section -->
-                        <div x-data="bookComponent()" class="mb-4 grid grid-cols-3">
-                            <label for="kode_buku">Buku</label>
-                            <div id="book-container" class="col-span-2 grid gap-4" x-ref="bookContainer">
-                                @foreach ($peminjaman->bukus as $buku)
-                                    <div class="flex">
-                                        <select name="kode_buku"
-                                            class="w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                                            @foreach ($bukus as $data_buku)
-                                                <option
-                                                    {{ $buku->kode_buku === $data_buku->kode_buku ? 'selected' : '' }}
-                                                    value="{{ $data_buku->kode_buku }}">{{ $data_buku->judul }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="number" name="jumlah" value="{{ $buku->pivot->jumlah }}"
-                                            class="w-14 rounded border border-primary p-2 shadow shadow-slate-500">
-                                    </div>
-                                @endforeach
+                        <!-- NISN Field -->
+                        <div class="col-start-1 row-start-1 flex items-center gap-4">
+                            <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
+                            <div class="w-full">
+                                <input type="text" inputmode="numeric" id="nisn" name="nisn"
+                                    x-model="nisn" x-init="() => {
+                                        nisn = '{{ old('nisn') }}' || '{{ $peminjaman->nisn }}';
+                                        if (nisn) fetchStudent();
+                                    }"
+                                    @keydown.tab="nisn ? fetchStudent() : alert('NISN tidak boleh kosong!')" autofocus
+                                    required
+                                    class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring"
+                                    x-ref="nisn">
                             </div>
-                            <div class="col-span-3 flex justify-end">
-                                <button type="button" class="mt-4 w-fit cursor-pointer" @click="addBook()">+ Tambah
-                                    buku</button>
-                            </div>
                         </div>
 
-                        <!-- Date Input -->
-                        <div x-data="{ currentDate: new Date().toISOString().split('T')[0] }" class="mb-4 grid grid-cols-3 items-center">
-                            <label for="tanggal_pinjam">Tanggal Pinjam</label>
-                            <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" x-bind:value="currentDate"
-                                class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
+                        <!-- Nama and Kode Kelas Fields -->
+                        <div class="col-start-1 row-start-2 flex items-center gap-4">
+                            <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
+                            <input type="text" id="nama" name="nama" x-model="nama" disabled
+                                class="w-full rounded border px-4 py-2 outline-none focus:ring">
+                        </div>
+                        <div class="col-start-1 row-start-3 flex items-center gap-4">
+                            <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
+                            <input type="text" id="kode_kelas" name="kode_kelas" x-model="kodeKelas" disabled
+                                class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
 
-                        <!-- Return Date Input -->
-                        <div x-data="{
-                            currentDate: (() => {
-                                const today = new Date();
-                                today.setDate(today.getDate() + 7);
-                                return today.toISOString().split('T')[0];
-                            })()
-                        }" class="mb-4 grid grid-cols-3 items-center">
-                            <label for="tanggal_kembali">Tanggal Kembali</label>
-                            <input type="date" name="tanggal_kembali" id="tanggal_kembali"
-                                x-bind:value="currentDate"
-                                class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                        </div>
+                        <!-- Book Table -->
+                        <table class="col-span-3 col-start-1 row-start-4 table-auto">
+                            <thead>
+                                <tr>
+                                    <th>Kode Buku</th>
+                                    <th>Judul</th>
+                                    <th>Penulis</th>
+                                    <th>Penerbit</th>
+                                    <th>Tahun Terbit</th>
+                                    <th>Jumlah Buku</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic book rows -->
+                                <template x-for="(book, index) in books" :key="index">
+                                    <tr>
+                                        <!-- Kode Buku Field -->
+                                        <td class="p-0">
+                                            <input type="text" x-model="book.kode_buku"
+                                                @keydown.tab="book.kode_buku ? fetchBookData(index) : alert('Kode buku tidak boleh kosong!')"
+                                                :x-ref="'kode_buku' + index" :name="'books[' + index + '][kode_buku]'"
+                                                required class="w-full rounded px-4 py-2 outline-none"
+                                                :value="book.kode_buku">
+                                        </td>
 
-                        <!-- Submit Button -->
-                        <div class="mt-6 flex justify-center">
-                            <button
-                                class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">
-                                Ubah
-                            </button>
-                        </div>
+                                        <td class="p-0">
+                                            <input type="text" x-model="book.judul" readonly
+                                                :x-ref="'judul' + index" class="w-full rounded px-4 py-2 outline-none">
+                                        </td>
+                                        <td class="p-0">
+                                            <input type="text" x-model="book.penulis" readonly
+                                                :x-ref="'penulis' + index"
+                                                class="w-full rounded px-4 py-2 outline-none">
+                                        </td>
+                                        <td class="p-0">
+                                            <input type="text" x-model="book.penerbit" readonly
+                                                :x-ref="'penerbit' + index"
+                                                class="w-full rounded px-4 py-2 outline-none">
+                                        </td>
+                                        <td class="p-0">
+                                            <input type="text" x-model="book.tahun_terbit" readonly
+                                                :x-ref="'tahun_terbit' + index"
+                                                class="w-full rounded px-4 py-2 outline-none">
+                                        </td>
+
+                                        <!-- Jumlah Buku Field -->
+                                        <td class="p-0">
+                                            <input type="number" x-model="book.jumlah" min="1"
+                                                :x-ref="'jumlah' + index" required
+                                                :name="'books[' + index + '][jumlah]'"
+                                                class="w-full rounded px-4 py-2 outline-none"
+                                                :value="book.jumlah ? book.jumlah : 1">
+                                        </td>
+                                    </tr>
+                                </template>
+
+                                <!-- Add Row and Save Buttons -->
+                                <tr>
+                                    <td colspan="3" class="p-0">
+                                        <button type="button" @click="addBookRow()"
+                                            class="w-full bg-tersier py-2 font-bold text-white">Tambah Buku</button>
+                                    </td>
+                                    <td colspan="3" class="p-0">
+                                        <button type="submit"
+                                            class="w-full bg-primary py-2 font-bold text-white">Simpan</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </form>
                 </div>
 
                 <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
-                    <a x-on:click="modal = !modal" x-ref="delete" href="/dashboard/siswa/hapus/{{ $peminjaman->id }}"
-                        @click.prevent="" class="font-medium text-red-500">Hapus data peminjaman ini</a>
+                    <a x-on:click="modal = !modal" x-ref="delete"
+                        href="/dashboard/siswa/hapus/{{ $peminjaman->id }}" @click.prevent=""
+                        class="font-medium text-red-500">Hapus data peminjaman ini</a>
                 </div>
             </div>
         </div>
@@ -158,4 +275,6 @@
             </div>
         </div>
     </div>
+
+    <script src="/js/requestDataPeminjaman.js"></script>
 </x-dashboard.layout>
