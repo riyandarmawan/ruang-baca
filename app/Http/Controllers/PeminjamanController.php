@@ -50,8 +50,8 @@ class PeminjamanController extends Controller
         // Validation rules
         $rules = [
             'nisn' => 'required|exists:siswas,nisn|numeric|digits:10',
-            'books.*.kode_buku' => 'required|exists:bukus,kode_buku|numeric|digits:13',
-            'books.*.jumlah' => 'required|numeric|min:1',
+            'kode_buku.*' => 'required|exists:bukus,kode_buku|numeric|digits:13',
+            'jumlah.*' => 'required|numeric|min:1',
         ];
 
         // Custom error messages
@@ -60,13 +60,15 @@ class PeminjamanController extends Controller
             'nisn.exists' => 'Siswa dengan NISN tersebut tidak ditemukan.',
             'nisn.numeric' => 'NISN harus berupa angka!',
             'nisn.digits' => 'NISN harus 10 digit angka!',
-            'books.*.kode_buku.required' => 'Kode buku wajib diisi!',
-            'books.*.kode_buku.exists' => 'Buku dengan kode tersebut tidak ditemukan.',
-            'books.*.kode_buku.numeric' => 'Kode buku harus berupa angka!',
-            'books.*.kode_buku.digits' => 'Kode buku harus 10 digit angka.',
-            'books.*.jumlah.required' => 'Jumlah buku wajib diisi!',
-            'books.*.jumlah.numeric' => 'Jumlah buku harus berupa angka!',
-            'books.*.jumlah.min' => 'Jumlah buku minimal 1.'
+
+            'kode_buku.*.required' => 'Kode buku wajib diisi!',
+            'kode_buku.*.exists' => 'Buku dengan kode tersebut tidak ditemukan.',
+            'kode_buku.*.numeric' => 'Kode buku harus berupa angka!',
+            'kode_buku.*.digits' => 'Kode buku harus 10 digit angka.',
+
+            'jumlah.*.required' => 'Jumlah buku wajib diisi!',
+            'jumlah.*.numeric' => 'Jumlah buku harus berupa angka!',
+            'jumlah.*.min' => 'Jumlah buku minimal 1.'
         ];
 
         // Validate request
@@ -81,13 +83,15 @@ class PeminjamanController extends Controller
 
         $peminjaman->save();
 
-        $peminjamanId = $peminjaman->id;
+        $idPeminjaman = $peminjaman->id;
 
-        foreach ($request->books as $book) {
+        foreach ($request->kode_buku as $index => $kode_buku) {
             $detailPeminjaman = new DetailPeminjaman();
-            $detailPeminjaman->id_peminjaman = $peminjamanId;
-            $detailPeminjaman->kode_buku = $book['kode_buku'];
-            $detailPeminjaman->jumlah = $book['jumlah'];
+
+            $detailPeminjaman->id_peminjaman = $idPeminjaman;
+            $detailPeminjaman->kode_buku = $kode_buku;
+            $detailPeminjaman->jumlah = $request->jumlah[$index];
+
             $detailPeminjaman->save();
         }
 
@@ -106,8 +110,6 @@ class PeminjamanController extends Controller
         $data = [
             'title' => "Detail Peminjaman",
             'peminjaman' => $peminjaman,
-            'siswas' => $siswa,
-            'bukus' => $buku
         ];
 
         return view('pages.dashboard.peminjaman.detail', $data);

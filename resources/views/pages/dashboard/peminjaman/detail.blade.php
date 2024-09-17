@@ -102,16 +102,16 @@
 
                 <div x-bind:class="active !== 'ubah' ? '' : '!block'" class="hidden p-4">
                     @if ($errors->any())
-                        <div class="col-span-3 mb-8 rounded bg-red-500 p-4 text-white">
+                        <div class="mb-4 rounded bg-red-500 p-4 font-bold text-white">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li class="font-medium">{{ $error }}</li>
+                                    <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
 
-                    <form action="" method="POST" class="grid grid-cols-3 gap-8" x-data="bookFormHandler(@json(old('books', $peminjaman->bukus)))">
+                    <form action="" method="POST" class="grid grid-cols-3 gap-8">
                         @csrf
                         <!-- Date Fields -->
                         <div class="col-start-3 row-start-1 flex items-center gap-4">
@@ -132,26 +132,23 @@
                             <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
                             <div class="w-full">
                                 <input type="text" inputmode="numeric" id="nisn" name="nisn"
-                                    x-model="nisn" x-init="() => {
-                                        nisn = '{{ old('nisn') }}' || '{{ $peminjaman->nisn }}';
-                                        if (nisn) fetchStudent();
-                                    }"
-                                    @keydown.tab="nisn ? fetchStudent() : alert('NISN tidak boleh kosong!')" autofocus
+                                    @keydown.tab="ambilDataSiswa()" value="{{ $peminjaman->nisn }}" autofocus
                                     required
-                                    class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring"
-                                    x-ref="nisn">
+                                    class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                             </div>
                         </div>
 
                         <!-- Nama and Kode Kelas Fields -->
                         <div class="col-start-1 row-start-2 flex items-center gap-4">
                             <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
-                            <input type="text" id="nama" name="nama" x-model="nama" disabled
+                            <input type="text" id="nama" name="nama"
+                                value="{{ $peminjaman->siswa->nama }}" disabled
                                 class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
                         <div class="col-start-1 row-start-3 flex items-center gap-4">
                             <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
-                            <input type="text" id="kode_kelas" name="kode_kelas" x-model="kodeKelas" disabled
+                            <input type="text" id="kode_kelas" name="kode_kelas"
+                                value="{{ $peminjaman->siswa->kode_kelas }}" disabled
                                 class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
 
@@ -167,64 +164,53 @@
                                     <th>Jumlah Buku</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- Dynamic book rows -->
-                                <template x-for="(book, index) in books" :key="index">
+                            <tbody id="book-container">
+                                @foreach ($peminjaman->bukus as $buku)
                                     <tr>
-                                        <!-- Kode Buku Field -->
                                         <td class="p-0">
-                                            <input type="text" x-model="book.kode_buku"
-                                                @keydown.tab="book.kode_buku ? fetchBookData(index) : alert('Kode buku tidak boleh kosong!')"
-                                                :x-ref="'kode_buku' + index" :name="'books[' + index + '][kode_buku]'"
-                                                required class="w-full rounded px-4 py-2 outline-none"
-                                                :value="book.kode_buku">
-                                        </td>
-
-                                        <td class="p-0">
-                                            <input type="text" x-model="book.judul" readonly
-                                                :x-ref="'judul' + index" class="w-full rounded px-4 py-2 outline-none">
+                                            <input type="text" name="kode_buku[]" required
+                                                onkeydown="if(event.key === 'Tab') ambilDataBuku(this)" value="{{ $buku->kode_buku }}"
+                                                class="kode_buku w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" x-model="book.penulis" readonly
-                                                :x-ref="'penulis' + index"
-                                                class="w-full rounded px-4 py-2 outline-none">
+                                            <input type="text" name="judul[]" disabled value="{{ $buku->judul }}"
+                                                class="judul w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" x-model="book.penerbit" readonly
-                                                :x-ref="'penerbit' + index"
-                                                class="w-full rounded px-4 py-2 outline-none">
+                                            <input type="text" name="penulis[]" disabled value="{{ $buku->penulis }}"
+                                                class="penulis w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" x-model="book.tahun_terbit" readonly
-                                                :x-ref="'tahun_terbit' + index"
-                                                class="w-full rounded px-4 py-2 outline-none">
+                                            <input type="text" name="penerbit[]" disabled value="{{ $buku->penerbit }}"
+                                                class="penerbit w-full rounded px-4 py-2 outline-none">
                                         </td>
-
-                                        <!-- Jumlah Buku Field -->
                                         <td class="p-0">
-                                            <input type="number" x-model="book.jumlah" min="1"
-                                                :x-ref="'jumlah' + index" required
-                                                :name="'books[' + index + '][jumlah]'"
-                                                class="w-full rounded px-4 py-2 outline-none"
-                                                :value="book.jumlah ? book.jumlah : 1">
+                                            <input type="text" name="tahun_terbit[]" disabled value="{{ $buku->tahun_terbit }}"
+                                                class="tahun_terbit w-full rounded px-4 py-2 outline-none">
+                                        </td>
+                                        <td class="p-0">
+                                            <input type="number" name="jumlah[]" min="1" value="1" value="{{ $buku->pivot->jumlah }}"
+                                                required class="jumlah w-full rounded px-4 py-2 outline-none">
                                         </td>
                                     </tr>
-                                </template>
-
-                                <!-- Add Row and Save Buttons -->
+                                @endforeach
+                            </tbody>
+                            <tfoot>
                                 <tr>
                                     <td colspan="3" class="p-0">
-                                        <button type="button" @click="addBookRow()"
-                                            class="w-full bg-tersier py-2 font-bold text-white">Tambah Buku</button>
+                                        <button type="button" @click="tambahBarisBuku()"
+                                            class="w-full bg-tersier py-2 font-bold text-white">Tambah Baris
+                                            Buku</button>
                                     </td>
                                     <td colspan="3" class="p-0">
                                         <button type="submit"
                                             class="w-full bg-primary py-2 font-bold text-white">Simpan</button>
                                     </td>
                                 </tr>
-                            </tbody>
+                            </tfoot>
                         </table>
                     </form>
+
                 </div>
 
                 <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
@@ -234,19 +220,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Template for Adding Books -->
-        <template x-data="bookComponent()" id="book-template">
-            <div class="flex">
-                <select name="kode_buku" class="w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                    @foreach ($bukus as $buku)
-                        <option value="{{ $buku->kode_buku }}">{{ $buku->judul }}</option>
-                    @endforeach
-                </select>
-                <input type="number" name="jumlah" value="1"
-                    class="w-14 rounded border border-primary p-2 shadow shadow-slate-500">
-            </div>
-        </template>
 
         <script>
             function bookComponent() {

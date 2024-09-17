@@ -1,94 +1,77 @@
-function bookFormHandler(initialBooks = [], kodeBukuErrors = {}, jumlahErrors = {}) {
-    return {
-        nisn: '',
-        nama: '',
-        kodeKelas: '',
+function tambahBarisBuku() {
+    const bookContainer = document.getElementById('book-container');
+    const rowElement = document.createElement('tr');
+    rowElement.innerHTML = `
+        <td class="p-0">
+            <input type="text" name="kode_buku[]" required onkeydown="if(event.key === 'Tab') ambilDataBuku(this)" class="kode_buku w-full rounded px-4 py-2 outline-none">
+        </td>
+        <td class="p-0">
+            <input type="text" name="judul[]" disabled class="judul w-full rounded px-4 py-2 outline-none">
+        </td>
+        <td class="p-0">
+            <input type="text" name="penulis[]" disabled class="penulis w-full rounded px-4 py-2 outline-none">
+        </td>
+        <td class="p-0">
+            <input type="text" name="penerbit[]" disabled class="penerbit w-full rounded px-4 py-2 outline-none">
+        </td>
+        <td class="p-0">
+            <input type="text" name="tahun_terbit[]" disabled class="tahun_terbit w-full rounded px-4 py-2 outline-none">
+        </td>
+        <td class="p-0">
+            <input type="number" name="jumlah[]" min="1" value="1" required class="jumlah w-full rounded px-4 py-2 outline-none">
+        </td>
+    `;
 
-        // Initialize books with old data or an empty row
-        books: initialBooks.length ? initialBooks : [{ kode_buku: '', judul: '', penulis: '', penerbit: '', tahun_terbit: '', jumlah: 1 }],
+    bookContainer.appendChild(rowElement);
+}
 
-        // Add a new row for book input
-        addBookRow() {
-            this.books.push({ kode_buku: '', judul: '', penulis: '', penerbit: '', tahun_terbit: '', jumlah: 1 });
-            this.errors.kode_buku[this.books.length - 1] = '';
-            this.errors.jumlah[this.books.length - 1] = '';
-        },
+function ambilDataSiswa() {
+    const nisn = document.getElementById('nisn');
+    const nama = document.getElementById('nama');
+    const kodeKelas = document.getElementById('kode_kelas');
 
-        // Fetch student details based on NISN
-        fetchStudent() {
-            if (!this.nisn) {
-                alert('NISN tidak boleh kosong!');
-                return;
-            }
+    if (!nisn.value) return alert('NISN tidak boleh kosong!');
 
-            fetch(`http://127.0.0.1:8000/api/siswa/${this.nisn}`)
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(errorData => { throw new Error(errorData.pesan); });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    this.nama = data.nama;
-                    this.kodeKelas = data.kode_kelas;
-                    this.$nextTick(() => {
-                        const firstKodeBukuRef = this.$refs['kode_buku0'];
-                        if (firstKodeBukuRef) {
-                            firstKodeBukuRef.focus(); // Automatically focus on the first book input
-                        }
-                    });
-                })
-                .catch(error => {
-                    this.nama = '';
-                    this.kodeKelas = '';
-                    this.$nextTick(() => {
-                        const nisnRef = this.$refs.nisn;
-                        if (nisnRef) {
-                            nisnRef.focus(); // Focus back on NISN input field in case of error
-                        }
-                    });
-                    alert(error.message);
-                });
-        },
+    fetch(`http://127.0.0.1:8000/api/siswa/${nisn.value}`)
+        .then(response => response.ok ? response.json() : response.json().then(error => { throw new Error(error.pesan) }))
+        .then(siswa => {
+            nama.value = siswa.nama;
+            kodeKelas.value = siswa.kode_kelas;
+        })
+        .catch(error => {
+            nisn.focus();
+            nama.value = '';
+            kodeKelas.value = '';
+            alert(error);
+        });
+}
 
-        // Fetch book details based on kode_buku
-        fetchBookData(index) {
-            const book = this.books[index];
+function ambilDataBuku(inputElement) {
+    const row = inputElement.closest('tr');
 
-            if (!book.kode_buku) {
-                alert('Kode buku tidak boleh kosong!');
-                return;
-            }
+    const kodeBuku = row.querySelector('.kode_buku');
+    const judul = row.querySelector('.judul');
+    const penulis = row.querySelector('.penulis');
+    const penerbit = row.querySelector('.penerbit');
+    const tahunTerbit = row.querySelector('.tahun_terbit');
+    const jumlah = row.querySelector('.jumlah');
 
-            fetch(`http://127.0.0.1:8000/api/buku/${book.kode_buku}`)
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(errorData => { throw new Error(errorData.pesan); });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    this.books[index].judul = data.judul;
-                    this.books[index].penulis = data.penulis;
-                    this.books[index].penerbit = data.penerbit;
-                    this.books[index].tahun_terbit = data.tahun_terbit;
-                    this.$nextTick(() => {
-                        const jumlahRef = this.$refs[`jumlah${index}`];
-                        if (jumlahRef) {
-                            jumlahRef.focus(); // Automatically focus on the jumlah input after fetching book data
-                        }
-                    });
-                })
-                .catch(error => {
-                    this.books[index] = { kode_buku: '', judul: '', penulis: '', penerbit: '', tahun_terbit: '', jumlah: 1 };
-                    this.errors.kode_buku[index] = error.message;
-                    this.$nextTick(() => {
-                        const kodeBukuRef = this.$refs[`kode_buku${index}`];
-                        if (kodeBukuRef) {
-                            kodeBukuRef.focus(); // Focus back on the kode_buku field in case of error
-                        }
-                    });
-                });
-        },
-    };
+    if (!kodeBuku.value) return alert('Kode buku tidak boleh kosong!');
+
+    fetch(`http://127.0.0.1:8000/api/buku/${kodeBuku.value}`)
+        .then(response => response.ok ? response.json() : response.json().then(error => { throw new Error(error.pesan) }))
+        .then(buku => {
+            judul.value = buku.judul;
+            penulis.value = buku.penulis;
+            penerbit.value = buku.penerbit;
+            tahunTerbit.value = buku.tahun_terbit;
+        })
+        .catch(error => {
+            kodeBuku.focus();
+            judul.value = '';
+            penulis.value = '';
+            penerbit.value = '';
+            tahunTerbit.value = '';
+            alert(error);
+        });
 }
