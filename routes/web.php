@@ -87,6 +87,8 @@ Route::post('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'store
 
 Route::get('/dashboard/peminjaman/detail/{id}', [PeminjamanController::class, 'detail']);
 
+Route::post('/dashboard/peminjaman/ubah/{id}', [PeminjamanController::class, 'update']);
+
 // pengembalian
 Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
 

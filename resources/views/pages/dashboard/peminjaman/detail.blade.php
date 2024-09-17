@@ -18,13 +18,13 @@
                     <!-- Date Fields -->
                     <div class="col-start-3 row-start-1 flex items-center gap-4">
                         <label for="tanggal_pinjam" class="w-48 whitespace-nowrap">Tanggal Pinjam</label>
-                        <input type="date" id="tanggal_pinjam" name="tanggal_pinjam"
+                        <input type="date"
                             value="{{ $peminjaman->tanggal_pinjam }}" disabled
                             class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
                     <div class="col-start-3 row-start-2 flex items-center gap-4">
                         <label for="tanggal_kembali" class="w-48 whitespace-nowrap">Tanggal Kembali</label>
-                        <input type="date" id="tanggal_kembali" name="tanggal_kembali"
+                        <input type="date"
                             value="{{ $peminjaman->tanggal_kembali }}" disabled
                             class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
@@ -33,7 +33,7 @@
                     <div class="col-start-1 row-start-1 flex items-center gap-4">
                         <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
                         <div class="w-full">
-                            <input type="text" inputmode="numeric" id="nisn" name="nisn"
+                            <input type="text" inputmode="numeric"
                                 value="{{ $peminjaman->nisn }}" disabled
                                 class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
@@ -42,12 +42,12 @@
                     <!-- Nama and Kode Kelas Fields -->
                     <div class="col-start-1 row-start-2 flex items-center gap-4">
                         <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
-                        <input type="text" id="nama" name="nama" value="{{ $peminjaman->siswa->nama }}"
+                        <input type="text" value="{{ $peminjaman->siswa->nama }}"
                             disabled class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
                     <div class="col-start-1 row-start-3 flex items-center gap-4">
                         <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
-                        <input type="text" id="kode_kelas" name="kode_kelas"
+                        <input type="text"
                             value="{{ $peminjaman->siswa->kode_kelas }}" disabled
                             class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
@@ -111,7 +111,7 @@
                         </div>
                     @endif
 
-                    <form action="" method="POST" class="grid grid-cols-3 gap-8">
+                    <form action="/dashboard/peminjaman/ubah/{{ $peminjaman->id }}" method="POST" class="grid grid-cols-3 gap-8">
                         @csrf
                         <!-- Date Fields -->
                         <div class="col-start-3 row-start-1 flex items-center gap-4">
@@ -132,7 +132,7 @@
                             <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
                             <div class="w-full">
                                 <input type="text" inputmode="numeric" id="nisn" name="nisn"
-                                    @keydown.tab="ambilDataSiswa()" value="{{ $peminjaman->nisn }}" autofocus
+                                    @keydown.tab="ambilDataSiswa()" x-init="ambilDataSiswa()" value="{{ $peminjaman->nisn }}" autofocus
                                     required
                                     class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                             </div>
@@ -141,14 +141,12 @@
                         <!-- Nama and Kode Kelas Fields -->
                         <div class="col-start-1 row-start-2 flex items-center gap-4">
                             <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
-                            <input type="text" id="nama" name="nama"
-                                value="{{ $peminjaman->siswa->nama }}" disabled
+                            <input type="text" id="nama" name="nama" disabled
                                 class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
                         <div class="col-start-1 row-start-3 flex items-center gap-4">
                             <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
-                            <input type="text" id="kode_kelas" name="kode_kelas"
-                                value="{{ $peminjaman->siswa->kode_kelas }}" disabled
+                            <input type="text" id="kode_kelas" name="kode_kelas" disabled
                                 class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
 
@@ -169,27 +167,27 @@
                                     <tr>
                                         <td class="p-0">
                                             <input type="text" name="kode_buku[]" required
-                                                onkeydown="if(event.key === 'Tab') ambilDataBuku(this)" value="{{ $buku->kode_buku }}"
+                                                onkeydown="if(event.key === 'Tab') ambilDataBuku(this)" x-init="ambilDataBuku($el)" value="{{ $buku->kode_buku }}"
                                                 class="kode_buku w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="judul[]" disabled value="{{ $buku->judul }}"
+                                            <input type="text" name="judul[]" disabled
                                                 class="judul w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="penulis[]" disabled value="{{ $buku->penulis }}"
+                                            <input type="text" name="penulis[]" disabled
                                                 class="penulis w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="penerbit[]" disabled value="{{ $buku->penerbit }}"
+                                            <input type="text" name="penerbit[]" disabled
                                                 class="penerbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="tahun_terbit[]" disabled value="{{ $buku->tahun_terbit }}"
+                                            <input type="text" name="tahun_terbit[]" disabled
                                                 class="tahun_terbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="number" name="jumlah[]" min="1" value="1" value="{{ $buku->pivot->jumlah }}"
+                                            <input type="number" name="jumlah[]" min="1" value="{{ $buku->pivot->jumlah }}"
                                                 required class="jumlah w-full rounded px-4 py-2 outline-none">
                                         </td>
                                     </tr>
@@ -220,17 +218,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            function bookComponent() {
-                return {
-                    addBook() {
-                        const template = document.getElementById('book-template').content.cloneNode(true);
-                        this.$refs.bookContainer.appendChild(template);
-                    }
-                };
-            }
-        </script>
 
         <div x-bind:class="modal ? '!block' : ''"
             class="absolute bottom-1/3 left-1/3 hidden overflow-hidden rounded-xl border border-primary bg-background shadow-xl">
