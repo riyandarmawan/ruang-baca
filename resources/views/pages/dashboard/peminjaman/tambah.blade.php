@@ -1,7 +1,7 @@
 <x-dashboard.layout title="{{ $title }}">
     <div class="p-4">
         @if ($errors->any())
-            <div class="rounded bg-red-500 p-4 font-bold mb-4 text-white">
+            <div class="mb-4 rounded bg-red-500 p-4 font-bold text-white">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -76,5 +76,5 @@
         </form>
     </div>
 
-    <script src="/js/requestDataPeminjaman.js"></script>
+    <script src="/js/requestData.js"></script>
 </x-dashboard.layout>

@@ -9,7 +9,7 @@
             <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
         @endif
 
-        <table class="mt-8 w-full min-w-[50rem] table-auto border-collapse">
+        <table class="mt-8 w-full min-w-[50rem] table-auto border-collapse mb-4">
             <thead>
                 <tr>
                     <th>No</th>
@@ -23,7 +23,7 @@
             <tbody>
                 @foreach ($peminjamans as $peminjaman)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($peminjamans->currentPage() - 1) * $peminjamans->perPage() + $loop->iteration }}</td>
                         <td>{{ $peminjaman->siswa->nisn }}</td>
                         <td>{{ $peminjaman->siswa->nama }}</td>
                         <td>{{ $peminjaman->tanggal_pinjam }}</td>

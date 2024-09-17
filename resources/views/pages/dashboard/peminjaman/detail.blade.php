@@ -18,14 +18,12 @@
                     <!-- Date Fields -->
                     <div class="col-start-3 row-start-1 flex items-center gap-4">
                         <label for="tanggal_pinjam" class="w-48 whitespace-nowrap">Tanggal Pinjam</label>
-                        <input type="date"
-                            value="{{ $peminjaman->tanggal_pinjam }}" disabled
+                        <input type="date" value="{{ $peminjaman->tanggal_pinjam }}" disabled
                             class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
                     <div class="col-start-3 row-start-2 flex items-center gap-4">
                         <label for="tanggal_kembali" class="w-48 whitespace-nowrap">Tanggal Kembali</label>
-                        <input type="date"
-                            value="{{ $peminjaman->tanggal_kembali }}" disabled
+                        <input type="date" value="{{ $peminjaman->tanggal_kembali }}" disabled
                             class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
 
@@ -33,8 +31,7 @@
                     <div class="col-start-1 row-start-1 flex items-center gap-4">
                         <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
                         <div class="w-full">
-                            <input type="text" inputmode="numeric"
-                                value="{{ $peminjaman->nisn }}" disabled
+                            <input type="text" inputmode="numeric" value="{{ $peminjaman->nisn }}" disabled
                                 class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
                     </div>
@@ -42,13 +39,12 @@
                     <!-- Nama and Kode Kelas Fields -->
                     <div class="col-start-1 row-start-2 flex items-center gap-4">
                         <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
-                        <input type="text" value="{{ $peminjaman->siswa->nama }}"
-                            disabled class="w-full rounded border px-4 py-2 outline-none focus:ring">
+                        <input type="text" value="{{ $peminjaman->siswa->nama }}" disabled
+                            class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
                     <div class="col-start-1 row-start-3 flex items-center gap-4">
                         <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
-                        <input type="text"
-                            value="{{ $peminjaman->siswa->kode_kelas }}" disabled
+                        <input type="text" value="{{ $peminjaman->siswa->kode_kelas }}" disabled
                             class="w-full rounded border px-4 py-2 outline-none focus:ring">
                     </div>
 
@@ -91,7 +87,7 @@
 
                                     <!-- Jumlah Buku Field -->
                                     <td class="p-0">
-                                        <input type="number" value="{{ $buku->pivot->jumlah }}"
+                                        <input type="number" value="{{ $buku->pivot->jumlah }}" disabled
                                             class="w-full rounded px-4 py-2 outline-none">
                                     </td>
                                 </tr>
@@ -111,7 +107,8 @@
                         </div>
                     @endif
 
-                    <form action="/dashboard/peminjaman/ubah/{{ $peminjaman->id }}" method="POST" class="grid grid-cols-3 gap-8">
+                    <form action="/dashboard/peminjaman/ubah/{{ $peminjaman->id }}" method="POST"
+                        class="grid grid-cols-3 gap-8">
                         @csrf
                         <!-- Date Fields -->
                         <div class="col-start-3 row-start-1 flex items-center gap-4">
@@ -132,8 +129,8 @@
                             <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
                             <div class="w-full">
                                 <input type="text" inputmode="numeric" id="nisn" name="nisn"
-                                    @keydown.tab="ambilDataSiswa()" x-init="ambilDataSiswa()" value="{{ $peminjaman->nisn }}" autofocus
-                                    required
+                                    @keydown.tab="ambilDataSiswa()" x-init="ambilDataSiswa()"
+                                    value="{{ $peminjaman->nisn }}" autofocus required
                                     class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                             </div>
                         </div>
@@ -167,7 +164,8 @@
                                     <tr>
                                         <td class="p-0">
                                             <input type="text" name="kode_buku[]" required
-                                                onkeydown="if(event.key === 'Tab') ambilDataBuku(this)" x-init="ambilDataBuku($el)" value="{{ $buku->kode_buku }}"
+                                                onkeydown="if(event.key === 'Tab') ambilDataBuku(this)"
+                                                x-init="ambilDataBuku($el)" value="{{ $buku->kode_buku }}"
                                                 class="kode_buku w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
@@ -187,8 +185,9 @@
                                                 class="tahun_terbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="number" name="jumlah[]" min="1" value="{{ $buku->pivot->jumlah }}"
-                                                required class="jumlah w-full rounded px-4 py-2 outline-none">
+                                            <input type="number" name="jumlah[]" min="1"
+                                                value="{{ $buku->pivot->jumlah }}" required
+                                                class="jumlah w-full rounded px-4 py-2 outline-none">
                                         </td>
                                     </tr>
                                 @endforeach
@@ -211,7 +210,7 @@
 
                 </div>
 
-                      <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
+                <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
                     <!-- Button to trigger the modal -->
                     <button x-on:click="modal = !modal" type="button"
                         class="font-medium text-red-500 focus:outline-none">Hapus data peminjaman ini</button>
@@ -240,5 +239,5 @@
         </div>
     </div>
 
-    <script src="/js/requestDataPeminjaman.js"></script>
+    <script src="/js/requestData.js"></script>
 </x-dashboard.layout>

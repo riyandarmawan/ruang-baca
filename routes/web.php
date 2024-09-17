@@ -98,6 +98,12 @@ Route::get('/dashboard/pengembalian/tambah', [PengembalianController::class, 'cr
 
 Route::get('/dashboard/pengembalian/detail/{id}', [PengembalianController::class, 'detail']);
 
+Route::post('/dashboard/pengembalian/tambah', [PengembalianController::class, 'store']);
+
+Route::post('/dashboard/pengembalian/ubah/{id}', [PengembalianController::class, 'update']);
+
+Route::post('/dashboard/pengembalian/hapus/{id}', [PengembalianController::class, 'destroy']);
+
 // APIs
 Route::get('/api/siswa/{nisn}', [ApiControler::class, 'siswa']);
 

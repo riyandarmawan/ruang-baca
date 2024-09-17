@@ -1,4 +1,4 @@
-<x-dashboard.layout title="{{ $title }}">
+<x-dashboard.layout title="{{ $title }}" search="{{ $search }}">
     <div class="p-6">
         <h1 class="mb-8 text-3xl font-bold">Data Pengembalian</h1>
         <a href="/dashboard/pengembalian/tambah"
@@ -9,12 +9,12 @@
             <div class="mt-4 rounded bg-green-500 bg-opacity-50 p-4">{{ session('success') }}</div>
         @endif
 
-        <table class="mt-8 w-full min-w-[50rem] table-auto border-collapse">
+        <table class="mt-8 w-full min-w-[50rem] table-auto border-collapse mb-4">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>NISN</th>
-                    <th>Peminjam</th>
+                    <th>Pengembali</th>
                     <th>Tanggal Kembali</th>
                     <th>Aksi</th>
                 </tr>
@@ -22,7 +22,7 @@
             <tbody>
                 @foreach ($pengembalians as $pengembalian)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ ($pengembalians->currentPage() - 1) * $pengembalians->perPage() + $loop->iteration }}</td>
                         <td>{{ $pengembalian->siswa->nisn }}</td>
                         <td>{{ $pengembalian->siswa->nama }}</td>
                         <td>{{ $pengembalian->tanggal_kembali }}</td>
@@ -36,5 +36,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $pengembalians->links() }}
     </div>
 </x-dashboard.layout>

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Buku;
 use App\Models\DetailPeminjaman;
-use App\Models\Siswa;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 
@@ -47,13 +45,8 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-        $siswa = Siswa::all();
-        $buku = Buku::all();
-
         $data = [
             'title' => "Tambah Data Peminjaman",
-            'siswas' => $siswa,
-            'bukus' => $buku
         ];
 
         return view('pages.dashboard.peminjaman.tambah', $data);
@@ -120,9 +113,7 @@ class PeminjamanController extends Controller
      */
     public function detail($id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
-        $siswa = Siswa::all();
-        $buku = Buku::all();
+        $peminjaman = Peminjaman::find($id);
 
         $data = [
             'title' => "Detail Peminjaman",

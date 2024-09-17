@@ -1,82 +1,74 @@
 <x-dashboard.layout title="{{ $title }}">
-    <div class="flex items-center justify-center p-6">
-        <div class="h-fit min-w-[40rem] rounded border border-primary p-4 shadow shadow-slate-500">
-            <h1 class="mb-6 text-center text-xl font-bold">Tambah Data Pengembalian</h1>
-            <form action="" method="POST">
-                <!-- Siswa Selection -->
-                <div class="mb-4 grid grid-cols-3 items-center">
-                    <label for="nisn">Siswa</label>
-                    <select name="nisn" id="nisn"
-                        class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                        @foreach ($siswas as $siswa)
-                            <option value="{{ $siswa->nisn }}">{{ $siswa->nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
+    <div class="p-4">
+        @if ($errors->any())
+            <div class="mb-4 rounded bg-red-500 p-4 font-bold text-white">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-                <!-- Books Section -->
-                <div x-data="bookComponent()" class="mb-4 grid grid-cols-3">
-                    <label for="kode_buku">Buku</label>
-                    <div id="book-container" class="col-span-2 grid gap-4" x-ref="bookContainer">
-                        <div class="flex">
-                            <select name="kode_buku"
-                                class="w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                                @foreach ($bukus as $buku)
-                                    <option value="{{ $buku->kode_buku }}">{{ $buku->judul }}</option>
-                                @endforeach
-                            </select>
-                            <input type="number" name="jumlah" value="1"
-                                class="w-14 rounded border border-primary p-2 shadow shadow-slate-500">
-                        </div>
-                    </div>
-                    <div class="col-span-3 flex justify-end">
-                        <button type="button" class="mt-4 w-fit cursor-pointer" @click="addBook()">+ Tambah buku</button>
-                    </div>
-                </div>
+        <form action="" method="POST" class="grid grid-cols-3 gap-8">
+            @csrf
+            <div class="col-start-3 row-start-1 flex items-center gap-4">
+                <label for="tanggal_kembali" class="w-48 whitespace-nowrap">Tanggal Kembali</label>
+                <input type="date" id="tanggal_kembali" name="tanggal_kembali"
+                    value="{{ date('Y-m-d') }}" readonly
+                    class="w-full rounded border px-4 py-2 outline-none focus:ring">
+            </div>
 
-                <!-- Return Date Input -->
-                <div x-data="{ currentDate: (() => {
-                        const today = new Date();
-                        today.setDate(today.getDate() + 7);
-                        return today.toISOString().split('T')[0];
-                    })() }" class="mb-4 grid grid-cols-3 items-center">
-                    <label for="tanggal_kembali">Tanggal Kembali</label>
-                    <input type="date" name="tanggal_kembali" id="tanggal_kembali" x-bind:value="currentDate"
-                        class="col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500">
+            <!-- NISN Field -->
+            <div class="col-start-1 row-start-1 flex items-center gap-4">
+                <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
+                <div class="w-full">
+                    <input type="text" inputmode="numeric" id="nisn" name="nisn"
+                        @keydown.tab="ambilDataSiswa()" autofocus required
+                        class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
                 </div>
+            </div>
 
-                <!-- Submit Button -->
-                <div class="mt-6 flex justify-center">
-                    <button
-                        class="rounded bg-primary px-6 py-2 font-medium text-background shadow shadow-slate-500 hover:opacity-80 focus:ring focus:ring-slate-500 active:opacity-70">
-                        Tambah
-                    </button>
-                </div>
-            </form>
-        </div>
+            <!-- Nama and Kode Kelas Fields -->
+            <div class="col-start-1 row-start-2 flex items-center gap-4">
+                <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
+                <input type="text" id="nama" name="nama" disabled
+                    class="w-full rounded border px-4 py-2 outline-none focus:ring">
+            </div>
+            <div class="col-start-1 row-start-3 flex items-center gap-4">
+                <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
+                <input type="text" id="kode_kelas" name="kode_kelas" disabled
+                    class="w-full rounded border px-4 py-2 outline-none focus:ring">
+            </div>
+
+            <!-- Book Table -->
+            <table class="col-span-3 col-start-1 row-start-4 table-auto">
+                <thead>
+                    <tr>
+                        <th>Kode Buku</th>
+                        <th>Judul</th>
+                        <th>Penulis</th>
+                        <th>Penerbit</th>
+                        <th>Tahun Terbit</th>
+                        <th>Jumlah Buku</th>
+                    </tr>
+                </thead>
+                <tbody id="book-container" x-init="tambahBarisBuku()">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="p-0">
+                            <button type="button" @click="tambahBarisBuku()"
+                                class="w-full bg-tersier py-2 font-bold text-white">Tambah Baris Buku</button>
+                        </td>
+                        <td colspan="3" class="p-0">
+                            <button type="submit" class="w-full bg-primary py-2 font-bold text-white">Simpan</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
     </div>
 
-    <!-- Template for Adding Books -->
-    <template x-data="bookComponent()" id="book-template">
-        <div class="flex">
-            <select name="kode_buku" class="w-full rounded border border-primary p-2 shadow shadow-slate-500">
-                @foreach ($bukus as $buku)
-                    <option value="{{ $buku->kode_buku }}">{{ $buku->judul }}</option>
-                @endforeach
-            </select>
-            <input type="number" name="jumlah" value="1"
-                class="w-14 rounded border border-primary p-2 shadow shadow-slate-500">
-        </div>
-    </template>
-
-    <script>
-        function bookComponent() {
-            return {
-                addBook() {
-                    const template = document.getElementById('book-template').content.cloneNode(true);
-                    this.$refs.bookContainer.appendChild(template);
-                }
-            };
-        }
-    </script>
+    <script src="/js/requestData.js"></script>
 </x-dashboard.layout>
