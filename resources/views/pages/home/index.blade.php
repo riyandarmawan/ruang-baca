@@ -1,4 +1,5 @@
-<x-home.layout title="{{ $title }}">
+<x-home.layout title="{{ $title }}" :allKategoris="$allKategoris" judul="{{ $judul ?? '' }}" penulis="{{ $penulis ?? '' }}"
+    kategoriId="{{ $kategoriId ?? '' }}">
     <div class="pt-8">
         @foreach ($kategoris as $kategori)
             @if ($kategori->bukus->isNotEmpty())
@@ -8,7 +9,8 @@
                         <div class="overflow-x-auto pb-4">
                             <div class="flex w-fit gap-4">
                                 @foreach ($kategori->bukus as $buku)
-                                    <a href="/buku/detail/{{ $buku->slug }}" class="block w-24 md:w-28 lg:w-32 xl:w-36">
+                                    <a href="/buku/detail/{{ $buku->slug }}"
+                                        class="block w-24 md:w-28 lg:w-32 xl:w-36">
                                         <div class="relative aspect-[2/3] w-full">
                                             <img loading="lazy" src="{{ asset("storage/images/bukus/$buku->sampul") }}"
                                                 alt="{{ $buku->judul }}" class="h-full w-full rounded-xl object-cover">
@@ -17,7 +19,7 @@
                                             {{ $buku->judul }}
                                         </h4>
                                         <h4 class="line-clamp-1 text-xs text-slate-700 md:text-sm xl:text-base">
-                                            {{ $buku->penerbit }}
+                                            {{ $buku->penulis }}
                                         </h4>
                                     </a>
                                 @endforeach
@@ -27,5 +29,8 @@
                 </section>
             @endif
         @endforeach
+        @if ($kategoris->isEmpty())
+            <p class="text-center text-red-500 font-medium">Tidak ada hasil yang ditemukan dengan kriteria yang anda cari.</p>
+        @endif
     </div>
 </x-home.layout>

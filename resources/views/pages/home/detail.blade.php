@@ -1,4 +1,5 @@
-<x-home.layout title="{{ $title }}">
+<x-home.layout title="{{ $title }}" :allKategoris="$allKategoris" judul="{{ $judul ?? '' }}" penulis="{{ $penulis ?? '' }}"
+    kategoriId="{{ $kategoriId ?? '' }}">
     <div class="container pt-8">
         <nav class="mb-8">
             <ul class="flex flex-wrap gap-4">
