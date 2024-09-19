@@ -15,6 +15,18 @@ class BukuController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function getBukus()
+    {
+        $bukus = Buku::all();
+
+        if ($bukus) {
+            return response()->json($bukus);
+        }
+
+        return response()->json(['pesan' => 'Data buku tidak tersedia']);
+    }
+
     public function index(Request $request)
     {
         $search = $request->input('search');

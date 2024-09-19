@@ -1,5 +1,5 @@
-<aside x-bind:class="detail ? '!w-52 px-2' : ''"
-    class="flex w-14 flex-col gap-4 bg-primary py-2 ps-2 text-background duration-300">
+<aside x-bind:class="detail ? '!w-52 px-2' : ''" id="sidebar-dashboard"
+    class="flex flex-col gap-4 bg-primary py-2 w-14 ps-2 text-background duration-300">
 
     <x-dashboard.navbar />
 
@@ -7,7 +7,7 @@
 
     <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-evenly py-4">
         <div x-bind:class="{ 'left-8': !detail, '!block': open }"
-            class="absolute bottom-full hidden w-48 rounded bg-background text-primary shadow-2xl">
+            class="absolute bottom-full hidden w-48 rounded bg-background text-primary shadow-2xl border border-primary z-[9999] overflow-hidden">
             <a href="/dashbaord/user/profile"
                 class="group flex items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                 <span class="i-mdi-user bg-primary text-xl group-hover:bg-background"></span>

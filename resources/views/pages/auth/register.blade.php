@@ -30,4 +30,4 @@
             <a href="" class="mt-6 block text-center text-xs">kebijakan privasi</a>
         </div>
     </div>
-<x-base-layout title="{{ $title }}">
+</x-base-layout>

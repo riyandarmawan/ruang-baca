@@ -19,92 +19,97 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/buku/detail/{slug}', [HomeController::class, 'detail']);
 
 // Auth
-Route::get('/auth/login', [AuthController::class, 'login']);
+Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
+
+Route::post('/auth/login', [AuthController::class, 'loginProcess'])->middleware('throttle:5,1');
 
 Route::get('/auth/register', [AuthController::class, 'register']);
 
-// dashboard
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::middleware('auth')->group(function () {
 
-// siswa
-Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
-Route::get('/dashboard/siswa/tambah', [SiswaController::class, 'create']);
+    // siswa
+    Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
 
-Route::post('/dashboard/siswa/tambah', [SiswaController::class, 'store']);
+    Route::get('/dashboard/siswa/tambah', [SiswaController::class, 'create']);
 
-Route::get('/dashboard/siswa/detail/{nisn}', [SiswaController::class, 'detail']);
+    Route::post('/dashboard/siswa/tambah', [SiswaController::class, 'store']);
 
-Route::post('/dashboard/siswa/ubah/{nisn}', [SiswaController::class, 'update']);
+    Route::get('/dashboard/siswa/detail/{nisn}', [SiswaController::class, 'detail']);
 
-Route::post('/dashboard/siswa/hapus/{nisn}', [SiswaController::class, 'destroy']);
+    Route::post('/dashboard/siswa/ubah/{nisn}', [SiswaController::class, 'update']);
 
-// kelas
-Route::get('/dashboard/kelas', [KelasController::class, 'index']);
+    Route::post('/dashboard/siswa/hapus/{nisn}', [SiswaController::class, 'destroy']);
 
-Route::get('/dashboard/kelas/tambah', [KelasController::class, 'create']);
+    // kelas
+    Route::get('/dashboard/kelas', [KelasController::class, 'index']);
 
-Route::post('/dashboard/kelas/tambah', [KelasController::class, 'store']);
+    Route::get('/dashboard/kelas/tambah', [KelasController::class, 'create']);
 
-Route::get('/dashboard/kelas/detail/{kode_kelas}', [KelasController::class, 'detail']);
+    Route::post('/dashboard/kelas/tambah', [KelasController::class, 'store']);
 
-Route::post('/dashboard/kelas/ubah/{kode_kelas}', [KelasController::class, 'update']);
+    Route::get('/dashboard/kelas/detail/{kode_kelas}', [KelasController::class, 'detail']);
 
-Route::post('/dashboard/kelas/hapus/{kode_kelas}', [KelasController::class, 'destroy']);
+    Route::post('/dashboard/kelas/ubah/{kode_kelas}', [KelasController::class, 'update']);
 
-// buku
-Route::get('/dashboard/buku', [BukuController::class, 'index']);
+    Route::post('/dashboard/kelas/hapus/{kode_kelas}', [KelasController::class, 'destroy']);
 
-Route::get('/dashboard/buku/tambah', [BukuController::class, 'create']);
+    // buku
+    Route::get('/dashboard/buku', [BukuController::class, 'index']);
 
-Route::post('/dashboard/buku/tambah', [BukuController::class, 'store']);
+    Route::get('/dashboard/buku/tambah', [BukuController::class, 'create']);
 
-Route::get('/dashboard/buku/detail/{slug}', [BukuController::class, 'detail']);
+    Route::post('/dashboard/buku/tambah', [BukuController::class, 'store']);
 
-Route::post('/dashboard/buku/ubah/{slug}', [BukuController::class, 'update']);
+    Route::get('/dashboard/buku/detail/{slug}', [BukuController::class, 'detail']);
 
-Route::post('/dashboard/buku/hapus/{slug}', [BukuController::class, 'destroy']);
+    Route::post('/dashboard/buku/ubah/{slug}', [BukuController::class, 'update']);
 
-// Kategori
-Route::get('/dashboard/kategori', [KategoriController::class, 'index']);
+    Route::post('/dashboard/buku/hapus/{slug}', [BukuController::class, 'destroy']);
 
-Route::get('/dashboard/kategori/tambah', [KategoriController::class, 'create']);
+    // Kategori
+    Route::get('/dashboard/kategori', [KategoriController::class, 'index']);
 
-Route::post('/dashboard/kategori/tambah', [KategoriController::class, 'store']);
+    Route::get('/dashboard/kategori/tambah', [KategoriController::class, 'create']);
 
-Route::get('/dashboard/kategori/detail/{slug}', [KategoriController::class, 'detail']);
+    Route::post('/dashboard/kategori/tambah', [KategoriController::class, 'store']);
 
-Route::post('/dashboard/kategori/ubah/{slug}', [KategoriController::class, 'update']);
+    Route::get('/dashboard/kategori/detail/{slug}', [KategoriController::class, 'detail']);
 
-Route::post('/dashboard/kategori/hapus/{slug}', [KategoriController::class, 'destroy']);
+    Route::post('/dashboard/kategori/ubah/{slug}', [KategoriController::class, 'update']);
 
-// peminjaman
-Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);
+    Route::post('/dashboard/kategori/hapus/{slug}', [KategoriController::class, 'destroy']);
 
-Route::get('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'create']);
+    // peminjaman
+    Route::get('/dashboard/peminjaman', [PeminjamanController::class, 'index']);
 
-Route::post('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'store']);
+    Route::get('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'create']);
 
-Route::get('/dashboard/peminjaman/detail/{id}', [PeminjamanController::class, 'detail']);
+    Route::post('/dashboard/peminjaman/tambah', [PeminjamanController::class, 'store']);
 
-Route::post('/dashboard/peminjaman/ubah/{id}', [PeminjamanController::class, 'update']);
+    Route::get('/dashboard/peminjaman/detail/{id}', [PeminjamanController::class, 'detail']);
 
-Route::post('/dashboard/peminjaman/hapus/{id}', [PeminjamanController::class, 'destroy']);
+    Route::post('/dashboard/peminjaman/ubah/{id}', [PeminjamanController::class, 'update']);
 
-// pengembalian
-Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
+    Route::post('/dashboard/peminjaman/hapus/{id}', [PeminjamanController::class, 'destroy']);
 
-Route::get('/dashboard/pengembalian/tambah', [PengembalianController::class, 'create']);
+    // pengembalian
+    Route::get('/dashboard/pengembalian', [PengembalianController::class, 'index']);
 
-Route::get('/dashboard/pengembalian/detail/{id}', [PengembalianController::class, 'detail']);
+    Route::get('/dashboard/pengembalian/tambah', [PengembalianController::class, 'create']);
 
-Route::post('/dashboard/pengembalian/tambah', [PengembalianController::class, 'store']);
+    Route::get('/dashboard/pengembalian/detail/{id}', [PengembalianController::class, 'detail']);
 
-Route::post('/dashboard/pengembalian/ubah/{id}', [PengembalianController::class, 'update']);
+    Route::post('/dashboard/pengembalian/tambah', [PengembalianController::class, 'store']);
 
-Route::post('/dashboard/pengembalian/hapus/{id}', [PengembalianController::class, 'destroy']);
+    Route::post('/dashboard/pengembalian/ubah/{id}', [PengembalianController::class, 'update']);
 
-// APIs
-Route::get('/api/siswa/{nisn}', [ApiControler::class, 'siswa']);
+    Route::post('/dashboard/pengembalian/hapus/{id}', [PengembalianController::class, 'destroy']);
 
-Route::get('/api/buku/{kode_buku}', [ApiControler::class, 'buku']);
+    // APIs
+    Route::get('/api/siswas', [SiswaController::class, 'getSiswas']);;
+
+    Route::get('/api/bukus', [BukuController::class, 'getBukus']);
+});

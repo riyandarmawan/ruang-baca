@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "alpinejs": "^3.14.1",
-        "chart.js": "^4.4.4"
+        "chart.js": "^4.4.4",
+        "dompurify": "^3.1.6"
     }
 }

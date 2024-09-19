@@ -26,14 +26,23 @@
             </div>
 
             <!-- NISN Field -->
-            <div class="col-start-1 row-start-1 flex items-center gap-4">
+            <div class="col-start-1 row-start-1 flex items-center gap-2">
                 <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
-                <div class="w-full">
+                <div x-data="{ showAutoComplete: false }" @keydown.esc.window="showAutoComplete = false"
+                    @close-autocomplete.window="showAutoComplete = false" class="relative w-full">
                     <input type="text" inputmode="numeric" id="nisn" name="nisn"
-                        @keydown.tab="ambilDataSiswa()" autofocus required
+                        @input="showAutoComplete = true" @keydown.alt="showAutoComplete = !showAutoComplete"
+                        autocomplete="off" autofocus required
                         class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
+                    <div x-show="showAutoComplete" x-cloak @click.outside="showAutoComplete = false"
+                        id="autocomplete-box" class="absolute left-0 top-full mt-2 h-fit w-full bg-background">
+                        <ul
+                            class="max-h-40 overflow-hidden overflow-y-scroll rounded border border-primary focus:ring focus:ring-primary">
+                        </ul>
+                    </div>
                 </div>
             </div>
+
 
             <!-- Nama and Kode Kelas Fields -->
             <div class="col-start-1 row-start-2 flex items-center gap-4">

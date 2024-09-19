@@ -1,3 +1,4 @@
+
 function tambahBarisBuku() {
     const bookContainer = document.getElementById('book-container');
     const rowElement = document.createElement('tr');
@@ -25,26 +26,101 @@ function tambahBarisBuku() {
     bookContainer.appendChild(rowElement);
 }
 
-function ambilDataSiswa() {
-    const nisn = document.getElementById('nisn');
-    const nama = document.getElementById('nama');
-    const kodeKelas = document.getElementById('kode_kelas');
+(() => {
+    document.addEventListener('DOMContentLoaded', function () {
+        ambilSemuaSiswa();
+        ambilSemuaBuku();
+    });
 
-    if (!nisn.value) return alert('NISN tidak boleh kosong!');
+    let siswas = [];
+    let selectedNisn = null;
 
-    fetch(`http://127.0.0.1:8000/api/siswa/${nisn.value}`)
-        .then(response => response.ok ? response.json() : response.json().then(error => { throw new Error(error.pesan) }))
-        .then(siswa => {
-            nama.value = siswa.nama;
-            kodeKelas.value = siswa.kode_kelas;
-        })
-        .catch(error => {
-            nisn.focus();
-            nama.value = '';
-            kodeKelas.value = '';
-            alert(error);
-        });
-}
+    let bukus = [];
+    let selectedKodeBuku = null;
+
+    async function ambilSemuaSiswa() {
+        const nisn = document.getElementById('nisn');
+        const autocompleteBox = document.getElementById('autocomplete-box');
+        const nisnListContainer = autocompleteBox.getElementsByTagName('ul')[0];
+
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/siswas`);
+            if (!response.ok) {
+                throw new Error('Terjadi kesalahan saat mengambil data.');
+            }
+            siswas = await response.json();
+            updateAutocompleteList(siswas);
+
+            // Add input event listener to filter the list
+            nisn.addEventListener('input', () => {
+                filterSiswa(nisn.value);
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Updates the autocomplete list dynamically
+    function updateAutocompleteList(filteredSiswas) {
+        const autocompleteBox = document.getElementById('autocomplete-box');
+        const nisnListContainer = autocompleteBox.getElementsByTagName('ul')[0];
+        nisnListContainer.innerHTML = ''; // Clear previous results
+
+        // If no results, show a message
+        if (filteredSiswas.length < 1) {
+            const li = document.createElement('li');
+            li.className = 'py-2 px-4 hover:text-background hover:bg-tersier cursor-pointer font-medium';
+            li.textContent = 'NISN tidak terdaftar!';
+            nisnListContainer.appendChild(li);
+        } else {
+            filteredSiswas.forEach(siswa => {
+                const li = document.createElement('li');
+                li.className = `py-2 px-4 hover:text-background hover:bg-tersier cursor-pointer font-medium`;
+
+                const sanitizedNisn = window.purify.sanitize(siswa.nisn); // Sanitize NISN
+                li.textContent = sanitizedNisn;
+
+                // On selection of NISN from the list
+                li.addEventListener('click', () => {
+                    const nisnInput = document.getElementById('nisn');
+                    nisnInput.value = sanitizedNisn;
+
+                    if (selectedNisn) {
+                        selectedNisn.classList.remove('bg-tersier', 'text-background');
+                    }
+
+                    li.classList.add('bg-tersier', 'text-background');
+                    selectedNisn = li;
+
+                    pilihSiswa(siswa); // Fill in the student details
+
+                    // Dispatch event to Alpine.js to close the dropdown
+                    const alpineComponent = autocompleteBox.closest('[x-data]');
+                    if (alpineComponent) {
+                        alpineComponent.dispatchEvent(new CustomEvent('close-autocomplete', { bubbles: true }));
+                    }
+                });
+
+                nisnListContainer.appendChild(li);
+            });
+        }
+    }
+
+    // Filters the students based on the input value
+    function filterSiswa(query) {
+        const filtered = siswas.filter(siswa => siswa.nisn.toLowerCase().includes(query.toLowerCase()));
+        updateAutocompleteList(filtered);
+    }
+
+    // Updates the fields when a student is selected
+    function pilihSiswa(siswa) {
+        const nama = document.getElementById('nama');
+        const kodeKelas = document.getElementById('kode_kelas');
+        nama.value = siswa.nama;
+        kodeKelas.value = siswa.kode_kelas;
+    }
+})();
 
 function ambilDataBuku(inputElement) {
     const row = inputElement.closest('tr');

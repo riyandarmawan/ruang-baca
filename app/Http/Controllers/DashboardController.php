@@ -41,6 +41,7 @@ class DashboardController extends Controller
         // Calculate total numbers
         $jumlahBukuDiPinjam = array_sum($pinjamPerHari);
         $jumlahBukuDiKembalikan = array_sum($kembaliPerHari);
+        $jumlahBukuYangMasihDiPinjam = $jumlahBukuDiPinjam - $jumlahBukuDiKembalikan;
 
         // Get most favorite book, author, and publisher based on this week
         $bukuTerfavorit = Buku::select('bukus.judul')
@@ -59,24 +60,25 @@ class DashboardController extends Controller
             ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
             ->first();
 
-        $penerbitTerfavorit = Buku::select('bukus.penerbit')
-            ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
-            ->join('peminjamans', 'detail_peminjaman.id_peminjaman', '=', 'peminjamans.id')
-            ->whereBetween('peminjamans.tanggal_pinjam', [$startOfWeek, $today])
-            ->groupBy('bukus.penerbit')
-            ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
-            ->first();
+        // $penerbitTerfavorit = Buku::select('bukus.penerbit')
+        //     ->join('detail_peminjaman', 'bukus.kode_buku', '=', 'detail_peminjaman.kode_buku')
+        //     ->join('peminjamans', 'detail_peminjaman.id_peminjaman', '=', 'peminjamans.id')
+        //     ->whereBetween('peminjamans.tanggal_pinjam', [$startOfWeek, $today])
+        //     ->groupBy('bukus.penerbit')
+        //     ->orderByRaw('SUM(detail_peminjaman.jumlah) DESC')
+        //     ->first();
 
         // Pass data to the view
         return view('pages.dashboard.index', [
             'title' => 'Dashboard',
             'jumlahBukuDiPinjam' => $jumlahBukuDiPinjam,
             'pinjamPerHari' => $pinjamPerHari,
+            'jumlahBukuYangMasihDiPinjam' => $jumlahBukuYangMasihDiPinjam,
             'jumlahBukuDiKembalikan' => $jumlahBukuDiKembalikan,
             'kembaliPerHari' => $kembaliPerHari,
             'bukuTerfavorit' => $bukuTerfavorit->judul ?? 'Tidak ada data',
             'penulisTerfavorit' => $penulisTerfavorit->penulis ?? 'Tidak ada data',
-            'penerbitTerfavorit' => $penerbitTerfavorit->penerbit ?? 'Tidak ada data'
+            // 'penerbitTerfavorit' => $penerbitTerfavorit->penerbit ?? 'Tidak ada data'
         ]);
     }
 }

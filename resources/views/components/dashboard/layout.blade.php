@@ -1,5 +1,5 @@
 <x-base-layout title="{{ $title }}">
-    <div x-data="{ detail: false }">
+    <div x-data="{ detail: JSON.parse(window.localStorage.getItem('openSidebar')) }">
         <x-dashboard.header search="{{ $search ?? '' }}"/>
 
         <main class="h-fit flex w-full" style="height: calc(100vh - 4rem)">

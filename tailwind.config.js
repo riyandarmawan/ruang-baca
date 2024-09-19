@@ -8,6 +8,10 @@ export default {
     "./resources/**/*.vue",
     './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
   ],
+  safelist: [
+    'hover:text-background',
+    'hover:bg-tersier',
+  ],
   theme: {
     container: {
       center: true,

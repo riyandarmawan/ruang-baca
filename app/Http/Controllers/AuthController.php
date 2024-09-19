@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -13,6 +14,32 @@ class AuthController extends Controller
         ];
 
         return view('pages.auth.login', $data);
+    }
+
+    public function loginProcess(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required|exists:users,username',
+            'password' => 'required|min:8'
+        ], [
+            // Username
+            'username.required' => 'Username wajib diisi!',
+            'username.exists' => 'Username tersebut tidak terdaftar!',
+
+            // Password
+            'password.required' => 'Password wajib diisi!',
+            'password.min' => 'Password minimal harus 8 karakter'
+        ]);
+
+        if(Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            return redirect()->intended('/dashboard');
+        }
+
+        return redirect()->back()->withErrors(['password' => 'Password yang anda masukkan salah!'])->onlyInput('username');
     }
 
     public function register()

@@ -23,7 +23,7 @@ td {
 }
 
 .input-error {
-  @apply border-red-500 ring-red-500
+  @apply border-red-500 ring-red-500 bg-red-200
 }
 
 .input-unerror {

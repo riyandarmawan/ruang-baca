@@ -13,6 +13,17 @@ class SiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
+    public function getSiswas() {
+        $siswas = Siswa::all();
+
+        if ($siswas) {
+            return response()->json($siswas);
+        }
+
+        return response()->json(['pesan' => 'Data siswa tidak tersedia']);
+    }
+
     public function index(Request $request)
     {
         $search = $request->input('search');
