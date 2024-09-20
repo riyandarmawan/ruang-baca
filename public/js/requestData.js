@@ -53,8 +53,8 @@ function tambahBarisBuku() {
 
     // Updates the autocomplete list dynamically
     function updateSiswaAutocompleteList(filteredSiswas) {
-        const autocompleteBox = document.getElementById('autocomplete-box');
-        const nisnListContainer = autocompleteBox.getElementsByTagName('ul')[0];
+        const nisnSuggestionsBox = document.getElementById('nisn-suggestions-box');
+        const nisnListContainer = nisnSuggestionsBox.getElementsByTagName('ul')[0];
         nisnListContainer.innerHTML = ''; // Clear previous results
 
         // If no results, show a message

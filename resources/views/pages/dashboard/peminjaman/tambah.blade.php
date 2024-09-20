@@ -28,13 +28,13 @@
             <!-- NISN Field -->
             <div class="col-start-1 row-start-1 flex items-center gap-2">
                 <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
-                <div x-data="{ showAutoComplete: false, nisn: '' }" @keydown.esc.window="showAutoComplete = false" class="relative w-full">
+                <div x-data="{ showNisnSuggestions: false, nisn: '' }" @keydown.esc.window="showNisnSuggestions = false" class="relative w-full">
                     <input type="text" inputmode="numeric" id="nisn" name="nisn" x-model="nisn"
-                        @input="showAutoComplete = true; window.filterSiswa(nisn)"
-                        @keydown.alt="showAutoComplete = !showAutoComplete" autocomplete="off" autofocus required
+                        @input="showNisnSuggestions = true; window.filterSiswa(nisn)"
+                        @keydown.alt="showNisnSuggestions = !showNisnSuggestions" autocomplete="off" autofocus required
                         class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
-                    <div x-cloak x-show="showAutoComplete" @click.outside="showAutoComplete = false"
-                        id="autocomplete-box" class="absolute left-full top-0 ms-2 h-fit w-full bg-background">
+                    <div x-cloak x-show="showNisnSuggestions" @click.outside="showNisnSuggestions = false"
+                        id="nisn-suggestions-box" class="absolute left-full top-0 ms-2 h-fit w-full bg-background">
                         <ul
                             class="max-h-40 overflow-hidden overflow-y-scroll rounded border border-primary focus:ring focus:ring-primary">
                         </ul>
