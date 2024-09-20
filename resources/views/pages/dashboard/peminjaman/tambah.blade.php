@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <form action="" method="POST" class="grid grid-cols-3 gap-8">
+        <form action="" method="POST" x-data="{ showKodeBukuSuggestions: false, kodeBuku: '' }" @keydown.esc.window="showKodeBukuSuggestions = false" class="grid grid-cols-3 gap-8 relative">
             @csrf
             <!-- Date Fields -->
             <div class="col-start-3 row-start-1 flex items-center gap-4">
@@ -36,7 +36,7 @@
                     <div x-cloak x-show="showNisnSuggestions" @click.outside="showNisnSuggestions = false"
                         id="nisn-suggestions-box" class="absolute left-full top-0 ms-2 h-fit w-full bg-background">
                         <ul
-                            class="max-h-40 overflow-hidden overflow-y-scroll rounded border border-primary focus:ring focus:ring-primary">
+                            class="max-h-40 overflow-hidden overflow-y-auto rounded border border-primary focus:ring focus:ring-primary">
                         </ul>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <th>Jumlah Buku</th>
                     </tr>
                 </thead>
-                <tbody id="book-container" x-init="tambahBarisBuku()">
+                <tbody id="book-container" x-init="tambahBarisBuku()" x-data="{kodeBuku: ''}">
                 </tbody>
                 <tfoot>
                     <tr>
@@ -80,6 +80,13 @@
                     </tr>
                 </tfoot>
             </table>
+
+            <div x-cloak x-show="showKodeBukuSuggestions" @click.outside="showKodeBukuSuggestions = false"
+                id="kode-buku-suggestions-box" class="absolute -bottom-44 h-fit w-full bg-background">
+                <ul
+                    class="max-h-40 overflow-hidden overflow-y-auto rounded border border-primary focus:ring focus:ring-primary">
+                </ul>
+            </div>
         </form>
     </div>
 
