@@ -11,6 +11,7 @@ export default {
   safelist: [
     'hover:text-background',
     'hover:bg-tersier',
+    'text-yellow-500'
   ],
   theme: {
     container: {

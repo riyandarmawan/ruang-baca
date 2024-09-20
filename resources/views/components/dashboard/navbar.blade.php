@@ -1,4 +1,4 @@
-<ul class="scrollbar-none flex h-[27rem] flex-col gap-4 overflow-y-scroll">
+<ul class="scrollbar-none flex h-[27rem] flex-col gap-4 overflow-y-scroll overflow-x-hidden">
     <li
         class="{{ Request::Is('dashboard') ? 'item-active' : '' }} min-w-52 cursor-pointer rounded hover:bg-tersier hover:opacity-80">
         <a href="/dashboard" class="flex items-center gap-4 px-2 py-2 text-lg font-bold">

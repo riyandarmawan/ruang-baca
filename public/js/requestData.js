@@ -1,10 +1,9 @@
-
 function tambahBarisBuku() {
     const bookContainer = document.getElementById('book-container');
     const rowElement = document.createElement('tr');
     rowElement.innerHTML = `
         <td class="p-0">
-            <input type="text" name="kode_buku[]" required onkeydown="if(event.key === 'Tab') ambilDataBuku(this)" class="kode_buku w-full rounded px-4 py-2 outline-none">
+            <input type="text" name="kode_buku[]" required autocomplete="off" class="kode_buku w-full rounded px-4 py-2 outline-none">
         </td>
         <td class="p-0">
             <input type="text" name="judul[]" disabled class="judul w-full rounded px-4 py-2 outline-none">
@@ -29,7 +28,8 @@ function tambahBarisBuku() {
 (() => {
     document.addEventListener('DOMContentLoaded', function () {
         ambilSemuaSiswa();
-        ambilSemuaBuku();
+
+        window.filterSiswa = filterSiswa;
     });
 
     let siswas = [];
@@ -39,30 +39,20 @@ function tambahBarisBuku() {
     let selectedKodeBuku = null;
 
     async function ambilSemuaSiswa() {
-        const nisn = document.getElementById('nisn');
-        const autocompleteBox = document.getElementById('autocomplete-box');
-        const nisnListContainer = autocompleteBox.getElementsByTagName('ul')[0];
-
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/siswas`);
             if (!response.ok) {
                 throw new Error('Terjadi kesalahan saat mengambil data.');
             }
             siswas = await response.json();
-            updateAutocompleteList(siswas);
-
-            // Add input event listener to filter the list
-            nisn.addEventListener('input', () => {
-                filterSiswa(nisn.value);
-            });
-
+            updateSiswaAutocompleteList(siswas);
         } catch (error) {
             console.error(error);
         }
     }
 
     // Updates the autocomplete list dynamically
-    function updateAutocompleteList(filteredSiswas) {
+    function updateSiswaAutocompleteList(filteredSiswas) {
         const autocompleteBox = document.getElementById('autocomplete-box');
         const nisnListContainer = autocompleteBox.getElementsByTagName('ul')[0];
         nisnListContainer.innerHTML = ''; // Clear previous results
@@ -94,12 +84,6 @@ function tambahBarisBuku() {
                     selectedNisn = li;
 
                     pilihSiswa(siswa); // Fill in the student details
-
-                    // Dispatch event to Alpine.js to close the dropdown
-                    const alpineComponent = autocompleteBox.closest('[x-data]');
-                    if (alpineComponent) {
-                        alpineComponent.dispatchEvent(new CustomEvent('close-autocomplete', { bubbles: true }));
-                    }
                 });
 
                 nisnListContainer.appendChild(li);
@@ -110,7 +94,7 @@ function tambahBarisBuku() {
     // Filters the students based on the input value
     function filterSiswa(query) {
         const filtered = siswas.filter(siswa => siswa.nisn.toLowerCase().includes(query.toLowerCase()));
-        updateAutocompleteList(filtered);
+        updateSiswaAutocompleteList(filtered);
     }
 
     // Updates the fields when a student is selected
@@ -121,33 +105,3 @@ function tambahBarisBuku() {
         kodeKelas.value = siswa.kode_kelas;
     }
 })();
-
-function ambilDataBuku(inputElement) {
-    const row = inputElement.closest('tr');
-
-    const kodeBuku = row.querySelector('.kode_buku');
-    const judul = row.querySelector('.judul');
-    const penulis = row.querySelector('.penulis');
-    const penerbit = row.querySelector('.penerbit');
-    const tahunTerbit = row.querySelector('.tahun_terbit');
-    const jumlah = row.querySelector('.jumlah');
-
-    if (!kodeBuku.value) return alert('Kode buku tidak boleh kosong!');
-
-    fetch(`http://127.0.0.1:8000/api/buku/${kodeBuku.value}`)
-        .then(response => response.ok ? response.json() : response.json().then(error => { throw new Error(error.pesan) }))
-        .then(buku => {
-            judul.value = buku.judul;
-            penulis.value = buku.penulis;
-            penerbit.value = buku.penerbit;
-            tahunTerbit.value = buku.tahun_terbit;
-        })
-        .catch(error => {
-            kodeBuku.focus();
-            judul.value = '';
-            penulis.value = '';
-            penerbit.value = '';
-            tahunTerbit.value = '';
-            alert(error);
-        });
-}
