@@ -1,5 +1,5 @@
 <x-base-layout title="{{ $title }}">
-    <x-home.header :allKategoris="$allKategoris" judul="{{ $judul }}" penulis="{{ $penulis }}" kategori_id="{{ $kategoriId }}" />
+    <x-home.header search="{{ $search ?? '' }}" />
 
     <div class="mt-14">
         {{ $slot }}

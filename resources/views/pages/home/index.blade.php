@@ -1,5 +1,4 @@
-<x-home.layout title="{{ $title }}" :allKategoris="$allKategoris" judul="{{ $judul ?? '' }}" penulis="{{ $penulis ?? '' }}"
-    kategoriId="{{ $kategoriId ?? '' }}">
+<x-home.layout title="{{ $title }}" search="{{ $search }}">
     <div class="pt-8">
         @foreach ($kategoris as $kategori)
             @if ($kategori->bukus->isNotEmpty())

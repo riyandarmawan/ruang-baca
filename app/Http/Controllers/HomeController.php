@@ -10,28 +10,18 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $judul = $request->input('judul');
-        $penulis = $request->input('penulis');
-        $kategoriId = $request->input('kategori_id');
+        $search = $request->input('search');
 
         $kategori = new Kategori();
 
         $query = $kategori->query();
 
-        if ($request->filled('judul')) {
-            $query->whereHas('bukus', function ($query) use ($judul) {
-                $query->where('judul', 'like', "%$judul%");
-            });
-        }
-
-        if ($request->filled('penulis')) {
-            $query->whereHas('bukus', function ($query) use ($penulis) {
-                $query->where('penulis', 'like', "%$penulis%");
-            });
-        }
-
-        if ($request->filled('kategori_id') && $kategoriId != 'all') {
-            $query->where('id', '=', "$kategoriId");
+        if ($search) {
+            $query->where('nama', 'like', "%$search%")
+                ->orWhereHas('bukus', function ($query) use ($search) {
+                    $query->where('judul', 'like', "%$search%")
+                        ->orWhere('penulis', 'like', "%$search%");;
+                });
         }
 
         $kategoris = $query->with('bukus')->get();
@@ -40,9 +30,7 @@ class HomeController extends Controller
             'title' => 'Ruang Baca',
             'allKategoris' => $kategori->all(),
             'kategoris' => $kategoris,
-            'judul' => $judul,
-            'penulis' => $penulis,
-            'kategoriId' => $kategoriId
+            'search' => $search,
         ];
 
         return view('pages.home.index', $data);
