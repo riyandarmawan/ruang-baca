@@ -10,8 +10,9 @@
             </div>
         @endif
 
-        <form action="" method="POST" class="grid grid-cols-3 gap-8">
+        <form action="" method="POST" x-data="{ showNisnSuggestions: false, nisn: '', showKodeBukuSuggestions: false, kodeBuku: '' }" class="grid grid-cols-3 gap-8 relative">
             @csrf
+            <!-- Date Fields -->
             <div class="col-start-3 row-start-1 flex items-center gap-4">
                 <label for="tanggal_kembali" class="w-48 whitespace-nowrap">Tanggal Kembali</label>
                 <input type="date" id="tanggal_kembali" name="tanggal_kembali"
@@ -20,12 +21,19 @@
             </div>
 
             <!-- NISN Field -->
-            <div class="col-start-1 row-start-1 flex items-center gap-4">
+            <div class="col-start-1 row-start-1 flex items-center gap-2">
                 <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
-                <div class="w-full">
-                    <input type="text" inputmode="numeric" id="nisn" name="nisn"
-                        @keydown.tab="ambilDataSiswa()" autofocus required
+                <div class="relative w-full">
+                    <input type="text" inputmode="numeric" id="nisn" name="nisn" x-model="nisn"
+                        @input="showNisnSuggestions = true; window.filterSiswa(nisn)"
+                        @keydown.alt="showNisnSuggestions = !showNisnSuggestions" autocomplete="off" autofocus required
                         class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
+                    <div x-cloak x-show="showNisnSuggestions" @click.outside="showNisnSuggestions = false"
+                        id="nisn-suggestions-box" class="absolute left-full top-0 ms-2 h-fit w-full bg-background">
+                        <ul
+                            class="max-h-40 overflow-hidden overflow-y-auto rounded border border-primary focus:ring focus:ring-primary">
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -53,7 +61,7 @@
                         <th>Jumlah Buku</th>
                     </tr>
                 </thead>
-                <tbody id="book-container" x-init="tambahBarisBuku()">
+                <tbody id="book-container" x-init="tambahBarisBuku()" x-data="{kodeBuku: ''}">
                 </tbody>
                 <tfoot>
                     <tr>
@@ -67,6 +75,13 @@
                     </tr>
                 </tfoot>
             </table>
+
+            <div x-cloak x-show="showKodeBukuSuggestions" @click.outside="showKodeBukuSuggestions = false"
+                id="kode-buku-suggestions-box" class="absolute -bottom-44 h-fit w-full bg-background">
+                <ul
+                    class="max-h-40 overflow-hidden overflow-y-auto rounded border border-primary focus:ring focus:ring-primary">
+                </ul>
+            </div>
         </form>
     </div>
 
