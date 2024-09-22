@@ -16,7 +16,7 @@ class AuthController extends Controller
         return view('pages.auth.login', $data);
     }
 
-    public function loginProcess(Request $request)
+    public function attemptLogin(Request $request)
     {
         $credentials = $request->validate([
             'username' => 'required|exists:users,username',
@@ -34,8 +34,6 @@ class AuthController extends Controller
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
-
             return redirect()->intended('/dashboard');
         }
 
@@ -49,5 +47,15 @@ class AuthController extends Controller
         ];
 
         return view('pages.auth.register', $data);
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

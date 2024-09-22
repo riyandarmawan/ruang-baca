@@ -27,7 +27,7 @@
                 <button
                     class="w-full rounded bg-background py-2 font-bold text-primary hover:opacity-90 focus:opacity-70 active:opacity-80">Masuk</button>
             </form>
-            <a href="" class="mt-6 block text-center text-xs">kebijakan privasi</a>
+                                <p class="text-link text-sm mt-8 text-center">Sudah punya akun? <a href="/auth/login" class="font-bold hover:underline">Masuk sekarang!</a></p>
         </div>
     </div>
 </x-base-layout>

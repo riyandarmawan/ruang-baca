@@ -19,7 +19,6 @@
                     @error('password')
                         <p class="self-start col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
                     @enderror
-                    <a href="" class="text-link text-right text-sm">Lupa password?</a>
                     <div class="absolute flex items-center rounded-r bg-secondary p-2">
                         <span x-on:click="show = !show" x-bind:class="show ? 'i-mdi-eye-off' : 'i-mdi-eye '"
                             class="cursor-pointer bg-primary text-right text-2xl"></span>
@@ -28,7 +27,7 @@
                 <button
                     class="w-full rounded bg-background py-2 font-bold text-primary hover:opacity-90 focus:opacity-70 active:opacity-80">Masuk</button>
             </form>
-            <a href="" class="mt-6 block text-center text-xs">kebijakan privasi</a>
+                    <p class="text-link text-sm mt-8 text-center">Belum punya akun? <a href="/auth/register" class="font-bold hover:underline">Daftar sekarang!</a></p>
         </div>
     </div>
 </x-base-layout>

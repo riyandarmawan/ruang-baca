@@ -7,6 +7,7 @@ use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
