@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <form action="" method="POST" x-data="{ showKodeBukuSuggestions: false, kodeBuku: '' }" @keydown.esc.window="showKodeBukuSuggestions = false" class="grid grid-cols-3 gap-8 relative">
+        <form action="" method="POST" x-data="{ showNisnSuggestions: false, nisn: '', showKodeBukuSuggestions: false, kodeBuku: '' }" class="grid grid-cols-3 gap-8 relative">
             @csrf
             <!-- Date Fields -->
             <div class="col-start-3 row-start-1 flex items-center gap-4">
@@ -28,7 +28,7 @@
             <!-- NISN Field -->
             <div class="col-start-1 row-start-1 flex items-center gap-2">
                 <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
-                <div x-data="{ showNisnSuggestions: false, nisn: '' }" @keydown.esc.window="showNisnSuggestions = false" class="relative w-full">
+                <div class="relative w-full">
                     <input type="text" inputmode="numeric" id="nisn" name="nisn" x-model="nisn"
                         @input="showNisnSuggestions = true; window.filterSiswa(nisn)"
                         @keydown.alt="showNisnSuggestions = !showNisnSuggestions" autocomplete="off" autofocus required

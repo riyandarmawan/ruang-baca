@@ -28,7 +28,7 @@
                     </div>
 
                     <!-- NISN Field -->
-                    <div class="col-start-1 row-start-1 flex items-center gap-4">
+                    <div class="col-start-1 row-start-1 flex items-center gap-2">
                         <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
                         <div class="w-full">
                             <input type="text" inputmode="numeric" value="{{ $peminjaman->nisn }}" disabled
@@ -108,7 +108,7 @@
                     @endif
 
                     <form action="/dashboard/peminjaman/ubah/{{ $peminjaman->id }}" method="POST"
-                        class="grid grid-cols-3 gap-8">
+                        x-data="{ showNisnSuggestions: false, nisn: '{{ $peminjaman->siswa->nisn }}', showKodeBukuSuggestions: false }" class="relative grid grid-cols-3 gap-8">
                         @csrf
                         <!-- Date Fields -->
                         <div class="col-start-3 row-start-1 flex items-center gap-4">
@@ -125,13 +125,21 @@
                         </div>
 
                         <!-- NISN Field -->
-                        <div class="col-start-1 row-start-1 flex items-center gap-4">
+                        <div class="col-start-1 row-start-1 flex items-center gap-2">
                             <label for="nisn" class="w-48 whitespace-nowrap">NISN</label>
-                            <div class="w-full">
+                            <div class="relative w-full">
                                 <input type="text" inputmode="numeric" id="nisn" name="nisn"
-                                    @keydown.tab="ambilDataSiswa()" x-init="ambilDataSiswa()"
-                                    value="{{ $peminjaman->nisn }}" autofocus required
+                                    x-model="nisn" @input="showNisnSuggestions = true; window.filterSiswa(nisn)"
+                                    @keydown.alt="showNisnSuggestions = !showNisnSuggestions" autocomplete="off"
+                                    autofocus required
                                     class="input-unerror w-full rounded border px-4 py-2 outline-none focus:ring">
+                                <div x-cloak x-show="showNisnSuggestions" @click.outside="showNisnSuggestions = false"
+                                    id="nisn-suggestions-box"
+                                    class="absolute left-full top-0 ms-2 h-fit w-full bg-background">
+                                    <ul
+                                        class="max-h-40 overflow-hidden overflow-y-auto rounded border border-primary focus:ring focus:ring-primary">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
@@ -139,11 +147,13 @@
                         <div class="col-start-1 row-start-2 flex items-center gap-4">
                             <label for="nama" class="w-48 whitespace-nowrap">Nama</label>
                             <input type="text" id="nama" name="nama" disabled
+                                value="{{ $peminjaman->siswa->nama }}"
                                 class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
                         <div class="col-start-1 row-start-3 flex items-center gap-4">
                             <label for="kode_kelas" class="w-48 whitespace-nowrap">Kelas</label>
                             <input type="text" id="kode_kelas" name="kode_kelas" disabled
+                                value="{{ $peminjaman->siswa->kode_kelas }}"
                                 class="w-full rounded border px-4 py-2 outline-none focus:ring">
                         </div>
 
@@ -161,27 +171,29 @@
                             </thead>
                             <tbody id="book-container">
                                 @foreach ($peminjaman->bukus as $buku)
-                                    <tr>
+                                    <tr x-data="{kodeBuku: '{{ $buku->kode_buku }}'}">
                                         <td class="p-0">
-                                            <input type="text" name="kode_buku[]" required
-                                                onkeydown="if(event.key === 'Tab') ambilDataBuku(this)"
-                                                x-init="ambilDataBuku($el)" value="{{ $buku->kode_buku }}"
+                                            <input type="text" name="kode_buku[]" required autocomplete="off"
+                                                x-model="kodeBuku"
+                                                @input="showKodeBukuSuggestions = true; window.filterBuku(kodeBuku)"
+                                                @keydown.alt="showKodeBukuSuggestions = !showKodeBukuSuggestions"
+                                                @focus="window.selectedKodeBukuInput = $el"
                                                 class="kode_buku w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="judul[]" disabled
+                                            <input type="text" name="judul[]" disabled value="{{ $buku->judul }}"
                                                 class="judul w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="penulis[]" disabled
+                                            <input type="text" name="penulis[]" disabled value="{{ $buku->penulis }}"
                                                 class="penulis w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="penerbit[]" disabled
+                                            <input type="text" name="penerbit[]" disabled value="{{ $buku->penerbit }}"
                                                 class="penerbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="tahun_terbit[]" disabled
+                                            <input type="text" name="tahun_terbit[]" disabled value="{{ $buku->tahun_terbit }}"
                                                 class="tahun_terbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
@@ -206,8 +218,14 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </form>
 
+                        <div x-cloak x-show="showKodeBukuSuggestions" @click.outside="showKodeBukuSuggestions = false"
+                            id="kode-buku-suggestions-box" class="absolute -bottom-44 h-fit w-full bg-background">
+                            <ul
+                                class="max-h-40 overflow-hidden overflow-y-auto rounded border border-primary focus:ring focus:ring-primary">
+                            </ul>
+                        </div>
+                    </form>
                 </div>
 
                 <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
