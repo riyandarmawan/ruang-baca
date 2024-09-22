@@ -172,7 +172,7 @@ class PeminjamanController extends Controller
         $peminjaman->save();
 
         $idPeminjaman = $peminjaman->id;
-
+        
         foreach ($request->kode_buku as $index => $kode_buku) {
             // Check if a DetailPeminjaman exists for the given index
             $detailPeminjaman = DetailPeminjaman::where('id_peminjaman', $id)
@@ -191,7 +191,7 @@ class PeminjamanController extends Controller
                 $detailPeminjaman->kode_buku = $kode_buku;
                 $detailPeminjaman->jumlah = $request->jumlah[$index];
             }
-
+            
             // Save the record (whether it's new or updated)
             $detailPeminjaman->save();
         }

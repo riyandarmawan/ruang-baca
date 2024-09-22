@@ -30,11 +30,11 @@ class Buku extends Model
 
     public function peminjamans(): BelongsToMany 
     {
-        return $this->belongsToMany(Peminjaman::class, 'detail_peminjaman', 'kode_buku', 'id_peminjaman')->withPivot('jumlah');
+        return $this->belongsToMany(Peminjaman::class, 'detail_peminjaman', 'kode_buku', 'id_peminjaman')->withPivot('jumlah')->withPivot('id');
     }
 
     public function pengembalians(): BelongsToMany
     {
-        return $this->belongsToMany(Pengembalian::class, 'detail_pengembalian', 'kode_buku', 'id_pengembalian')->withPivot('jumlah');
+        return $this->belongsToMany(Pengembalian::class, 'detail_pengembalian', 'kode_buku', 'id_pengembalian')->withPivot('jumlah')->withPivot('id');
     }
 }

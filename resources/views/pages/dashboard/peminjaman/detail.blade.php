@@ -171,7 +171,7 @@
                             </thead>
                             <tbody id="book-container">
                                 @foreach ($peminjaman->bukus as $buku)
-                                    <tr x-data="{kodeBuku: '{{ $buku->kode_buku }}'}">
+                                    <tr x-data="{ kodeBuku: '{{ $buku->kode_buku }}' }">
                                         <td class="p-0">
                                             <input type="text" name="kode_buku[]" required autocomplete="off"
                                                 x-model="kodeBuku"
@@ -181,19 +181,23 @@
                                                 class="kode_buku w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="judul[]" disabled value="{{ $buku->judul }}"
+                                            <input type="text" name="judul[]" disabled
+                                                value="{{ $buku->judul }}"
                                                 class="judul w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="penulis[]" disabled value="{{ $buku->penulis }}"
+                                            <input type="text" name="penulis[]" disabled
+                                                value="{{ $buku->penulis }}"
                                                 class="penulis w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="penerbit[]" disabled value="{{ $buku->penerbit }}"
+                                            <input type="text" name="penerbit[]" disabled
+                                                value="{{ $buku->penerbit }}"
                                                 class="penerbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
-                                            <input type="text" name="tahun_terbit[]" disabled value="{{ $buku->tahun_terbit }}"
+                                            <input type="text" name="tahun_terbit[]" disabled
+                                                value="{{ $buku->tahun_terbit }}"
                                                 class="tahun_terbit w-full rounded px-4 py-2 outline-none">
                                         </td>
                                         <td class="p-0">
@@ -211,7 +215,7 @@
                                             class="w-full bg-tersier py-2 font-bold text-white">Tambah Baris
                                             Buku</button>
                                     </td>
-                                    <td colspan="3" class="p-0">
+                                    <td colspan="4" class="p-0">
                                         <button type="submit"
                                             class="w-full bg-primary py-2 font-bold text-white">Simpan</button>
                                     </td>

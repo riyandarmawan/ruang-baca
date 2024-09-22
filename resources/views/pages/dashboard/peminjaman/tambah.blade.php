@@ -74,7 +74,7 @@
                             <button type="button" @click="tambahBarisBuku()"
                                 class="w-full bg-tersier py-2 font-bold text-white">Tambah Baris Buku</button>
                         </td>
-                        <td colspan="3" class="p-0">
+                        <td colspan="4" class="p-0">
                             <button type="submit" class="w-full bg-primary py-2 font-bold text-white">Simpan</button>
                         </td>
                     </tr>

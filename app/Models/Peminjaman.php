@@ -21,7 +21,7 @@ class Peminjaman extends Model
 
     public function bukus(): BelongsToMany
     {
-        return $this->belongsToMany(Buku::class, 'detail_peminjaman', 'id_peminjaman', 'kode_buku')->withPivot('jumlah');
+        return $this->belongsToMany(Buku::class, 'detail_peminjaman', 'id_peminjaman', 'kode_buku')->withPivot('jumlah')->withPivot('id');
     }
 
     public function siswa(): BelongsTo
