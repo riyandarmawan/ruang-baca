@@ -21,7 +21,7 @@ class DetailPeminjamanFactory extends Factory
         return [
             'id_peminjaman' => Peminjaman::factory(),
             'kode_buku' => Buku::factory(),
-            'jumlah' => 1
+            'jumlah' => fake()->numberBetween(0, 10)
         ];
     }
 }

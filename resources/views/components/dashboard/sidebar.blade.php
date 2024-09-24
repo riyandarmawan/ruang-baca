@@ -1,4 +1,4 @@
-<aside x-bind:class="detail ? '!w-52 px-2' : ''" id="sidebar-dashboard"
+<aside x-data="{logoutModal: false}" x-bind:class="detail ? '!w-52 px-2' : ''" id="sidebar-dashboard"
     class="flex w-14 flex-col gap-4 bg-primary py-2 ps-2 text-background duration-300">
 
     <x-dashboard.navbar />
@@ -18,23 +18,39 @@
                 <span class="i-mdi-gear bg-primary text-xl group-hover:bg-background"></span>
                 Settings
             </a>
-            <form action="/auth/logout" method="POST" class="w-full">
-                @csrf
-                <button type="submit"
-                    class="group flex items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background w-full">
+                <button @click="logoutModal = !logoutModal" type="button"
+                    class="group flex w-full items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                     <span class="i-mdi-logout bg-primary text-xl group-hover:bg-background"></span>
                     Logout
                 </button>
-            </form>
         </div>
         <div class="flex overflow-hidden">
             <div x-on:click="open = !open" class="me-14 ms-1 flex items-center gap-4">
                 <img loading="lazy" src="{{ asset('storage/images/users/jajang.jpg') }}" alt="user"
                     class="h-8 w-8 rounded-full border border-background">
-                <h4 class="text-lg font-semibold line-clamp-1">{{ Auth::user()->name }}</h4>
+                <h4 class="w-fit text-lg font-semibold">{{ Auth::user()->name }}</h4>
             </div>
             <span x-on:click="open = !open" x-bind:class="open ? 'i-mdi-arrow-drop-down' : 'i-mdi-arrow-drop-up'"
                 class="cursor-pointer bg-background text-4xl"></span>
+        </div>
+    </div>
+
+    <div x-bind:class="logoutModal ? '!block' : ''"
+        class="absolute bottom-1/3 left-1/3 hidden overflow-hidden rounded-xl border border-primary bg-background shadow-xl">
+        <div class="flex items-center border-b border-primary bg-gray-200 p-4 font-semibold text-red-500">
+            <span class="i-mdi-alert me-2 text-lg"></span>
+            Peringatan
+        </div>
+        <div class="p-4 text-primary">Apakah anda yakin ingin logout?</div>
+        <div class="flex items-center justify-end bg-gray-200 p-4">
+            <form action="/auth/logout" method="post">
+                @csrf
+                <button type="submit"
+                    class="me-4 rounded hover:opacity-80 bg-red-500 px-4 py-1 font-medium text-background shadow shadow-slate-500">Ya</button>
+            </form>
+            <button x-on:click="logoutModal = !logoutModal" type="button"
+                class="cursor-pointer rounded hover:opacity-80 bg-primary px-4 py-1 font-medium text-background shadow shadow-slate-500">
+                Tidak</button>
         </div>
     </div>
 </aside>

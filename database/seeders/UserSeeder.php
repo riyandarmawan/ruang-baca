@@ -19,6 +19,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@ruangbaca.id',
         ]);
         
-        User::factory(10)->create();
+        // User::factory(10)->create();
     }
 }
