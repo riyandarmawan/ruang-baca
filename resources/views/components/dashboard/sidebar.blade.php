@@ -13,11 +13,6 @@
                 <span class="i-mdi-user bg-primary text-xl group-hover:bg-background"></span>
                 Profile
             </a>
-            <a href="/dashboard/user/settings"
-                class="group flex items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
-                <span class="i-mdi-gear bg-primary text-xl group-hover:bg-background"></span>
-                Settings
-            </a>
                 <button @click="logoutModal = !logoutModal" type="button"
                     class="group flex w-full items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                     <span class="i-mdi-logout bg-primary text-xl group-hover:bg-background"></span>

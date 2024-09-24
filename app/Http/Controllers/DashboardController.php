@@ -13,6 +13,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        
+
         $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
         $today = Carbon::now()->format('Y-m-d');
 
