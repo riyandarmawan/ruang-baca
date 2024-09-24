@@ -13,7 +13,7 @@
                                 class="aspect-[2/3] w-full object-cover">
                         </label>
                         <input type="file" name="sampul" id="sampul"
-                            value="{{ $errors->has('sampul') ? '' : old('sampul') }}" required @change="fileChosen"
+                            value="{{ $errors->has('sampul') ? '' : old('sampul') }}" @change="fileChosen"
                             class="{{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring hidden">
                     </div>
                     @error('sampul')

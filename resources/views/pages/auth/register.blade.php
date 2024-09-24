@@ -2,8 +2,23 @@
     <div class="h-dvh container flex items-center justify-center">
         <div class="w-[30rem] rounded-xl bg-primary px-4 py-6 text-background md:px-6">
             <h1 class="mb-8 text-center text-xl font-bold">Mulai daftarkan akun Anda sekarang!</h1>
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div x-data="{ imagePreview: '{{ asset('storage/images/users/user.png') }}' }" class="mb-4 grid grid-cols-3 items-center">
+                    <div class="flex col-start-2 flex-col gap-4">
+                        <label for="profile"
+                            class="focus focus-ring {{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} m-auto aspect-square w-24 mb-4 cursor-pointer overflow-hidden rounded-full border border-primary focus:ring outline-none">
+                            <img src="{{ asset('storage/images/users/user.png') }}" :src="imagePreview" alt="Photo Profile"
+                                class="aspect-square rounded-full w-full object-cover">
+                        </label>
+                        <input type="file" name="profile" id="profile"
+                            value="{{ $errors->has('profile') ? '' : old('profile') }}" @change="fileChosen"
+                            class="{{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring hidden">
+                    </div>
+                    @error('profile')
+                        <p class="m-auto col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
                 <div class="mb-4">
                     <input type="text" name="name" id="name" placeholder="Masukkan nama lengkap anda" value="{{ $errors->has('name ') ? '' : old('name') }}" required 
                         class="{{ $errors->has('name') ? 'input-error' : '' }} w-full rounded p-2 text-primary outline-none">
@@ -56,4 +71,17 @@
                     class="font-bold hover:underline">Masuk sekarang!</a></p>
         </div>
     </div>
+
+    <script>
+        function fileChosen(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imagePreview = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </x-base-layout>

@@ -55,12 +55,16 @@ class AuthController extends Controller
     {
         // Validate the input
         $validatedData = $request->validate([
+            'profile' => 'nullable|mimes:jpeg,jpg,png|max:2048',
             'name' => 'required',
             'username' => 'required|unique:users,username|min:5|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|min:8|confirmed', // "confirmed" checks for matching password_confirmation field
         ], [
             // Custom error messages
+            'profile.image' => 'Photo profile harus berupa gambar!',
+            'profile.mimes' => 'Photo profile harus berupa jpeg, jpg, atau png!',
+            'profile.max' => 'Photo profile harus berukuranw kurang dari 2mb!',
             'name.required' => 'Nama lenkap wajib diisi!',
             'username.required' => 'Username wajib diisi!',
             'username.unique' => 'Username sudah terdaftar!',
@@ -74,13 +78,24 @@ class AuthController extends Controller
             'password.confirmed' => 'Password konfirmasi tidak cocok!',
         ]);
 
-        // Create new user
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'username' => $validatedData['username'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']), // Hash the password before saving
-        ]);
+        $user = new User();
+
+        $user->profile = 'user.png';
+
+        if ($request->file('profile')) {
+            $profile = $request->file('profile');
+            $profileName = time() . '.' . $profile->getClientOriginalExtension();
+            $profile->storeAs('public/images/users', $profileName);
+
+            $user->profile = $profileName;
+        }
+
+        $user->name = $validatedData['name'];
+        $user->username = $validatedData['username'];
+        $user->email = $validatedData['email'];
+        $user->password = Hash::make($validatedData['password']);
+        
+        $user->save();
 
         // Automatically log the user in after registration
         Auth::login($user);
