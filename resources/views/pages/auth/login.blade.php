@@ -5,8 +5,7 @@
             <form action="" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <input type="text" name="username" id="username" required placeholder="Masukkan username anda"
-                        autofocus value="{{ $errors->has('username ') ? '' : old('username') }}"
+                    <input type="text" name="username" id="username" required placeholder="Masukkan username anda" value="{{ $errors->has('username ') ? '' : old('username') }}"
                         class="{{ $errors->has('username') ? 'input-error' : '' }} w-full rounded p-2 text-primary outline-none">
                     @error('username')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
@@ -14,7 +13,7 @@
                 </div>
                 <div x-data="{ show: false }" class="relative mb-5 flex flex-col items-end">
                     <input x-bind:type="show ? 'text' : 'password'" required name="password" id="password"
-                        placeholder="Masukkan password anda" autofocus
+                        placeholder="Masukkan password anda"
                         class="{{ $errors->has('password') ? 'input-error' : '' }} mb-2 w-full rounded p-2 text-primary outline-none">
                     @error('password')
                         <p class="self-start col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
@@ -25,7 +24,7 @@
                     </div>
                 </div>
                 <button
-                    class="w-full rounded bg-background py-2 font-bold text-primary hover:opacity-90 focus:opacity-70 active:opacity-80">Masuk</button>
+                    class="w-full rounded bg-tersier py-2 font-bold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Masuk</button>
             </form>
                     <p class="text-link text-sm mt-8 text-center">Belum punya akun? <a href="/auth/register" class="font-bold hover:underline">Daftar sekarang!</a></p>
         </div>

@@ -31,7 +31,7 @@
             <div x-on:click="open = !open" class="me-14 ms-1 flex items-center gap-4">
                 <img loading="lazy" src="{{ asset('storage/images/users/jajang.jpg') }}" alt="user"
                     class="h-8 w-8 rounded-full border border-background">
-                <h4 class="text-lg font-semibold">{{ Auth::user()->name }}</h4>
+                <h4 class="text-lg font-semibold line-clamp-1">{{ Auth::user()->name }}</h4>
             </div>
             <span x-on:click="open = !open" x-bind:class="open ? 'i-mdi-arrow-drop-down' : 'i-mdi-arrow-drop-up'"
                 class="cursor-pointer bg-background text-4xl"></span>

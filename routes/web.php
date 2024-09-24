@@ -25,6 +25,8 @@ Route::post('/auth/login', [AuthController::class, 'attemptLogin'])->middleware(
 
 Route::get('/auth/register', [AuthController::class, 'register']);
 
+Route::post('/auth/register', [AuthController::class, 'attemptRegister']);
+
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth')->group(function () {
