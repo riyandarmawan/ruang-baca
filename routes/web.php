@@ -10,6 +10,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // home
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
 
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    // user
+    Route::get('/dashboard/user/profile', [UserController::class, 'show']);
 
     // siswa
     Route::get('/dashboard/siswa', [SiswaController::class, 'index']);

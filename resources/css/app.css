@@ -45,3 +45,17 @@ input:read-only, input:disabled {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* tabs */
+.tab-active {
+  @apply border-slate-200 bg-slate-100
+}
+
+.tab-inactive {
+  @apply border-white hover:border-slate-200 hover:bg-slate-100 hover:opacity-80
+}
+
+/* x-cloak alpine js */
+[x-cloak] {
+    @apply !hidden
+}

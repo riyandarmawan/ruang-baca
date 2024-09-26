@@ -5,36 +5,39 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div x-data="{ imagePreview: '{{ asset('storage/images/users/user.png') }}' }" class="mb-4 grid grid-cols-3 items-center">
-                    <div class="flex col-start-2 flex-col gap-4">
+                    <div class="col-start-2 flex flex-col gap-4">
                         <label for="profile"
-                            class="focus focus-ring {{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} m-auto aspect-square w-24 mb-4 cursor-pointer overflow-hidden rounded-full border border-primary focus:ring outline-none">
-                            <img src="{{ asset('storage/images/users/user.png') }}" :src="imagePreview" alt="Photo Profile"
-                                class="aspect-square rounded-full w-full object-cover">
+                            class="focus focus-ring {{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} m-auto mb-4 aspect-square w-24 cursor-pointer overflow-hidden rounded-full border border-primary outline-none focus:ring">
+                            <img src="{{ asset('storage/images/users/user.png') }}" :src="imagePreview"
+                                alt="Photo Profile" class="aspect-square w-full rounded-full object-cover">
                         </label>
                         <input type="file" name="profile" id="profile"
                             value="{{ $errors->has('profile') ? '' : old('profile') }}" @change="fileChosen"
-                            class="{{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring hidden">
+                            class="{{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} hidden w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
                     </div>
                     @error('profile')
-                        <p class="m-auto col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
+                        <p class="col-start-2 m-auto mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <input type="text" name="name" id="name" placeholder="Masukkan nama lengkap anda" value="{{ $errors->has('name ') ? '' : old('name') }}" required 
+                    <input type="text" name="name" id="name" placeholder="Masukkan nama lengkap anda"
+                        value="{{ $errors->has('name ') ? '' : old('name') }}" required
                         class="{{ $errors->has('name') ? 'input-error' : '' }} w-full rounded p-2 text-primary outline-none">
                     @error('name')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <input type="text" name="username" id="username" placeholder="Masukkan username anda" value="{{ $errors->has('username ') ? '' : old('username') }}" required 
+                    <input type="text" name="username" id="username" placeholder="Masukkan username anda"
+                        value="{{ $errors->has('username ') ? '' : old('username') }}" required
                         class="{{ $errors->has('username') ? 'input-error' : '' }} w-full rounded p-2 text-primary outline-none">
                     @error('username')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <input type="email" name="email" id="email" placeholder="Masukkan email anda" value="{{ $errors->has('email ') ? '' : old('email') }}" required 
+                    <input type="email" name="email" id="email" placeholder="Masukkan email anda"
+                        value="{{ $errors->has('email ') ? '' : old('email') }}" required
                         class="{{ $errors->has('email') ? 'input-error' : '' }} w-full rounded p-2 text-primary outline-none">
                     @error('email')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>
@@ -53,8 +56,8 @@
                     </div>
                 </div>
                 <div x-data="{ show: false }" class="relative mb-5 flex flex-col items-end">
-                    <input x-bind:type="show ? 'text' : 'password'" name="password_confirmation" id="password_confirmation"
-                        placeholder="Konfirmasi password" required
+                    <input x-bind:type="show ? 'text' : 'password'" name="password_confirmation"
+                        id="password_confirmation" placeholder="Konfirmasi password" required
                         class="{{ $errors->has('password_confirmation') ? 'input-error' : '' }} mb-2 w-full rounded p-2 text-primary outline-none">
                     @error('password_confirmation')
                         <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}</p>

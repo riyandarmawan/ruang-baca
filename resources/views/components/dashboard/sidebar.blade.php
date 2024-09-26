@@ -8,7 +8,7 @@
     <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-evenly py-4">
         <div x-bind:class="{ 'left-8': !detail, '!block': open }"
             class="absolute bottom-full z-[9999] hidden w-48 overflow-hidden rounded border border-primary bg-background text-primary shadow-2xl">
-            <a href="/dashbaord/user/profile"
+            <a href="/dashboard/user/profile"
                 class="group flex items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                 <span class="i-mdi-user bg-primary text-xl group-hover:bg-background"></span>
                 Profile
