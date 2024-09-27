@@ -47,12 +47,20 @@ input:read-only, input:disabled {
 }
 
 /* tabs */
+.tab {
+  @apply cursor-pointer rounded-tl rounded-tr border border-b-0 px-4 py-2 font-medium inline-block
+}
+
 .tab-active {
   @apply border-slate-200 bg-slate-100
 }
 
 .tab-inactive {
   @apply border-white hover:border-slate-200 hover:bg-slate-100 hover:bg-opacity-50
+}
+
+.tab:disabled {
+  @apply text-slate-500 hover:bg-transparent hover:border-transparent bg-transparent border-transparent
 }
 
 /* x-cloak alpine js */

@@ -94,6 +94,7 @@ class AuthController extends Controller
         $user->username = $validatedData['username'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
+        $user->role = 'admin';
         
         $user->save();
 
