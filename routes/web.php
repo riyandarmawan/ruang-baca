@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function () {
     // user
     Route::get('/dashboard/user/profile', [UserController::class, 'show']);
 
+    Route::post('/dashboard/user/ubah/{username}', [UserController::class, 'update']);
+
+    Route::post('/dashboard/user/hapus/{username}', [UserController::class, 'destroy']);
+
     // siswa
     Route::get('/dashboard/siswa', [SiswaController::class, 'index']);
 

@@ -55,7 +55,7 @@ class AuthController extends Controller
     {
         // Validate the input
         $validatedData = $request->validate([
-            'profile' => 'nullable|mimes:jpeg,jpg,png|max:2048',
+            'profile' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'name' => 'required',
             'username' => 'required|unique:users,username|min:5|max:255',
             'email' => 'required|email|unique:users,email|max:255',
@@ -115,6 +115,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/auth/login');
     }
 }

@@ -184,7 +184,7 @@ class BukuController extends Controller
         $validator = Validator::make($request->all(), [
             'kode_buku' => [
                 'required',
-                Rule::uniqie('bukus', 'kode_buku')->ignore($buku->kode_buku, 'kode_buku'),
+                Rule::unique('bukus', 'kode_buku')->ignore($buku->kode_buku, 'kode_buku'),
                 'digits:13'
             ],
             'sampul' => 'image|mimes:jpeg,jpg,png|max:2048',

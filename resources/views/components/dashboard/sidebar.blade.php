@@ -5,7 +5,7 @@
 
     <hr x-bind:class="detail ? '' : 'w-10'">
 
-    <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-evenly py-4">
+    <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-evenly py-4 max-h-20">
         <div x-bind:class="{ 'left-8': !detail, '!block': open }"
             class="absolute bottom-full z-[9999] hidden w-48 overflow-hidden rounded border border-primary bg-background text-primary shadow-2xl">
             <a href="/dashboard/user/profile"

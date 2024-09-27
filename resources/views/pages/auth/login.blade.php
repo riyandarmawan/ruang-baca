@@ -1,5 +1,5 @@
 <x-base-layout title="{{ $title }}">
-    <div class="h-dvh container flex items-center justify-center">
+    <div x-data="{showModalPesan: {{ session('success') ? true : false }}}" x-init="showModalPesan && setTimeout(() => showModalPesan = false, 5000)" class="h-dvh container flex items-center justify-center relative">
         <div class="w-[30rem] rounded-xl bg-primary px-4 py-6 text-background md:px-6">
             <h1 class="mb-8 text-center text-xl font-bold">Masuk ke akun Anda</h1>
             <form action="" method="POST">
@@ -27,6 +27,16 @@
                     class="w-full rounded bg-tersier py-2 font-bold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Masuk</button>
             </form>
                     <p class="text-link text-sm mt-8 text-center">Belum punya akun? <a href="/auth/register" class="font-bold hover:underline">Daftar sekarang!</a></p>
+        </div>
+
+        <div x-cloak x-show="showModalPesan" class="bg-green-500 bg-opacity-50 p-4 w-96 absolute rounded shadow right-10 top-10">
+            <div class="flex justify-between items-center text-xl font-semibold text-slate-700">
+                <h3>Pesan</h3>
+                <span @click="showModalPesan = false" class="i-mdi-close cursor-pointer hover:opacity-50"></span>
+            </div>
+            <div class="mt-3">
+                <p>{{ session('success') ?? '' }}</p>
+            </div>
         </div>
     </div>
 </x-base-layout>

@@ -52,7 +52,7 @@ input:read-only, input:disabled {
 }
 
 .tab-inactive {
-  @apply border-white hover:border-slate-200 hover:bg-slate-100 hover:opacity-80
+  @apply border-white hover:border-slate-200 hover:bg-slate-100 hover:bg-opacity-50
 }
 
 /* x-cloak alpine js */
