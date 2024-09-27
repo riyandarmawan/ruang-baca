@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,7 +62,7 @@ class UserController extends Controller
     public function update(Request $request, $username)
     {
         $user = User::where('username', $username)->first();
-        
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -136,10 +137,58 @@ class UserController extends Controller
         return redirect('/auth/login')->with('success', 'Informasi akun anda terlah diubah!');
     }
 
+    public function changePassword(Request $request, $username)
+    {
+        // Validate the request input
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'oldPassword' => 'required|string',
+                'password' => 'required|string|min:8|confirmed',
+            ],
+            [
+                'oldPassword.required' => 'Password lama wajib diisi.',
+                'password.required' => 'Password baru wajib diisi.',
+                'password.min' => 'Password baru harus memiliki minimal 8 karakter.',
+                'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            ]
+        );
+
+        // Redirect back with validation errors if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withFragment('ubah-password'); // Optional fragment
+        }
+
+        // Retrieve the user by username
+        $user = User::where('username', $username)->first();
+
+        // Check if the old password is correct
+        if (!Hash::check($request->oldPassword, $user->password)) {
+            return redirect()->back()
+                ->withErrors(['oldPassword' => 'Password lama tidak sesuai.'])
+                ->withFragment('ubah-password');
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Log out the user and invalidate session
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Redirect to the login page with a success message
+        return redirect('/auth/login')->with('success', 'Password anda berhasil diubah. Silakan login dengan password baru Anda.');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($username, Request $request)
+    public function destroy(Request $request, $username)
     {
         Auth::logout();
 

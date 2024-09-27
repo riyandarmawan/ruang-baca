@@ -29,7 +29,7 @@
                     <p class="text-link text-sm mt-8 text-center">Belum punya akun? <a href="/auth/register" class="font-bold hover:underline">Daftar sekarang!</a></p>
         </div>
 
-        <div x-cloak x-show="showModalPesan" class="bg-green-500 bg-opacity-50 p-4 w-96 absolute rounded shadow right-10 top-10">
+        <div x-cloak x-show="showModalPesan" class="bg-green-500 bg-opacity-50 p-4 w-96 absolute rounded shadow right-10 top-10 z-[9999]">
             <div class="flex justify-between items-center text-xl font-semibold text-slate-700">
                 <h3>Pesan</h3>
                 <span @click="showModalPesan = false" class="i-mdi-close cursor-pointer hover:opacity-50"></span>

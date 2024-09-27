@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/dashboard/user/ubah/{username}', [UserController::class, 'update']);
 
+    Route::post('/dashboard/user/ubah-password/{username}', [UserController::class, 'changePassword']);
+
     Route::post('/dashboard/user/hapus/{username}', [UserController::class, 'destroy']);
 
     // siswa
