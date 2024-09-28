@@ -26,7 +26,6 @@
                 <button
                     class="w-full rounded bg-tersier py-2 font-bold text-background hover:opacity-90 focus:opacity-70 active:opacity-80">Masuk</button>
             </form>
-                    <p class="text-link text-sm mt-8 text-center">Belum punya akun? <a href="/auth/register" class="font-bold hover:underline">Daftar sekarang!</a></p>
         </div>
 
         <div x-cloak x-show="showModalPesan" class="bg-green-500 p-4 w-96 absolute rounded shadow right-10 top-10 z-[9999] text-background">

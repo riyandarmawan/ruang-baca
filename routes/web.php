@@ -22,11 +22,7 @@ Route::get('/buku/detail/{slug}', [HomeController::class, 'detail']);
 // Auth
 Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
 
-Route::post('/auth/login', [AuthController::class, 'attemptLogin'])->middleware('throttle:5,1');
-
-Route::get('/auth/register', [AuthController::class, 'register']);
-
-Route::post('/auth/register', [AuthController::class, 'attemptRegister'])->middleware('throttle:5,1');
+Route::post('/auth/login', [AuthController::class, 'attemptLogin']);
 
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
