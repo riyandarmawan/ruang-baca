@@ -23,6 +23,31 @@ class Siswa extends Model
 
     protected $with = ['kelas'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Listen for the 'deleting' event to handle related models
+        static::deleting(function ($siswa) {
+            if ($siswa->isForceDeleting()) {
+                // Force delete related models if the Siswa is being permanently deleted
+                $siswa->peminjaman()->forceDelete();
+                $siswa->pengembalian()->forceDelete();
+            } else {
+                // Soft delete related models if the Siswa is being soft-deleted
+                $siswa->peminjaman()->delete();
+                $siswa->pengembalian()->delete();
+            }
+        });
+
+        // Listen for the 'restoring' event to restore related models
+        static::restoring(function ($siswa) {
+            // Restore related models when the Siswa is being restored
+            $siswa->peminjaman()->restore();
+            $siswa->pengembalian()->restore();
+        });
+    }
+
     public function peminjaman(): HasMany
     {
         return $this->hasMany(Peminjaman::class, 'nisn', 'nisn');

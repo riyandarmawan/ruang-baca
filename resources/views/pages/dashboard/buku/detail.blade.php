@@ -1,6 +1,6 @@
 <x-dashboard.layout title="{{ $title }}">
     <div x-data="{
-        modal: false,
+        showModalHapus: false,
         active: window.location.hash ? window.location.hash.substring(1) : 'detail',
         changeTab(tab) {
             this.active = tab;
@@ -102,9 +102,8 @@
                                         alt="Sampul" class="aspect-[2/3] w-full object-cover">
                                 </label>
                                 <input type="file" name="sampul" id="sampul"
-                                    value="{{ $errors->has('sampul') ? '' : old('sampul') }}"
-                                    @change="fileChosen"
-                                    class="{{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring hidden">
+                                    value="{{ $errors->has('sampul') ? '' : old('sampul') }}" @change="fileChosen"
+                                    class="{{ $errors->has('sampul') ? 'input-error' : 'input-unerror' }} hidden w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
                             </div>
                             @error('sampul')
                                 <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}
@@ -169,7 +168,8 @@
                                 value="{{ $errors->has('jumlah_halaman') ? $buku->jumlah_halaman : old('jumlah_halaman', $buku->jumlah_halaman) }}"
                                 class="{{ $errors->has('jumlah_halaman') ? 'input-error' : 'input-unerror' }} col-span-2 w-full rounded border border-primary p-2 shadow shadow-slate-500 outline-none focus:ring">
                             @error('jumlah_halaman')
-                                <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">{{ $message }}
+                                <p class="col-span-2 col-start-2 mt-2 text-sm font-medium text-red-500">
+                                    {{ $message }}
                                 </p>
                             @enderror
                         </div>
@@ -203,28 +203,46 @@
                 </div>
 
                 <div x-bind:class="active !== 'hapus' ? '' : '!block'" class="hidden p-4">
-                    <!-- Button to trigger the modal -->
-                    <button x-on:click="modal = !modal" type="button"
+                    <!-- Button to trigger the showModalHapus -->
+                    <button x-on:click="showModalHapus = !showModalHapus" type="button"
                         class="font-medium text-red-500 focus:outline-none">Hapus data buku ini</button>
                 </div>
 
-                <!-- Modal for confirmation -->
-                <div x-bind:class="modal ? '!block' : ''"
-                    class="absolute bottom-1/3 left-1/3 hidden overflow-hidden rounded-xl border border-primary bg-background shadow-xl">
-                    <div class="flex items-center border-b border-primary bg-gray-200 p-4 font-semibold text-red-500">
-                        <span class="i-mdi-alert me-2 text-lg"></span>
-                        Peringatan
-                    </div>
-                    <div class="p-4">Apakah anda yakin ingin menghapus data buku ini?</div>
-                    <div class="flex items-center justify-end bg-gray-200 p-4">
-                        <form action="/dashboard/buku/hapus/{{ $buku->slug }}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="me-4 rounded bg-red-500 px-4 py-1 font-medium text-background shadow shadow-slate-500">Ya</button>
-                        </form>
-                        <button x-on:click="modal = !modal" type="button"
-                            class="cursor-pointer rounded bg-primary px-4 py-1 font-medium text-background shadow shadow-slate-500">
-                            Tidak</button>
+                <!-- showModalHapus for confirmation -->
+                <div x-cloak x-show="showModalHapus"
+                    class="fixed inset-0 z-40 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                    <!-- Modal Container -->
+                    <div @click.outside="showModalHapus = false"
+                        class="w-96 scale-100 transform rounded-lg bg-white p-6 shadow-lg transition-transform duration-300">
+                        <!-- Modal Header -->
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-semibold text-gray-800">Konfirmasi Hapus</h2>
+                            <button @click="showModalHapus = false"
+                                class="i-mdi-close text-2xl text-gray-400 transition duration-200 hover:text-gray-600">
+                            </button>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="mt-4">
+                            <p class="text-gray-600">
+                                Apakah anda yakin ingin menghapus buku ini?
+                            </p>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="mt-6 flex justify-end space-x-3">
+                            <button @click="showModalHapus = false"
+                                class="rounded bg-gray-200 px-4 py-2 font-medium text-gray-700 transition duration-200 hover:bg-gray-300">
+                                Batal
+                            </button>
+                            <form action="/dashboard/buku/hapus/{{ $buku->slug }}" method="POST">
+                                @csrf
+                                <button
+                                    class="rounded bg-red-500 px-4 py-2 font-medium text-white transition duration-200 hover:bg-red-600">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

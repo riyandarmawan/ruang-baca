@@ -18,21 +18,23 @@ class Kategori extends Model
 
     protected $with = ['bukus'];
 
-    // Event for cascading soft deletes
-    protected static function booted()
+    protected static function boot()
     {
+        parent::boot();
+
+        // Handle soft delete and restore events for related Buku models
         static::deleting(function ($kategori) {
             if ($kategori->isForceDeleting()) {
-                // If force deleting the kategori, force delete related bukus
+                // Permanently delete related Buku models
                 $kategori->bukus()->forceDelete();
             } else {
-                // Soft delete related bukus
+                // Soft delete related Buku models
                 $kategori->bukus()->delete();
             }
         });
 
         static::restoring(function ($kategori) {
-            // Restore related bukus when the kategori is restored
+            // Restore related Buku models
             $kategori->bukus()->withTrashed()->restore();
         });
     }

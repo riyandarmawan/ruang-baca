@@ -23,6 +23,28 @@ class Buku extends Model
 
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Handle soft delete and restore for related models
+        static::deleting(function ($buku) {
+            if ($buku->isForceDeleting()) {
+                // Force delete related pivot records
+                $buku->peminjamans()->detach();
+                $buku->pengembalians()->detach();
+            } else {
+                // Additional handling for soft delete if needed
+                // For example: log activity or notify users
+            }
+        });
+
+        static::restoring(function ($buku) {
+            // Restore logic for related models if needed
+            // Usually, pivot tables do not require restoration, but you can handle it here
+        });
+    }
+
     public function kategori(): BelongsTo 
     {
         return $this->belongsTo(Kategori::class)->withTrashed();

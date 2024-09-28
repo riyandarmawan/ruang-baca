@@ -22,22 +22,25 @@ class Kelas extends Model
 
     protected $guarded = [];
 
-    // Event for cascading soft deletes
-    protected static function booted()
+    protected static function boot()
     {
+        parent::boot();
+
+        // Listen for the 'deleting' event to handle related models
         static::deleting(function ($kelas) {
             if ($kelas->isForceDeleting()) {
-                // If force deleting the kelas, force delete related siswas
+                // If we're force deleting the parent, force delete the children too
                 $kelas->siswas()->forceDelete();
             } else {
-                // Soft delete related siswas
+                // Soft delete related children
                 $kelas->siswas()->delete();
             }
         });
 
+        // Listen for the 'restoring' event to restore related models
         static::restoring(function ($kelas) {
-            // Restore related siswas when the kelas is restored
-            $kelas->siswas()->withTrashed()->restore();
+            // Restore related children when restoring the parent
+            $kelas->siswas()->restore();
         });
     }
 
