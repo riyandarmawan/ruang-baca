@@ -1,4 +1,4 @@
-<aside x-data="{ logoutModal: false }" x-bind:class="detail ? '!w-52 px-2' : ''" id="sidebar-dashboard"
+<aside x-data="{ showModalLogout: false }" x-bind:class="detail ? '!w-52 px-2' : ''" id="sidebar-dashboard"
     class="flex w-14 flex-col gap-4 bg-primary py-2 ps-2 text-background duration-300">
 
     <x-dashboard.navbar />
@@ -8,7 +8,7 @@
     <div x-data="{ open: false }" @click.outside="open = false"
         class="relative flex max-h-20 cursor-pointer items-center justify-evenly py-4">
         <div x-bind:class="{ 'left-8': !detail, '!block': open }"
-            class="absolute bottom-full z-[9999] hidden w-48 overflow-hidden rounded border border-primary bg-background text-primary shadow-2xl">
+            class="absolute bottom-full z-30 hidden w-48 overflow-hidden rounded border border-primary bg-background text-primary shadow-2xl">
             <a href="/dashboard/user/profile"
                 class="group flex items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                 <span class="i-mdi-user bg-primary text-xl group-hover:bg-background"></span>
@@ -21,7 +21,7 @@
                     Users
                 </a>
             @endif
-            <button @click="logoutModal = !logoutModal" type="button"
+            <button @click="showModalLogout = !showModalLogout" type="button"
                 class="group flex w-full items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                 <span class="i-mdi-logout bg-primary text-xl group-hover:bg-background"></span>
                 Keluar
@@ -38,22 +38,40 @@
         </div>
     </div>
 
-    <div x-bind:class="logoutModal ? '!block' : ''"
-        class="absolute bottom-1/3 left-1/3 hidden overflow-hidden rounded-xl border border-primary bg-background shadow-xl">
-        <div class="flex items-center border-b border-primary bg-gray-200 p-4 font-semibold text-red-500">
-            <span class="i-mdi-alert me-2 text-lg"></span>
-            Peringatan
-        </div>
-        <div class="p-4 text-primary">Apakah anda yakin ingin keluar?</div>
-        <div class="flex items-center justify-end bg-gray-200 p-4">
-            <form action="/auth/logout" method="post">
-                @csrf
-                <button type="submit"
-                    class="me-4 rounded bg-red-500 px-4 py-1 font-medium text-background shadow shadow-slate-500 hover:opacity-80">Ya</button>
-            </form>
-            <button x-on:click="logoutModal = !logoutModal" type="button"
-                class="cursor-pointer rounded bg-primary px-4 py-1 font-medium text-background shadow shadow-slate-500 hover:opacity-80">
-                Tidak</button>
+    <div x-cloak x-show="showModalLogout"
+        class="fixed inset-0 z-40 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <!-- Modal Container -->
+        <div @click.outside="showModalLogout = false"
+            class="w-96 scale-100 transform rounded-lg bg-white p-6 shadow-lg transition-transform duration-300">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-gray-800">Konfirmasi Hapus</h2>
+                <button @click="showModalLogout = false"
+                    class="i-mdi-close text-2xl text-gray-400 transition duration-200 hover:text-gray-600">
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="mt-4">
+                <p class="text-gray-600">
+                    Apakah anda yakin ingin keluar?
+                </p>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-6 flex justify-end space-x-3">
+                <button @click="showModalLogout = false"
+                    class="rounded bg-gray-200 px-4 py-2 font-medium text-gray-700 transition duration-200 hover:bg-gray-300">
+                    Batal
+                </button>
+                <form action="/auth/logout" method="POST">
+                    @csrf
+                    <button
+                        class="rounded bg-red-500 px-4 py-2 font-medium text-white transition duration-200 hover:bg-red-600">
+                        Keluar
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </aside>
