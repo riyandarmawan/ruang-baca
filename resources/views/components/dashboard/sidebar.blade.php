@@ -5,7 +5,8 @@
 
     <hr x-bind:class="detail ? '' : 'w-10'">
 
-    <div x-data="{ open: false }" class="relative flex cursor-pointer items-center justify-evenly py-4 max-h-20">
+    <div x-data="{ open: false }" @click.outside="open = false"
+        class="relative flex max-h-20 cursor-pointer items-center justify-evenly py-4">
         <div x-bind:class="{ 'left-8': !detail, '!block': open }"
             class="absolute bottom-full z-[9999] hidden w-48 overflow-hidden rounded border border-primary bg-background text-primary shadow-2xl">
             <a href="/dashboard/user/profile"
@@ -13,10 +14,17 @@
                 <span class="i-mdi-user bg-primary text-xl group-hover:bg-background"></span>
                 Profile
             </a>
+            @if (Auth::user()->role === 'superadmin')
+                <a href="/dashboard/users"
+                    class="group flex items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
+                    <span class="i-mdi-user-group bg-primary text-xl group-hover:bg-background"></span>
+                    Users
+                </a>
+            @endif
             <button @click="logoutModal = !logoutModal" type="button"
                 class="group flex w-full items-center gap-2 p-4 text-base font-bold hover:bg-tersier hover:text-background">
                 <span class="i-mdi-logout bg-primary text-xl group-hover:bg-background"></span>
-                Logout
+                Keluar
             </button>
         </div>
         <div class="flex overflow-hidden">
@@ -36,7 +44,7 @@
             <span class="i-mdi-alert me-2 text-lg"></span>
             Peringatan
         </div>
-        <div class="p-4 text-primary">Apakah anda yakin ingin logout?</div>
+        <div class="p-4 text-primary">Apakah anda yakin ingin keluar?</div>
         <div class="flex items-center justify-end bg-gray-200 p-4">
             <form action="/auth/logout" method="post">
                 @csrf

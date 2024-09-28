@@ -6,16 +6,16 @@
                         :class="activatedTab === '#profile' ? 'tab-active' : 'tab-inactive'" class="tab">Profile</>
                 </li>
                 <li><button @click="window.location.hash = '#ubah'; activatedTab = '#ubah'"
-                    {{ Auth::user()->username == 'superadmin' ? 'disabled' : '' }}
+                    {{ Auth::user()->role == 'superadmin' ? 'disabled' : '' }}
                         :class="activatedTab === '#ubah' ? 'tab-active' : 'tab-inactive'" class="tab">Ubah</>
                 </li>
                 <li><button @click="window.location.hash = '#ubah-password'; activatedTab = '#ubah-password'"
-                    {{ Auth::user()->username == 'superadmin' ? 'disabled' : '' }}
+                    {{ Auth::user()->role == 'superadmin' ? 'disabled' : '' }}
                         :class="activatedTab === '#ubah-password' ? 'tab-active' : 'tab-inactive'" class="tab">Ubah
                         Password</>
                 </li>
                 <li><button @click="window.location.hash = '#hapus'; activatedTab = '#hapus'"
-                        {{ Auth::user()->username == 'superadmin' ? 'disabled' : '' }}
+                        {{ Auth::user()->role == 'superadmin' ? 'disabled' : '' }}
                         :class="activatedTab === '#hapus' ? 'tab-active' : 'tab-inactive'" class="tab">Hapus</>
                 </li>
             </ul>
@@ -37,7 +37,7 @@
                 </ul>
             </div>
 
-            @if (Auth::user()->username !== 'superadmin')
+            @if (Auth::user()->role !== 'superadmin')
                 <div x-cloak x-show="activatedTab === '#ubah'">
                     <form action="/dashboard/user/ubah/{{ Auth::user()->username }}" method="POST"
                         enctype="multipart/form-data">

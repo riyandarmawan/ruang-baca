@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
     // user
+    Route::get('/dashboard/users', [UserController::class, 'index'])->middleware('superadmin');
+
     Route::get('/dashboard/user/profile', [UserController::class, 'show']);
 
     Route::post('/dashboard/user/ubah/{username}', [UserController::class, 'update']);

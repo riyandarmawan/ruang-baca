@@ -48,7 +48,7 @@ input:read-only, input:disabled {
 
 /* tabs */
 .tab {
-  @apply cursor-pointer rounded-tl rounded-tr border border-b-0 px-4 py-2 font-medium inline-block
+  @apply rounded-tl rounded-tr border border-b-0 px-4 py-2 font-medium inline-block cursor-pointer
 }
 
 .tab-active {
@@ -60,7 +60,7 @@ input:read-only, input:disabled {
 }
 
 .tab:disabled {
-  @apply text-slate-500 hover:bg-transparent hover:border-transparent bg-transparent border-transparent
+  @apply text-slate-500 hover:bg-transparent hover:border-transparent bg-transparent border-transparent cursor-default
 }
 
 /* x-cloak alpine js */
