@@ -49,7 +49,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if($request->password === config('app.default_password')) {
+            if($request->password === config('app.default_password', 'password')) {
                 return redirect('/auth/consider-to-change-your-password');
             }
 
