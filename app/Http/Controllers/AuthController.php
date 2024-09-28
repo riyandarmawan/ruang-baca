@@ -21,24 +21,38 @@ class AuthController extends Controller
     public function attemptLogin(Request $request)
     {
         $credentials = $request->validate([
-            'username' => 'required|exists:users,username',
+            'username' => 'required',
             'password' => 'required|min:8'
         ], [
             // Username
             'username.required' => 'Username wajib diisi!',
-            'username.exists' => 'Username tersebut tidak terdaftar!',
 
             // Password
             'password.required' => 'Password wajib diisi!',
-            'password.min' => 'Password minimal harus 8 karakter'
+            'password.min' => 'Password minimal harus 8 karakter',
         ]);
 
-        if(Auth::attempt($credentials)) {
+        // Check if the username exists in the database (including soft-deleted users)
+        $user = User::withTrashed()->where('username', $credentials['username'])->first();
+
+        if (!$user) {
+            // If no user is found, return an error message
+            return redirect()->back()->withErrors(['username' => 'Username tersebut tidak terdaftar!']);
+        }
+
+        // Check if the user is soft deleted
+        if ($user->trashed()) {
+            return redirect()->back()->withErrors(['username' => 'Akun ini telah dihapus!']);
+        }
+
+        // Attempt to authenticate the user
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/dashboard');
         }
 
+        // If authentication fails, return an error message for the password
         return redirect()->back()->withErrors(['password' => 'Password yang anda masukkan salah!'])->onlyInput('username');
     }
 

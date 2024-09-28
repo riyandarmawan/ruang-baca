@@ -46,7 +46,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => 'Tambah User'
+        ];
+
+        return view('pages.dashboard.user.tambah', $data);
     }
 
     /**
@@ -54,16 +58,85 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+
+        $request->validate(
+            [
+                'profile' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+                'name' => 'required',
+                'username' => [
+                    'required',
+                    'min:5',
+                    'max:255',
+                    'unique:App\Models\User,username',
+                    'alpha_dash'
+                ],
+                'email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    'unique:App\Models\User,email'
+                ],
+            ],
+            [
+                // photo profile
+                'profile.image' => 'Photo profile harus berupa gambar!',
+                'profile.mimes' => 'Photo profile harus berupa jpeg, jpg, atau png!',
+                'profile.max' => 'Photo profile harus berukuranw kurang dari 2mb!',
+
+                // name
+                'name.required' => 'Nama lenkap wajib diisi!',
+
+                // username
+                'username.required' => 'Username wajib diisi!',
+                'username.unique' => 'Username sudah terdaftar!',
+                'username.min' => 'Username minimal harus 5 karakter!',
+                'username.max' => 'Username maksimal 255 karakter!',
+                'username.alpha_dash' => 'Username hanya boleh mengandung huruf, angka, tanda hubung, atau garis bawah!',
+
+                // email
+                'email.required' => 'Email wajib diisi!',
+                'email.email' => 'Format email tidak valid!',
+                'email.unique' => 'Email sudah terdaftar!',
+            ]
+        );
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->password = Hash::make('password');
+
+        if ($request->file('profile')) {
+            $profile = $request->file('profile');
+            $profileName = time() . '.' . $profile->getClientOriginalExtension();
+            $profile->storeAs('public/images/users', $profileName);
+
+            $user->profile = $profileName;
+        }
+
+        $user->save();
+
+        return redirect('/dashboard/users')->with('success', 'Data user berhasil ditambah!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user, $username = '')
     {
+        $isDetailPage = request()->route()->getName() === 'detail.user';
+
+        $user = User::where('username', Auth::user()->username)->first();
+
+        if ($isDetailPage) {
+            $user = User::where('username', $username)->first();
+        }
+
         $data = [
-            'title' => 'Profile ' . Auth::user()->name,
+            'title' => "Profile $user->name",
+            'user' => $user,
+            'isDetailPage' => $isDetailPage
         ];
 
         return view('pages.dashboard.user.profile', $data);
@@ -94,6 +167,7 @@ class UserController extends Controller
                     'min:5',
                     'max:255',
                     Rule::unique('users', 'username')->ignore($user->username, 'username'),
+                    'alpha_dash'
                 ],
                 'email' => [
                     'required',
@@ -116,6 +190,7 @@ class UserController extends Controller
                 'username.unique' => 'Username sudah terdaftar!',
                 'username.min' => 'Username minimal harus 5 karakter!',
                 'username.max' => 'Username maksimal 255 karakter!',
+                'username.alpha_dash' => 'Username hanya boleh mengandung huruf, angka, tanda hubung, atau garis bawah!',
 
                 // email
                 'email.required' => 'Email wajib diisi!',
@@ -130,12 +205,6 @@ class UserController extends Controller
                 ->withInput()
                 ->withFragment('ubah');
         }
-
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
 
         $user->name = $request->name;
         $user->username = $request->username;
@@ -155,7 +224,21 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/auth/login')->with('success', 'Informasi akun anda terlah diubah!');
+        // Check if the currently authenticated user is the same as the updated user
+        if (Auth::user()->username === $user->username) {
+            // Log out the user if they updated their own profile
+            Auth::logout();
+
+            // Invalidate the session and regenerate the token
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            // Redirect to login page
+            return redirect('/auth/login')->with('success', 'Informasi akun anda berhasil diubah!');
+        }
+
+        // If the authenticated user is not the same as the updated user, redirect to dashboard users
+        return redirect('/dashboard/users')->with('success', 'Informasi akun pengguna berhasil diubah!');
     }
 
     public function changePassword(Request $request, $username)
@@ -211,16 +294,29 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $username)
     {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
 
         $user = User::where('username', $username)->first();
 
+        if ($user->profile && $user->profile !== 'user.png' && Storage::exists("public/images/users/$user->profile")) {
+            Storage::delete("public/images/users/$user->profile");
+        }
+
         $user->delete();
 
-        return redirect('/auth/login')->with('success', 'Akun anda berhasil dihapus!');
+        // Check if the currently authenticated user is the same as the updated user
+        if (Auth::user()->username === $user->username) {
+            // Log out the user if they updated their own profile
+            Auth::logout();
+
+            // Invalidate the session and regenerate the token
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            // Redirect to login page
+            return redirect('/auth/login')->with('success', 'Akun anda berhasil dihapus!');
+        }
+
+        // If the authenticated user is not the same as the updated user, redirect to dashboard users
+        return redirect('/dashboard/users')->with('success', 'Akun tersebut berhasil dihapus!');
     }
 }

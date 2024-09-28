@@ -6,47 +6,49 @@
                         :class="activatedTab === '#profile' ? 'tab-active' : 'tab-inactive'" class="tab">Profile</>
                 </li>
                 <li><button @click="window.location.hash = '#ubah'; activatedTab = '#ubah'"
-                    {{ Auth::user()->role == 'superadmin' ? 'disabled' : '' }}
+                        {{ $user->role == 'superadmin' ? 'disabled' : '' }}
                         :class="activatedTab === '#ubah' ? 'tab-active' : 'tab-inactive'" class="tab">Ubah</>
                 </li>
                 <li><button @click="window.location.hash = '#ubah-password'; activatedTab = '#ubah-password'"
-                    {{ Auth::user()->role == 'superadmin' ? 'disabled' : '' }}
+                        {{ $user->role == 'superadmin' || $isDetailPage ? 'disabled' : '' }}
                         :class="activatedTab === '#ubah-password' ? 'tab-active' : 'tab-inactive'" class="tab">Ubah
                         Password</>
                 </li>
                 <li><button @click="window.location.hash = '#hapus'; activatedTab = '#hapus'"
-                        {{ Auth::user()->role == 'superadmin' ? 'disabled' : '' }}
+                        {{ $user->role == 'superadmin' ? 'disabled' : '' }}
                         :class="activatedTab === '#hapus' ? 'tab-active' : 'tab-inactive'" class="tab">Hapus</>
                 </li>
             </ul>
 
             <div x-cloak x-show="activatedTab === '#profile'" class="grid grid-cols-4">
                 <div class="col-span-4 mb-8">
-                    <img src="{{ asset('storage/images/users/' . Auth::user()->profile) }}"
-                        alt="{{ Auth::user()->name }}" class="m-auto aspect-square w-24 rounded-full object-cover">
+                    <img src="{{ asset("storage/images/users/$user->profile") }}" alt="{{ $user->name }}"
+                        class="m-auto aspect-square w-24 rounded-full object-cover">
                 </div>
                 <ul class="col-span-1 flex flex-col gap-2 font-medium text-slate-500">
                     <li>Nama</li>
                     <li>Username</li>
                     <li>Email</li>
+                    <li>Role</li>
                 </ul>
                 <ul class="col-span-3 flex flex-col gap-2">
-                    <li>{{ Auth::user()->name }}</li>
-                    <li>{{ Auth::user()->username }}</li>
-                    <li>{{ Auth::user()->email }}</li>
+                    <li>{{ $user->name }}</li>
+                    <li>{{ $user->username }}</li>
+                    <li>{{ $user->email }}</li>
+                    <li>{{ $user->role }}</li>
                 </ul>
             </div>
 
-            @if (Auth::user()->role !== 'superadmin')
+            @if ($user->role !== 'superadmin')
                 <div x-cloak x-show="activatedTab === '#ubah'">
-                    <form action="/dashboard/user/ubah/{{ Auth::user()->username }}" method="POST"
+                    <form action="/dashboard/user/ubah/{{ $user->username }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        <div x-data="{ imagePreview: '{{ asset('storage/images/users/' . Auth::user()->profile) }}' }" class="mb-4 grid grid-cols-3 items-center">
+                        <div x-data="{ imagePreview: '{{ asset("storage/images/users/$user->profile") }}' }" class="mb-4 grid grid-cols-3 items-center">
                             <div class="col-start-2 flex flex-col gap-4">
                                 <label for="profile"
                                     class="focus focus-ring {{ $errors->has('profile') ? 'input-error' : 'input-unerror' }} m-auto mb-4 aspect-square w-24 cursor-pointer overflow-hidden rounded-full border border-primary outline-none focus:ring">
-                                    <img src="{{ asset('storage/images/users/' . Auth::user()->profile) }}"
+                                    <img src="{{ asset("storage/images/users/$user->profile") }}"
                                         :src="imagePreview" alt="Photo Profile"
                                         class="aspect-square w-full rounded-full object-cover">
                                 </label>
@@ -60,7 +62,7 @@
                         <div class="mb-4 grid grid-cols-4 items-center">
                             <label for="name" class="col-span-1 font-medium text-slate-500">Nama</label>
                             <input type="text" id="name" name="name" required
-                                value="{{ old('name', Auth::user()->name) }}"
+                                value="{{ $errors->has('name') ? $user->name : old('name', $user->name) }}"
                                 class="{{ $errors->has('name') ? 'border-red-500 focus:ring-red-500' : '' }} col-span-3 rounded border px-4 py-2 shadow outline-none focus:ring">
                             @error('name')
                                 <p class="col-span-3 col-start-2 mt-2.5 text-sm font-medium text-red-500">
@@ -71,7 +73,7 @@
                         <div class="mb-4 grid grid-cols-4 items-center">
                             <label for="username" class="col-span-1 font-medium text-slate-500">Username</label>
                             <input type="text" id="username" name="username" required
-                                value="{{ old('username', Auth::user()->username) }}"
+                                value="{{ $errors->has('username') ? $user->username : old('username', $user->username) }}"
                                 class="{{ $errors->has('username') ? 'border-red-500 focus:ring-red-500' : '' }} col-span-3 rounded border px-4 py-2 shadow outline-none focus:ring">
                             @error('username')
                                 <p class="col-span-3 col-start-2 mt-2.5 text-sm font-medium text-red-500">
@@ -82,7 +84,7 @@
                         <div class="mb-4 grid grid-cols-4 items-center">
                             <label for="email" class="col-span-1 font-medium text-slate-500">Email</label>
                             <input type="email" id="email" name="email" required
-                                value="{{ old('email', Auth::user()->email) }}"
+                                value="{{ $errors->has('email') ? $user->email : old('email', $user->email) }}"
                                 class="{{ $errors->has('email') ? 'border-red-500 focus:ring-red-500' : '' }} col-span-3 rounded border px-4 py-2 shadow outline-none focus:ring">
                             @error('email')
                                 <p class="col-span-3 col-start-2 mt-2.5 text-sm font-medium text-red-500">
@@ -90,13 +92,21 @@
                                 </p>
                             @enderror
                         </div>
+                        <div class="mb-4 grid grid-cols-4 items-center">
+                            <label for="role" class="col-span-1 font-medium text-slate-500">Role</label>
+                            <input type="text" id="role" name="role" required readonly
+                                value="{{ $user->role }}"
+                                class="col-span-3 rounded border px-4 py-2 shadow outline-none focus:ring">
+                        </div>
                         <button
                             class="col-span-4 mt-2 w-full rounded bg-tersier px-4 py-2 text-center font-medium text-white shadow hover:opacity-80 focus:opacity-70">Ubah</button>
                     </form>
                 </div>
+            @endif
 
+            @if ($user->role !== 'superadmin' || $isDetailPage)
                 <div x-cloak x-show="activatedTab === '#ubah-password'">
-                    <form action="/dashboard/user/ubah-password/{{ Auth::user()->username }}" method="POST">
+                    <form action="/dashboard/user/ubah-password/{{ $user->username }}" method="POST">
                         @csrf
                         <div x-data="{ showPassword: false }" class="mb-4 grid grid-cols-4 items-center">
                             <label for="oldPassword" class="col-span-1 font-medium text-slate-500">Password Lama</label>
@@ -156,7 +166,9 @@
                             Password</button>
                     </form>
                 </div>
+            @endif
 
+            @if ($user->role !== 'superadmin')
                 <div x-cloak x-show="activatedTab === '#hapus'">
                     <a @click.prevent="showModalHapus = !showModalHapus" href=""
                         class="font-medium text-red-500">Hapus akun ini</a>
@@ -190,7 +202,7 @@
                             class="rounded bg-gray-200 px-4 py-2 font-medium text-gray-700 transition duration-200 hover:bg-gray-300">
                             Batal
                         </button>
-                        <form action="/dashboard/user/hapus/{{ Auth::user()->username }}" method="POST">
+                        <form action="/dashboard/user/hapus/{{ $user->username }}" method="POST">
                             @csrf
                             <button
                                 class="rounded bg-red-500 px-4 py-2 font-medium text-white transition duration-200 hover:bg-red-600">

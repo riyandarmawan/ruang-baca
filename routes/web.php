@@ -38,7 +38,13 @@ Route::middleware('auth')->group(function () {
     // user
     Route::get('/dashboard/users', [UserController::class, 'index'])->middleware('superadmin');
 
-    Route::get('/dashboard/user/profile', [UserController::class, 'show']);
+    Route::get('/dashboard/user/tambah', [UserController::class, 'create'])->middleware('superadmin');
+    
+    Route::post('/dashboard/user/tambah', [UserController::class, 'store'])->middleware('superadmin');
+    
+    Route::get('/dashboard/user/detail/{username}', [UserController::class, 'show'])->middleware('superadmin')->name('detail.user');
+
+    Route::get('/dashboard/user/profile', [UserController::class, 'show'])->name('profile.user');
 
     Route::post('/dashboard/user/ubah/{username}', [UserController::class, 'update']);
 
