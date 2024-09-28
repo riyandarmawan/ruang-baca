@@ -49,11 +49,23 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            if($request->password === config('app.default_password')) {
+                return redirect('/auth/consider-to-change-your-password');
+            }
+
             return redirect()->intended('/dashboard');
         }
 
         // If authentication fails, return an error message for the password
         return redirect()->back()->withErrors(['password' => 'Password yang anda masukkan salah!'])->onlyInput('username');
+    }
+
+    public function considerToChangePassword() {
+        $data = [
+            'title' => 'Pertimbangkan untuk mengganti password anda!'
+        ];
+
+        return view('pages.auth.consider-to-change-password', $data);
     }
 
     public function logout(Request $request) 
