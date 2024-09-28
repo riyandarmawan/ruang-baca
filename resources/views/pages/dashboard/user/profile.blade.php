@@ -10,7 +10,7 @@
                         :class="activatedTab === '#ubah' ? 'tab-active' : 'tab-inactive'" class="tab">Ubah</>
                 </li>
                 <li><button @click="window.location.hash = '#ubah-password'; activatedTab = '#ubah-password'"
-                        {{ $user->role == 'superadmin' || $isDetailPage ? 'disabled' : '' }}
+                        {{ $isDetailPage ? 'disabled' : '' }}
                         :class="activatedTab === '#ubah-password' ? 'tab-active' : 'tab-inactive'" class="tab">Ubah
                         Password</>
                 </li>
@@ -104,7 +104,7 @@
                 </div>
             @endif
 
-            @if ($user->role !== 'superadmin' || $isDetailPage)
+            @if (!$isDetailPage)
                 <div x-cloak x-show="activatedTab === '#ubah-password'">
                     <form action="/dashboard/user/ubah-password/{{ $user->username }}" method="POST">
                         @csrf
